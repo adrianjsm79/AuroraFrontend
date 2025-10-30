@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
+import Dashboard from './components/dashboard/Dashboard';
+import LoadingScreen from './components/common/LoadingScreen';
 
-function App() {
+const AppContent = () => {
+  const [showLogin, setShowLogin] = useState(true);
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  if (!user) {
+    return showLogin ? (
+      <Login onToggle={() => setShowLogin(false)} />
+    ) : (
+      <Register onToggle={() => setShowLogin(true)} />
+    );
+  }
+
+  return <Dashboard />;
+};
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
-}
+};
 
 export default App;

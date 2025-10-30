@@ -1,38 +1,106 @@
 .App {
-  text-align: center;
-}
+  --bg: #f8fafc; /* light slate */
+  --surface: #ffffff;
+  --muted: #6b7280;
+  --primary: #6366f1; /* indigo-500 */
+  --text: #0f172a;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  padding: 1.5rem;
+}
+
+/* Header: smaller, not full-screen */
+.App-header {
+  width: 100%;
+  max-width: 1200px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  gap: 1rem;
+}
+
+.App-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.App-logo {
+  width: 48px;
+  height: 48px;
+  max-width: 10vmin;
+  pointer-events: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(99,102,241,0.06));
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+}
+
+/* Gentle rotation if user allows motion */
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo { animation: app-logo-spin 16s linear infinite; }
+}
+
+@keyframes app-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.App-main {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+  align-items: flex-start;
+}
+
+.App-sidebar {
+  width: 240px;
+  min-height: 200px;
+}
+
+.App-content {
+  flex: 1 1 auto;
+  background: var(--surface);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 6px 15px -6px rgba(2,6,23,0.08);
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--primary);
+  text-decoration: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Loading fallback — components may use .loading-spinner from index.css */
+.loading-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem 0;
 }
+
+/* Make sure the original animation name doesn't collide with others */
+@keyframes app-bounce {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.app-bounce { animation: app-bounce 0.45s ease-out; }
+
+/* Small utilities useful across components */
+.rounded-md { border-radius: 0.5rem; }
+.shadow-soft { box-shadow: 0 8px 20px -10px rgba(2,6,23,0.08); }
+.muted { color: var(--muted); }
