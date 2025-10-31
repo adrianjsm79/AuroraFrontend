@@ -67,7 +67,7 @@ const Register = ({ onToggle }) => {
           <h2 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
             Crear Cuenta
           </h2>
-          <p className="text-gray-600 mt-2">Únete a TrackApp</p>
+          <p className="text-gray-600 mt-2">Únete a Aurora</p>
         </div>
 
         {error && (
