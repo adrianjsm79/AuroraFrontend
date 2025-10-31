@@ -4,7 +4,7 @@ export const apiService = {
   // Contactos
   async getTrustedContacts(token) {
     const response = await fetch(`${API_URL}/users/trusted-contacts/`, {
-      headers: { 'Authorization': `Bearer ${token}` },
+      headers: { 'Authorization': `Bearer ${token}`, 'ngrok-skip-browser-warning': 'true' }, 
     });
     return response.json();
   },
@@ -15,6 +15,7 @@ export const apiService = {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true',
       },
       body: JSON.stringify({ numero }),
     });
@@ -30,7 +31,7 @@ export const apiService = {
   async removeTrustedContact(token, contactId) {
     await fetch(`${API_URL}/users/trusted-contacts/${contactId}/remove/`, {
       method: 'DELETE',
-      headers: { 'Authorization': `Bearer ${token}` },
+      headers: { 'Authorization': `Bearer ${token}`, 'ngrok-skip-browser-warning': 'true' },
     });
   },
 
@@ -41,6 +42,7 @@ export const apiService = {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true',
       },
       body: JSON.stringify(location),
     });
@@ -48,7 +50,7 @@ export const apiService = {
 
   async getLocations(token) {
     const response = await fetch(`${API_URL}/tracking/locations/`, {
-      headers: { 'Authorization': `Bearer ${token}` },
+      headers: { 'Authorization': `Bearer ${token}`, 'ngrok-skip-browser-warning': 'true' },
     });
     return response.json();
   },

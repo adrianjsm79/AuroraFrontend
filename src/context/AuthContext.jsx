@@ -19,8 +19,7 @@ export const AuthProvider = ({ children }) => {
   const fetchProfile = async () => {
     try {
       const response = await fetch(`${API_URL}/users/profile/`, {
-        headers: { 'Authorization': `Bearer ${token}`,
-                'ngrok-skip-browser-warning': 'true' },
+        headers: { 'Authorization': `Bearer ${token}`, 'ngrok-skip-browser-warning': 'true' },
       });
       if (response.ok) {
         const data = await response.json();
