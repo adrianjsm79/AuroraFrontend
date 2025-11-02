@@ -24,6 +24,28 @@ const HomeView = ({
         </p>
       </div>
 
+      <div className="mb-8">
+        <button
+          onClick={() => setCurrentView('about')}
+          className="group w-full bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-4 text-white hover:bg-white/30 transition-all duration-300 flex items-center justify-between shadow-lg relative overflow-hidden"
+        >
+          <div className="flex items-center">
+            <img 
+              src="/images/qrAuroraReleases.png" 
+              alt="QR Code App" 
+              className="w-16 h-16 mr-5 rounded-lg border-2 border-white/50"
+            />
+            <div>
+              <h3 className="text-2xl font-bold text-left">¡Obtén nuestra app gratuita ahora!</h3>
+              <p className="text-left text-white/80">Escanea el QR o haz clic para saber más.</p>
+            </div>
+          </div>
+          <span className="text-lg font-semibold bg-white/25 px-5 py-3 rounded-lg group-hover:bg-white/40 transition-colors">
+            Ver Detalles
+          </span>
+        </button>
+      </div>
+
       {locationError && (
         <div className="bg-yellow-50 border-l-4 border-yellow-500 text-yellow-700 px-6 py-4 rounded-xl mb-6 flex items-start shadow-md">
           <AlertCircle className="w-6 h-6 mr-3 flex-shrink-0 mt-0.5" />
