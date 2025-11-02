@@ -13,10 +13,10 @@ const Header = ({ sidebarOpen, setSidebarOpen, onLogout }) => {
         </button>
         
         <div className="flex items-center space-x-2">
-          <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+          <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center shadow-lg">
             <MapPin className="w-6 h-6 text-white" />
           </div>
-          <h1 className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             AuroraWeb
           </h1>
         </div>

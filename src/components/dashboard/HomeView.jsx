@@ -15,7 +15,7 @@ const HomeView = ({
 }) => {
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 rounded-3xl shadow-2xl p-8 mb-8 text-white">
+      <div className="bg-gradient-to-br from-primary to-secondary rounded-3xl shadow-2xl p-8 mb-8 text-white">
         <h2 className="text-4xl font-bold mb-2">
           ¡Hola, {user?.nombre}!
         </h2>
@@ -108,7 +108,7 @@ const HomeView = ({
           </div>
           <button
             onClick={() => setCurrentView('contacts')}
-            className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-2 rounded-xl font-semibold hover:from-indigo-700 hover:to-purple-700 transition"
+            className="w-full bg-gradient-to-r from-primary to-secondary text-white py-2 rounded-xl font-semibold hover:from-indigo-700 hover:to-purple-700 transition"
           >
             {trustedContacts.length === 0 ? 'Agregar Contactos' : 'Ver Todos'}
           </button>

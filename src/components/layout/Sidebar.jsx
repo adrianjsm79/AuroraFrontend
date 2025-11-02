@@ -22,7 +22,7 @@ const Sidebar = ({ sidebarOpen, currentView, setCurrentView, setSidebarOpen, use
       <div className="p-6 h-full overflow-y-auto">
         <div className="mb-8 pb-6 border-b border-gray-200">
           <div className="flex items-center space-x-3">
-            <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+            <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center shadow-lg">
               <span className="text-white font-bold text-2xl">
                 {user?.nombre?.charAt(0)}
               </span>
@@ -46,7 +46,7 @@ const Sidebar = ({ sidebarOpen, currentView, setCurrentView, setSidebarOpen, use
                 onClick={() => handleMenuClick(item.id)}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all transform hover:scale-105 ${
                   isActive
-                    ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg'
+                    ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg'
                     : 'text-gray-700 hover:bg-gray-100'
                 }`}
               >
