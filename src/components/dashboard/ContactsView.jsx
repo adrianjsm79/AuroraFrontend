@@ -12,11 +12,11 @@ const ContactsView = ({
 }) => {
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 mb-6">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-3xl font-bold text-gray-800">Contactos de Confianza</h2>
-            <p className="text-gray-600 mt-1">Gestiona quién puede ver tu ubicación</p>
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200">Contactos de Confianza</h2>
+            <p className="text-gray-600 dark:text-gray-400 mt-1">Gestiona quién puede ver tu ubicación</p>
           </div>
           <button
             onClick={() => setShowAddContact(!showAddContact)}
@@ -28,8 +28,8 @@ const ContactsView = ({
         </div>
 
         {showAddContact && (
-          <div className="bg-gradient-to-br from-primary to-secondary rounded-xl p-6 mb-6 border-2 border-indigo-100">
-            <h3 className="font-bold text-gray-800 mb-4 flex items-center">
+          <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-6 mb-6 border-2 border-gray-100 dark:border-gray-700">
+            <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center">
               <UserPlus className="w-5 h-5 mr-2 text-primary" />
               Agregar Nuevo Contacto
             </h3>
@@ -39,7 +39,7 @@ const ContactsView = ({
                 value={newContactNumber}
                 onChange={(e) => setNewContactNumber(e.target.value)}
                 placeholder="Número de teléfono (ej: +51987654321)"
-                className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                className="flex-1 px-4 py-3 border-2 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500"
                 onKeyPress={(e) => e.key === 'Enter' && addTrustedContact()}
               />
               <button
@@ -55,17 +55,17 @@ const ContactsView = ({
         <div className="space-y-3">
           {trustedContacts.length === 0 ? (
             <div className="text-center py-16">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full mb-4">
-                <Users className="w-10 h-10 text-gray-400" />
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 dark:bg-gray-700 rounded-full mb-4">
+                <Users className="w-10 h-10 text-gray-400 dark:text-gray-500" />
               </div>
-              <p className="text-gray-500 text-lg">No tienes contactos de confianza aún</p>
-              <p className="text-gray-400 text-sm mt-2">Agrega contactos para compartir ubicaciones</p>
+              <p className="text-gray-500 dark:text-gray-400 text-lg">No tienes contactos de confianza aún</p>
+              <p className="text-gray-400 dark:text-gray-500 text-sm mt-2">Agrega contactos para compartir ubicaciones</p>
             </div>
           ) : (
             trustedContacts.map((contact, index) => (
               <div
                 key={contact.id}
-                className="flex items-center justify-between p-5 bg-gradient-to-r from-gray-50 to-gray-100 hover:from-indigo-50 hover:to-purple-50 rounded-xl transition-all transform hover:scale-102 shadow-sm hover:shadow-md"
+                className="flex items-center justify-between p-5 bg-gray-50 hover:bg-gray-100 rounded-xl transition-all transform hover:scale-102 shadow-sm hover:shadow-md dark:bg-gray-700/50 dark:hover:bg-gray-700"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="flex items-center space-x-4">
@@ -75,14 +75,14 @@ const ContactsView = ({
                     </span>
                   </div>
                   <div>
-                    <p className="font-bold text-gray-800 text-lg">{contact.nombre}</p>
-                    <p className="text-sm text-gray-600">{contact.email}</p>
+                    <p className="font-bold text-gray-800 dark:text-gray-200 text-lg">{contact.nombre}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{contact.email}</p>
                     <p className="text-xs text-primary font-medium mt-1">{contact.numero}</p>
                   </div>
                 </div>
                 <button
                   onClick={() => removeTrustedContact(contact.id)}
-                  className="p-3 text-red-600 hover:bg-red-50 rounded-xl transition-all transform hover:scale-110"
+                  className="p-3 text-red-600 hover:bg-red-50 rounded-xl transition-all transform hover:scale-110 dark:hover:bg-red-900/50"
                   title="Eliminar contacto"
                 >
                   <Trash2 className="w-5 h-5" />
@@ -96,7 +96,7 @@ const ContactsView = ({
       {trustedContacts.length > 0 && (
         <div className="bg-gradient-to-br from-primary to-secondary rounded-2xl shadow-xl p-6 text-white">
           <h3 className="font-bold text-xl mb-3">💡 Consejo</h3>
-          <p className="text-green-100">
+          <p className="text-white/80">
             Tus contactos pueden ver tu ubicación en tiempo real cuando la tienes activa. 
             Asegúrate de agregar solo personas de confianza.
           </p>
