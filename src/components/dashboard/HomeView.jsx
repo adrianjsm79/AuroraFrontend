@@ -15,34 +15,28 @@ const HomeView = ({
 }) => {
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="bg-gradient-to-br from-primary to-secondary rounded-3xl shadow-2xl p-8 mb-8 text-white">
-        <h2 className="text-4xl font-bold mb-2">
-          ¡Hola, {user?.nombre}!
-        </h2>
-        <p className="text-indigo-100 text-lg">
-          Gestiona tu ubicación y contactos de confianza
-        </p>
-      </div>
-
-      <div className="mb-8">
+      <div className="bg-gradient-to-br from-primary to-secondary rounded-3xl shadow-2xl p-8 mb-8 text-white flex items-center justify-between">
+        <div>
+          <h2 className="text-4xl font-bold mb-2">
+            ¡Hola, {user?.nombre}!
+          </h2>
+          <p className="text-indigo-100 text-lg">
+            Gestiona tu ubicación y contactos de confianza
+          </p>
+        </div>
         <button
           onClick={() => setCurrentView('about')}
-          className="group w-full bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-4 text-white hover:bg-white/30 transition-all duration-300 flex items-center justify-between shadow-lg relative overflow-hidden"
+          className="group bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-3 text-white hover:bg-white/30 transition-all duration-300 flex items-center shadow-lg"
         >
-          <div className="flex items-center">
-            <img 
-              src="/images/qrAuroraReleases.png" 
-              alt="QR Code App" 
-              className="w-16 h-16 mr-5 rounded-lg border-2 border-white/50"
-            />
-            <div>
-              <h3 className="text-2xl font-bold text-left">¡Obtén nuestra app gratuita ahora!</h3>
-              <p className="text-left text-white/80">Escanea el QR o haz clic para saber más.</p>
-            </div>
+          <img 
+            src="/images/qrAuroraReleases.png" 
+            alt="QR Code App" 
+            className="w-14 h-14 mr-4 rounded-lg border-2 border-white/50"
+          />
+          <div>
+            <h3 className="text-xl font-bold text-left">¡Obtén la app!</h3>
+            <p className="text-left text-white/80 text-sm">Haz clic para saber más</p>
           </div>
-          <span className="text-lg font-semibold bg-white/25 px-5 py-3 rounded-lg group-hover:bg-white/40 transition-colors">
-            Ver Detalles
-          </span>
         </button>
       </div>
 
