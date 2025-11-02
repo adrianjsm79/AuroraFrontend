@@ -42,7 +42,7 @@ const Register = ({ onToggle }) => {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-primary to-secondary flex items-center justify-center p-4">
         <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md text-center">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4 animate-pulse">
             <svg className="w-10 h-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -57,14 +57,14 @@ const Register = ({ onToggle }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary to-secondary flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black opacity-10"></div>
       <div className="relative bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md transform transition-all">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full mb-4 shadow-lg">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-full mb-4 shadow-lg">
             <UserPlus className="w-10 h-10 text-white" />
           </div>
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Crear Cuenta
           </h2>
           <p className="text-gray-600 mt-2">Únete a Aurora</p>
@@ -87,7 +87,7 @@ const Register = ({ onToggle }) => {
               name="nombre"
               value={formData.nombre}
               onChange={handleChange}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition"
               placeholder="Juan Pérez"
               required
             />
@@ -102,7 +102,7 @@ const Register = ({ onToggle }) => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition"
               placeholder="tu@email.com"
               required
             />
@@ -117,7 +117,7 @@ const Register = ({ onToggle }) => {
               name="numero"
               value={formData.numero}
               onChange={handleChange}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition"
               placeholder="+51987654321"
               required
             />
@@ -132,7 +132,7 @@ const Register = ({ onToggle }) => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition"
               placeholder="••••••••"
               required
               minLength={8}
@@ -148,7 +148,7 @@ const Register = ({ onToggle }) => {
               name="password2"
               value={formData.password2}
               onChange={handleChange}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition"
               placeholder="••••••••"
               required
               minLength={8}
@@ -158,7 +158,7 @@ const Register = ({ onToggle }) => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:from-indigo-700 hover:to-purple-700 transition transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+            className="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-xl font-semibold transition transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
           >
             {loading ? (
               <span className="flex items-center justify-center">
@@ -176,7 +176,7 @@ const Register = ({ onToggle }) => {
             ¿Ya tienes cuenta?{' '}
             <button
               onClick={onToggle}
-              className="text-indigo-600 font-semibold hover:text-indigo-700 transition"
+              className="text-primary font-semibold hover:text-secondary transition"
             >
               Inicia sesión aquí
             </button>
