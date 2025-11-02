@@ -1,11 +1,12 @@
 import React from 'react';
-import { MapPin, Navigation, Users } from 'lucide-react';
+import { MapPin, Navigation, Users, Info } from 'lucide-react';
 
 const Sidebar = ({ sidebarOpen, currentView, setCurrentView, setSidebarOpen, user, trustedContacts, locationVisible }) => {
   const menuItems = [
     { id: 'home', label: 'Inicio', icon: MapPin },
     { id: 'map', label: 'Mapa', icon: Navigation },
     { id: 'contacts', label: 'Contactos', icon: Users, badge: trustedContacts.length },
+    { id: 'about', label: 'Sobre Nosotros', icon: Info },
   ];
 
   const handleMenuClick = (viewId) => {

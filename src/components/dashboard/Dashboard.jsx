@@ -8,6 +8,7 @@ import Sidebar from '../layout/Sidebar';
 import HomeView from './HomeView';
 import MapPage from './MapPage';
 import ContactsView from './ContactsView';
+import AboutView from './AboutView';
 
 const Dashboard = () => {
     const { user, token, logout } = useAuth();
@@ -209,6 +210,8 @@ const Dashboard = () => {
                         removeTrustedContact={removeTrustedContact}
                     />
                 )}
+
+                {currentView === 'about' && <AboutView />}
             </main>
         </div>
     );
