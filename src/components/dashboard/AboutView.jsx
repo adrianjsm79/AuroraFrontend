@@ -22,13 +22,13 @@ const AboutView = () => {
             </p>
             <div className="bg-gray-50 p-4 rounded-xl flex justify-center items-center">
               <img 
-                src="qrAuroraReleases.png" 
+                src="/images/qrAuroraReleases.png" 
                 alt="QR Code para descargar la app móvil" 
                 className="w-48 h-48"
               />
             </div>
             <a
-              href="/qrAuroraReleases.png" 
+              href="/images/qrAuroraReleases.png" // En un caso real, este sería el enlace de descarga directo
               download
               className="mt-4 w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-xl font-semibold transition transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg flex items-center justify-center space-x-2"
             >
