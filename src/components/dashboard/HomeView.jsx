@@ -26,17 +26,17 @@ const HomeView = ({
         </div>
         <button
           onClick={() => setCurrentView('about')}
-          className="group bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-3 text-white hover:bg-white/30 transition-all duration-300 flex items-center shadow-lg"
+          className="group bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-4 text-white hover:bg-white/30 transition-all duration-300 flex flex-col md:flex-row items-center shadow-lg text-center md:text-left"
         >
+          <div className="md:mr-4">
+            <h3 className="text-xl font-bold">¡Obtén la app!</h3>
+            <p className="text-white/80 text-sm">Haz clic para saber más</p>
+          </div>
           <img 
             src="/images/qrAuroraReleases.png" 
             alt="QR Code App" 
-            className="w-14 h-14 mr-4 rounded-lg border-2 border-white/50"
+            className="w-14 h-14 mt-3 md:mt-0 rounded-lg border-2 border-white/50"
           />
-          <div>
-            <h3 className="text-xl font-bold text-left">¡Obtén la app!</h3>
-            <p className="text-left text-white/80 text-sm">Haz clic para saber más</p>
-          </div>
         </button>
       </div>
 
