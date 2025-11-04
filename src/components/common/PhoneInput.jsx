@@ -12,7 +12,7 @@ const PhoneInput = ({ prefix, onPrefixChange, number, onNumberChange, placeholde
         >
           {countries.map((country) => (
             <option key={country.code} value={country.prefix}>
-              {country.prefix} ({country.code})
+              {country.flag} {country.prefix}
             </option>
           ))}
         </select>
