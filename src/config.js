@@ -3,6 +3,7 @@ export const WS_URL = process.env.REACT_APP_WS_URL;
 export const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY; //en .env: REACT_APP_GOOGLE_MAPS_API_KEY
 
 export const MAP_CONFIG = {
+  mapId: '7cc9a2a66294a518e7c92aee',
   defaultCenter: { lat: -12.0464, lng: -77.0428 },
   defaultZoom: 13,
   options: {
