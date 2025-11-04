@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { UserPlus, AlertCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import PhoneInput from '../common/PhoneInput';
+import { countries } from '../../utils/countries';
 
 const Register = ({ onToggle }) => {
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
-    numero: '',
     password: '',
     password2: '',
   });
+  const [phonePrefix, setPhonePrefix] = useState(countries[0].prefix);
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -29,7 +32,8 @@ const Register = ({ onToggle }) => {
     }
 
     setLoading(true);
-    const result = await register(formData);
+    const fullNumber = `${phonePrefix}${phoneNumber}`;
+    const result = await register({ ...formData, numero: fullNumber });
     setLoading(false);
 
     if (result.success) {
@@ -112,14 +116,11 @@ const Register = ({ onToggle }) => {
             <label className="block text-sm font-semibold text-gray-700 mb-2">
               Número de Teléfono
             </label>
-            <input
-              type="tel"
-              name="numero"
-              value={formData.numero}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition"
-              placeholder="+51987654321"
-              required
+            <PhoneInput
+              prefix={phonePrefix}
+              onPrefixChange={(e) => setPhonePrefix(e.target.value)}
+              number={phoneNumber}
+              onNumberChange={(e) => setPhoneNumber(e.target.value)}
             />
           </div>
 

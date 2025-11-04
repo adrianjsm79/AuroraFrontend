@@ -18,7 +18,6 @@ const Dashboard = () => {
     const [trustedContacts, setTrustedContacts] = useState([]);
     const [userLocation, setUserLocation] = useState(null);
     const [showAddContact, setShowAddContact] = useState(false);
-    const [newContactNumber, setNewContactNumber] = useState('');
     const [locationVisible, setLocationVisible] = useState(true);
     const [locationError, setLocationError] = useState('');
     const ws = useRef(null);
@@ -126,11 +125,10 @@ const Dashboard = () => {
             fetchLocations();
         }
     }, [currentView]);
-    const addTrustedContact = async () => {
-        if (!newContactNumber.trim()) return;
+    const addTrustedContact = async (fullNumber) => {
+        if (!fullNumber.trim()) return;
         try {
-            await apiService.addTrustedContact(token, newContactNumber);
-            setNewContactNumber('');
+            await apiService.addTrustedContact(token, fullNumber);
             setShowAddContact(false);
             fetchTrustedContacts();
         } catch (error) {
@@ -204,8 +202,6 @@ const Dashboard = () => {
                         trustedContacts={trustedContacts}
                         showAddContact={showAddContact}
                         setShowAddContact={setShowAddContact}
-                        newContactNumber={newContactNumber}
-                        setNewContactNumber={setNewContactNumber}
                         addTrustedContact={addTrustedContact}
                         removeTrustedContact={removeTrustedContact}
                     />

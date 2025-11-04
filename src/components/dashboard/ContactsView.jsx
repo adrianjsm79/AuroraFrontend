@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Plus, UserPlus, Users, Trash2 } from 'lucide-react';
+import PhoneInput from '../common/PhoneInput';
+import { countries } from '../../utils/countries';
 
 const ContactsView = ({ 
   trustedContacts, 
   showAddContact, 
   setShowAddContact,
-  newContactNumber,
-  setNewContactNumber,
   addTrustedContact,
   removeTrustedContact
 }) => {
+  const [phonePrefix, setPhonePrefix] = useState(countries[0].prefix);
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const handleAddClick = () => {
+    const fullNumber = `${phonePrefix}${phoneNumber}`;
+    addTrustedContact(fullNumber);
+    setPhoneNumber('');
+  };
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 mb-6">
@@ -33,17 +42,16 @@ const ContactsView = ({
               <UserPlus className="w-5 h-5 mr-2 text-primary" />
               Agregar Nuevo Contacto
             </h3>
-            <div className="flex space-x-3">
-              <input
-                type="tel"
-                value={newContactNumber}
-                onChange={(e) => setNewContactNumber(e.target.value)}
-                placeholder="Número de teléfono (ej: +51987654321)"
-                className="flex-1 px-4 py-3 border-2 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500"
-                onKeyPress={(e) => e.key === 'Enter' && addTrustedContact()}
+            <div className="flex items-center space-x-3">
+              <PhoneInput
+                prefix={phonePrefix}
+                onPrefixChange={(e) => setPhonePrefix(e.target.value)}
+                number={phoneNumber}
+                onNumberChange={(e) => setPhoneNumber(e.target.value)}
+                placeholder="Número de contacto"
               />
               <button
-                onClick={addTrustedContact}
+                onClick={handleAddClick}
                 className="bg-primary text-white px-8 py-3 rounded-xl hover:bg-secondary transition font-semibold shadow-lg transform hover:scale-105"
               >
                 Agregar
