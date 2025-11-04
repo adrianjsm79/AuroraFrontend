@@ -11,8 +11,9 @@ const PhoneInput = ({ prefix, onPrefixChange, number, onNumberChange, placeholde
       <div className="relative w-32">
         <Listbox value={selectedCountry} onChange={(country) => onPrefixChange(country.prefix)}>
           <div className="relative">
-            <Listbox.Button className="relative w-full cursor-default rounded-xl bg-gray-50 dark:bg-gray-700 py-3 pl-3 pr-10 text-left border-2 border-gray-200 dark:border-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-75">
-              <span className="block truncate dark:text-gray-200">{selectedCountry.flag} {selectedCountry.prefix}</span>
+            <Listbox.Button className="relative w-full cursor-default rounded-xl bg-gray-50 dark:bg-gray-700 py-3 pl-3 pr-10 text-left border-2 border-gray-200 dark:border-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-75 flex items-center space-x-2">
+              <span className={`fi fi-${selectedCountry.code.toLowerCase()}`}></span>
+              <span className="block truncate dark:text-gray-200">{selectedCountry.prefix}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <ChevronUpDownIcon
                   className="h-5 w-5 text-gray-400"
@@ -44,7 +45,8 @@ const PhoneInput = ({ prefix, onPrefixChange, number, onNumberChange, placeholde
                             selected ? 'font-medium' : 'font-normal'
                           }`}
                         >
-                          {country.flag} {country.name} ({country.prefix})
+                          <span className={`fi fi-${country.code.toLowerCase()} mr-2`}></span>
+                          {country.name} ({country.prefix})
                         </span>
                         {selected ? (
                           <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-primary">
