@@ -5,7 +5,7 @@ export const countries =
   { code: 'CO', name: 'Colombia', prefix: '+57', flag: '🇨🇴' },
   { code: 'AR', name: 'Argentina', prefix: '+54', flag: '🇦🇷' },
   { code: 'CL', name: 'Chile', prefix: '+56', flag: '🇨🇱' },
-  { code: 'ES', name: 'España', prefix: '+34', flag: '🇪🇸' },
+  { code: 'ES', name: 'España', prefix: '+34', flag: '\u{1F1EA}\u{1F1F8}' },
   { code: 'US', name: 'Estados Unidos', prefix: '+1', flag: '🇺🇸' },
   { code: 'HN', name: 'Honduras', prefix: '+504', flag: '🇭🇳' },
   { code: 'BR', name: 'Brasil', prefix: '+55', flag: '🇧🇷' },
