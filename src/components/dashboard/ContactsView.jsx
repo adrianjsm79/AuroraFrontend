@@ -45,7 +45,7 @@ const ContactsView = ({
             <div className="flex items-center space-x-3">
               <PhoneInput
                 prefix={phonePrefix}
-                onPrefixChange={(e) => setPhonePrefix(e.target.value)}
+                onPrefixChange={(value) => setPhonePrefix(value)}
                 number={phoneNumber}
                 onNumberChange={(e) => setPhoneNumber(e.target.value)}
                 placeholder="Número de contacto"

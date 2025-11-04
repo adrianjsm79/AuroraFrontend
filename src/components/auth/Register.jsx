@@ -118,7 +118,7 @@ const Register = ({ onToggle }) => {
             </label>
             <PhoneInput
               prefix={phonePrefix}
-              onPrefixChange={(e) => setPhonePrefix(e.target.value)}
+              onPrefixChange={(value) => setPhonePrefix(value)}
               number={phoneNumber}
               onNumberChange={(e) => setPhoneNumber(e.target.value)}
             />
