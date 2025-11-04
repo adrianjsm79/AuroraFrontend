@@ -46,7 +46,7 @@ const PhoneInput = ({ prefix, onPrefixChange, number, onNumberChange, placeholde
                           }`}
                         >
                           <span className={`fi fi-${country.code.toLowerCase()} mr-2`}></span>
-                          {country.name} ({country.prefix})
+                          {country.prefix}
                         </span>
                         {selected ? (
                           <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-primary">
