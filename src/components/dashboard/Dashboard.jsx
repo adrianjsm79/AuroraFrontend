@@ -116,13 +116,13 @@ const Dashboard = () => {
         try {
             const data = await apiService.getLocations(token);
             const formattedLocations = data.map((loc) => ({
-                user_id: loc.user.id,
-                nombre: loc.user.nombre,
+                user_id: loc.device.user.id,
+                nombre: loc.device.user.nombre,
                 latitude: loc.latitude,
                 longitude: loc.longitude,
                 accuracy: loc.accuracy,
                 timestamp: loc.timestamp,
-                isCurrentUser: loc.user.id === user.id,
+                isCurrentUser: loc.device.user.id === user.id,
             }));
             setLocations(formattedLocations);
         } catch (error) {
