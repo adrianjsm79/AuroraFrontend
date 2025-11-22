@@ -62,7 +62,18 @@ const MapView = ({ locations, userLocation, devices = [], contactsDevices = [], 
         >
           {locations.map((location, index) => {
             const isCurrentUser = location.isCurrentUser;
+            const isBrowserDevice = location.isBrowserDevice;
             const position = { lat: location.latitude, lng: location.longitude };
+            
+            // Color azul para navegador, indigo para otros del usuario, colores variados para contactos
+            let markerColor;
+            if (isBrowserDevice) {
+              markerColor = '#3b82f6'; // azul
+            } else if (isCurrentUser) {
+              markerColor = '#6366f1'; // indigo
+            } else {
+              markerColor = markerColors[index % markerColors.length];
+            }
             
             return (
               <React.Fragment key={location.user_id}>
@@ -72,7 +83,7 @@ const MapView = ({ locations, userLocation, devices = [], contactsDevices = [], 
                   icon={{
                     path: window.google.maps.SymbolPath.CIRCLE,
                     scale: isCurrentUser ? 12 : 10,
-                    fillColor: isCurrentUser ? '#6366f1' : markerColors[index % markerColors.length],
+                    fillColor: markerColor,
                     fillOpacity: 1,
                     strokeColor: '#ffffff',
                     strokeWeight: isCurrentUser ? 3 : 2,
@@ -85,9 +96,9 @@ const MapView = ({ locations, userLocation, devices = [], contactsDevices = [], 
                     center={position}
                     radius={location.accuracy}
                     options={{
-                      fillColor: isCurrentUser ? '#6366f1' : markerColors[index % markerColors.length],
+                      fillColor: markerColor,
                       fillOpacity: 0.1,
-                      strokeColor: isCurrentUser ? '#6366f1' : markerColors[index % markerColors.length],
+                      strokeColor: markerColor,
                       strokeOpacity: 0.3,
                       strokeWeight: 1,
                     }}
@@ -187,36 +198,58 @@ const MapView = ({ locations, userLocation, devices = [], contactsDevices = [], 
               }}
               onCloseClick={() => setSelectedMarker(null)}
             >
-              <div className="p-3 max-w-xs">
-                <h3 className="font-bold text-indigo-600 mb-1">
-                  {selectedMarker.isDevice ? `${selectedMarker.user?.nombre || 'Dispositivo'} - ${selectedMarker.name}` : selectedMarker.nombre}
+              <div className="p-3 max-w-xs bg-white rounded-lg shadow-md">
+                <h3 className="font-bold text-indigo-600 mb-2">
+                  {selectedMarker.nombre}
+                  {selectedMarker.isBrowserDevice && ' 🌐'}
                   {selectedMarker.isCurrentUser && ' (Tú)'}
                 </h3>
-                {selectedMarker.isDevice && (
-                  <p className="text-xs text-gray-600 mb-1">Dispositivo: {selectedMarker.name}</p>
+                
+                {selectedMarker.deviceName && (
+                  <p className="text-xs text-gray-700 mb-1">
+                    <strong>Dispositivo:</strong> {selectedMarker.deviceName}
+                  </p>
                 )}
-                <p className="text-xs text-gray-600">
-                  {new Date(selectedMarker.last_seen || selectedMarker.timestamp).toLocaleString('es-ES', {
+                
+                {selectedMarker.email && (
+                  <p className="text-xs text-gray-600 mb-1">
+                    <strong>Email:</strong> {selectedMarker.email}
+                  </p>
+                )}
+                
+                {selectedMarker.numero && (
+                  <p className="text-xs text-gray-600 mb-1">
+                    <strong>Teléfono:</strong> {selectedMarker.numero}
+                  </p>
+                )}
+                
+                <p className="text-xs text-gray-600 mb-2">
+                  <strong>Última actualización:</strong> {new Date(selectedMarker.timestamp).toLocaleString('es-ES', {
                     hour: '2-digit',
                     minute: '2-digit',
                     day: '2-digit',
-                    month: 'short'
+                    month: 'short',
+                    year: 'numeric'
                   })}
                 </p>
-                {(selectedMarker.accuracy || selectedMarker.is_visible_to_contacts !== undefined) && (
-                  <div className="mt-2 pt-2 border-t border-gray-200">
-                    {selectedMarker.accuracy && (
-                      <p className="text-xs text-gray-500">
-                        Precisión: ±{Math.round(selectedMarker.accuracy)}m
-                      </p>
-                    )}
-                    {selectedMarker.is_visible_to_contacts !== undefined && (
-                      <p className="text-xs text-gray-500">
-                        Visible: {selectedMarker.is_visible_to_contacts ? 'Sí' : 'No'}
-                      </p>
-                    )}
-                  </div>
-                )}
+                
+                <div className="pt-2 border-t border-gray-200 space-y-1">
+                  {selectedMarker.accuracy && (
+                    <p className="text-xs text-gray-500">
+                      <strong>Precisión:</strong> ±{Math.round(selectedMarker.accuracy)}m
+                    </p>
+                  )}
+                  {selectedMarker.isVisible !== undefined && (
+                    <p className="text-xs text-gray-500">
+                      <strong>Visible para contactos:</strong> {selectedMarker.isVisible ? '✓ Sí' : '✗ No'}
+                    </p>
+                  )}
+                  {selectedMarker.isLost && (
+                    <p className="text-xs text-red-600 font-semibold">
+                      ⚠️ Reportado como perdido
+                    </p>
+                  )}
+                </div>
               </div>
             </InfoWindow>
           )}
@@ -253,8 +286,12 @@ const MapView = ({ locations, userLocation, devices = [], contactsDevices = [], 
         <p className="font-bold text-sm text-gray-800 dark:text-gray-200 mb-3">Leyenda</p>
         <div className="space-y-2">
           <div className="flex items-center space-x-2">
+            <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce"></div>
+            <span className="text-xs text-gray-700 dark:text-gray-300">Tu navegador 🌐</span>
+          </div>
+          <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-indigo-600 rounded-full"></div>
-            <span className="text-xs text-gray-700 dark:text-gray-300">Tu ubicación</span>
+            <span className="text-xs text-gray-700 dark:text-gray-300">Tu ubicación/dispositivo</span>
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-indigo-500 rounded-full opacity-50"></div>
@@ -266,7 +303,7 @@ const MapView = ({ locations, userLocation, devices = [], contactsDevices = [], 
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-cyan-500 rounded-full"></div>
-            <span className="text-xs text-gray-700 dark:text-gray-300">Tu dispositivo</span>
+            <span className="text-xs text-gray-700 dark:text-gray-300">Tu dispositivo móvil</span>
           </div>
         </div>
       </div>

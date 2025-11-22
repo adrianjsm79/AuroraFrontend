@@ -118,11 +118,18 @@ const Dashboard = () => {
             const formattedLocations = data.map((loc) => ({
                 user_id: loc.device.user.id,
                 nombre: loc.device.user.nombre,
+                email: loc.device.user.email,
+                numero: loc.device.user.numero,
                 latitude: loc.latitude,
                 longitude: loc.longitude,
                 accuracy: loc.accuracy,
                 timestamp: loc.timestamp,
                 isCurrentUser: loc.device.user.id === user.id,
+                isBrowserDevice: loc.is_browser_device,
+                deviceName: loc.device.name,
+                deviceIdentifier: loc.device.device_identifier,
+                isLost: loc.device.is_lost,
+                isVisible: loc.device.is_visible_to_contacts,
             }));
             setLocations(formattedLocations);
         } catch (error) {
