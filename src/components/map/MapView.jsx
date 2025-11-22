@@ -179,7 +179,6 @@ const MapView = ({ locations, userLocation, devices = [], contactsDevices = [], 
             );
           })}
 
-          {selectedMarker && (
             <InfoWindow
               position={{ 
                 lat: selectedMarker.latitude, 
@@ -189,7 +188,7 @@ const MapView = ({ locations, userLocation, devices = [], contactsDevices = [], 
             >
               <div className="p-3 max-w-xs">
                 <h3 className="font-bold text-indigo-600 mb-1">
-                  {selectedMarker.isDevice ? `${selectedMarker.user.nombre} - ${selectedMarker.name}` : selectedMarker.nombre}
+                  {selectedMarker.isDevice ? `${selectedMarker.user?.nombre || 'Dispositivo'} - ${selectedMarker.name}` : selectedMarker.nombre}
                   {selectedMarker.isCurrentUser && ' (Tú)'}
                 </h3>
                 {selectedMarker.isDevice && (
@@ -240,7 +239,7 @@ const MapView = ({ locations, userLocation, devices = [], contactsDevices = [], 
                 />
                 <div className="text-xs flex-1 min-w-0">
                   <p className="font-semibold text-gray-800 dark:text-gray-200 truncate">{device.name}</p>
-                  <p className="text-gray-600 dark:text-gray-400 truncate">{device.user.nombre}</p>
+                  <p className="text-gray-600 dark:text-gray-400 truncate">{device.user?.nombre || 'Desconocido'}</p>
                 </div>
               </div>
             ))}
