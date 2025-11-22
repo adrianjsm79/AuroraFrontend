@@ -8,14 +8,30 @@ import Sidebar from '../layout/Sidebar';
 import HomeView from './HomeView';
 import MapPage from './MapPage';
 import ContactsView from './ContactsView';
+import DevicesView from './DevicesView';
 import AboutView from './AboutView';
 
 const Dashboard = () => {
-    const { user, token, logout } = useAuth();
+    const { 
+        user, 
+        token, 
+        logout,
+        trustedContacts,
+        receivedContacts,
+        devices,
+        contactsDevices,
+        addTrustedContact,
+        removeTrustedContact,
+        updateDeviceVisibility,
+        deleteDevice,
+        fetchTrustedContacts,
+        fetchReceivedContacts,
+        fetchDevices,
+        fetchContactsDevices
+    } = useAuth();
     const [currentView, setCurrentView] = useState('home');
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [locations, setLocations] = useState([]);
-    const [trustedContacts, setTrustedContacts] = useState([]);
     const [userLocation, setUserLocation] = useState(null);
     const [showAddContact, setShowAddContact] = useState(false);
     const [locationVisible, setLocationVisible] = useState(true);
@@ -24,7 +40,6 @@ const Dashboard = () => {
     const watchId = useRef(null);
 
     useEffect(() => {
-        fetchTrustedContacts();
         initializeLocation();
         connectWebSocket();
 
@@ -81,6 +96,7 @@ const Dashboard = () => {
             console.error('Error enviando ubicación:', error);
         }
     };
+
     const updateLocationInList = (locationData) => {
         setLocations((prev) => {
             const filtered = prev.filter((loc) => loc.user_id !== locationData.user_id);
@@ -95,14 +111,7 @@ const Dashboard = () => {
             }];
         });
     };
-    const fetchTrustedContacts = async () => {
-        try {
-            const data = await apiService.getTrustedContacts(token);
-            setTrustedContacts(data);
-        } catch (error) {
-            console.error('Error obteniendo contactos:', error);
-        }
-    };
+
     const fetchLocations = async () => {
         try {
             const data = await apiService.getLocations(token);
@@ -120,41 +129,26 @@ const Dashboard = () => {
             console.error('Error obteniendo ubicaciones:', error);
         }
     };
+
     useEffect(() => {
         if (currentView === 'map') {
             fetchLocations();
         }
     }, [currentView]);
-    const addTrustedContact = async (fullNumber) => {
-        if (!fullNumber.trim()) return;
-        try {
-            await apiService.addTrustedContact(token, fullNumber);
-            setShowAddContact(false);
-            fetchTrustedContacts();
-        } catch (error) {
-            alert(error.message);
-        }
-    };
-    const removeTrustedContact = async (contactId) => {
-        if (!window.confirm('¿Estás seguro de eliminar este contacto?')) return;
-        try {
-            await apiService.removeTrustedContact(token, contactId);
-            fetchTrustedContacts();
-        } catch (error) {
-            console.error('Error eliminando contacto:', error);
-        }
-    };
+
     const toggleLocationVisibility = () => {
         setLocationVisible(!locationVisible);
         if (!locationVisible && userLocation) {
             sendLocationToBackend(userLocation);
         }
     };
+
     const centerOnUserLocation = () => {
         if (userLocation) {
             setCurrentView('map');
         }
     };
+
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
             <Header
@@ -193,6 +187,8 @@ const Dashboard = () => {
                         locations={locations}
                         userLocation={userLocation}
                         trustedContacts={trustedContacts}
+                        devices={devices}
+                        contactsDevices={contactsDevices}
                         fetchLocations={fetchLocations}
                     />
                 )}
@@ -200,10 +196,19 @@ const Dashboard = () => {
                 {currentView === 'contacts' && (
                     <ContactsView
                         trustedContacts={trustedContacts}
+                        receivedContacts={receivedContacts}
                         showAddContact={showAddContact}
                         setShowAddContact={setShowAddContact}
                         addTrustedContact={addTrustedContact}
                         removeTrustedContact={removeTrustedContact}
+                    />
+                )}
+
+                {currentView === 'devices' && (
+                    <DevicesView
+                        devices={devices}
+                        updateDeviceVisibility={updateDeviceVisibility}
+                        deleteDevice={deleteDevice}
                     />
                 )}
 
@@ -212,4 +217,5 @@ const Dashboard = () => {
         </div>
     );
 };
+
 export default Dashboard;

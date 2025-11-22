@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigation } from 'lucide-react';
 import MapView from '../map/MapView';
 
-const MapPage = ({ locations, userLocation, trustedContacts, fetchLocations }) => {
+const MapPage = ({ locations, userLocation, trustedContacts, devices = [], contactsDevices = [], fetchLocations }) => {
   return (
     <div className="max-w-7xl mx-auto">
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 mb-6">
@@ -10,7 +10,7 @@ const MapPage = ({ locations, userLocation, trustedContacts, fetchLocations }) =
           <div>
             <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200">Mapa de Ubicaciones</h2>
             <p className="text-gray-600 dark:text-gray-400 mt-1">
-              Visualiza tu ubicación y la de tus {trustedContacts.length} contacto{trustedContacts.length !== 1 ? 's' : ''}
+              Visualiza tu ubicación, la de tus {trustedContacts.length} contacto{trustedContacts.length !== 1 ? 's' : ''} y tus dispositivos
             </p>
           </div>
           <button
@@ -27,20 +27,30 @@ const MapPage = ({ locations, userLocation, trustedContacts, fetchLocations }) =
         <MapView 
           locations={locations} 
           userLocation={userLocation}
+          devices={devices}
+          contactsDevices={contactsDevices}
         />
       </div>
 
       {/* Leyenda */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 mt-6">
         <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-4">Leyenda</h3>
-        <div className="flex flex-wrap gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex items-center space-x-2">
             <div className="w-4 h-4 bg-indigo-600 rounded-full animate-bounce"></div>
-            <span className="text-sm text-gray-700 dark:text-gray-300">Tu ubicación</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300">Tu ubicación del navegador</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 bg-purple-600 rounded-full"></div>
-            <span className="text-sm text-gray-700 dark:text-gray-300">Contactos de confianza</span>
+            <div className="w-4 h-4 bg-indigo-500 rounded-full opacity-50"></div>
+            <span className="text-sm text-gray-700 dark:text-gray-300">Ubicación de contacto</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-4 h-4 bg-cyan-500 rounded-full"></div>
+            <span className="text-sm text-gray-700 dark:text-gray-300">Tu dispositivo</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-4 h-4 bg-purple-500 rounded-full"></div>
+            <span className="text-sm text-gray-700 dark:text-gray-300">Dispositivo de contacto</span>
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-4 h-4 border-2 border-indigo-400 rounded-full bg-indigo-50"></div>

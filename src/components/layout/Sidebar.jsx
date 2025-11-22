@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Navigation, Users, Info, Sun, Moon } from 'lucide-react';
+import { MapPin, Navigation, Users, Smartphone, Info, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 
 const Sidebar = ({ sidebarOpen, currentView, setCurrentView, setSidebarOpen, user, trustedContacts, locationVisible }) => {
@@ -8,6 +8,7 @@ const Sidebar = ({ sidebarOpen, currentView, setCurrentView, setSidebarOpen, use
   const menuItems = [
     { id: 'home', label: 'Inicio', icon: MapPin },
     { id: 'map', label: 'Mapa', icon: Navigation },
+    { id: 'devices', label: 'Dispositivos', icon: Smartphone },
     { id: 'contacts', label: 'Contactos', icon: Users, badge: trustedContacts.length },
     { id: 'about', label: 'Sobre Nosotros', icon: Info },
   ];
