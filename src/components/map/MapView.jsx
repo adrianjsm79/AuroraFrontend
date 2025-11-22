@@ -179,6 +179,7 @@ const MapView = ({ locations, userLocation, devices = [], contactsDevices = [], 
             );
           })}
 
+          {selectedMarker && (
             <InfoWindow
               position={{ 
                 lat: selectedMarker.latitude, 
