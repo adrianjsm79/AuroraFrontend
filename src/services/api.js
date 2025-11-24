@@ -51,10 +51,21 @@ export const apiService = {
   },
 
   async getContactsDevices(token) {
-    const response = await fetch(`${API_URL}/devices/contacts_devices/`, {
-      headers: { 'Authorization': `Bearer ${token}`, 'ngrok-skip-browser-warning': 'true' },
-    });
-    return response.json();
+    try {
+      const response = await fetch(`${API_URL}/devices/contacts_devices/`, {
+        headers: { 'Authorization': `Bearer ${token}`, 'ngrok-skip-browser-warning': 'true' },
+      });
+      
+      if (!response.ok) {
+        console.warn('Error fetching contacts devices:', response.status);
+        return []; // Devuelve array vacío en caso de error
+      }
+      
+      return response.json();
+    } catch (error) {
+      console.warn('Error parsing contacts devices:', error);
+      return []; // Devuelve array vacío si hay error de parsing
+    }
   },
 
   async updateDeviceVisibility(token, deviceId, isVisible) {

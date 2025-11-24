@@ -74,9 +74,10 @@ export const AuthProvider = ({ children }) => {
   const fetchContactsDevices = async () => {
     try {
       const data = await apiService.getContactsDevices(token);
-      setContactsDevices(data);
+      setContactsDevices(data || []);
     } catch (error) {
-      console.error('Error fetching contacts devices:', error);
+      console.warn('Error fetching contacts devices:', error);
+      setContactsDevices([]);
     }
   };
 
