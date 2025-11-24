@@ -50,7 +50,7 @@ const ContactsView = ({
           {isReceived ? (
             <p className="text-xs text-green-600 dark:text-green-400 font-semibold mt-1">✓ Pueden ver tu ubicación en tiempo real</p>
           ) : (
-            <p className="text-xs text-blue-600 dark:text-blue-400 font-semibold mt-1">→ Tú ves su ubicación (si ellos te dan confianza)</p>
+            <p className="text-xs text-blue-600 dark:text-blue-400 font-semibold mt-1">→ Pueden ver tu ubicación (porque los agregaste)</p>
           )}
         </div>
       </div>
@@ -72,8 +72,8 @@ const ContactsView = ({
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200">Siguiendo Contactos</h2>
-            <p className="text-gray-600 dark:text-gray-400 mt-1">Contactos que agregaste. Podrás ver su ubicación solo si ellos te agregan como confianza.</p>
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200">Mis Contactos</h2>
+            <p className="text-gray-600 dark:text-gray-400 mt-1">Personas a quienes les compartiste tu ubicación. Ellos pueden verla en tiempo real.</p>
           </div>
           <button
             onClick={() => setShowAddContact(!showAddContact)}
@@ -140,7 +140,7 @@ const ContactsView = ({
               </div>
               <div>
                 <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200">Mis Seguidores</h2>
-                <p className="text-gray-600 dark:text-gray-400 mt-1">Personas que pueden ver tu ubicación en tiempo real. Pueden eliminar su confianza pero TÚ no puedes eliminarlos.</p>
+                <p className="text-gray-600 dark:text-gray-400 mt-1">Personas que te agregaron. Tú puedes ver su ubicación en tiempo real.</p>
               </div>
             </div>
           </div>
@@ -158,20 +158,20 @@ const ContactsView = ({
       {/* Info Box */}
       <div className="bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20 rounded-2xl border-2 border-primary/30 p-6">
         <h3 className="font-bold text-xl text-gray-800 dark:text-gray-200 mb-3 flex items-center">
-          <span className="mr-2">🔒</span> Cómo Funciona la Privacidad en Aurora
+          <span className="mr-2">🔒</span> Cómo Funciona el Compartir de Ubicación
         </h3>
         <div className="space-y-2 text-gray-700 dark:text-gray-300 text-sm">
           <p>
-            <span className="font-semibold text-primary">📍 Regla Fundamental:</span> "Solo si yo te doy confianza, tú puedes ver mi ubicación"
+            <span className="font-semibold text-primary">📍 Regla Fundamental:</span> "Si agrego a alguien, esa persona puede ver mi ubicación"
           </p>
           <p>
-            <span className="font-semibold text-blue-600">→ Siguiendo:</span> Contactos que agregaste. Tu ubicación será visible solo si ellos te agregan como confianza.
+            <span className="font-semibold text-blue-600">→ Mis Contactos:</span> Personas a quienes les compartiste tu ubicación. Ellos pueden verte en tiempo real en el mapa.
           </p>
           <p>
-            <span className="font-semibold text-green-600">✓ Seguidores:</span> Personas que te agregaron. Ven tu ubicación en tiempo real. Ellos pueden eliminar su confianza cuando quieran.
+            <span className="font-semibold text-green-600">✓ Mis Seguidores:</span> Personas que te agregaron a ellos. Tú puedes verlos en tiempo real en el mapa.
           </p>
           <p>
-            <span className="font-semibold text-red-600">⚠️ Importante:</span> No puedes eliminar a tus seguidores, solo ellos pueden dejar de seguirte. Administra tus dispositivos para controlar qué ubicaciones compartir.
+            <span className="font-semibold text-red-600">⚠️ Importante:</span> Puedes eliminar contactos en cualquier momento. Administra tu privacidad compartiendo solo con personas de confianza.
           </p>
         </div>
       </div>
