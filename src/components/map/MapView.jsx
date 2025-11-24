@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { GoogleMap, useLoadScript, Marker, InfoWindow, Polyline, Circle } from '@react-google-maps/api';
 import { GOOGLE_MAPS_API_KEY, MAP_CONFIG } from '../../config';
+import { Maximize2, Minimize2, X, Navigation2, Clock, Zap } from 'lucide-react';
 
 // Función para crear un icono SVG con un ícono de persona dentro
 const createUserLocationIcon = () => {
@@ -62,6 +63,7 @@ const MapView = ({
   const [routeInfo, setRouteInfo] = useState(null); // Información de la ruta (distancia, tiempo, etc)
   const [hoveredMarker, setHoveredMarker] = useState(null);
   const [initialMapCentered, setInitialMapCentered] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false); // Estado para pantalla completa
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
@@ -311,75 +313,182 @@ const MapView = ({
   };
 
   return (
-    <GoogleMap
-      mapContainerStyle={{ width: '100%', height: '100%' }}
-      zoom={MAP_CONFIG.defaultZoom}
-      options={MAP_CONFIG.options}
-      onLoad={onLoad}
-    >
-      {/* Pin azul: Ubicación del navegador del usuario */}
-      {userLocation && (
-        <Marker
-          position={{
-            lat: userLocation.latitude,
-            lng: userLocation.longitude
-          }}
-          icon={createUserLocationIcon()}
-          animation={window.google.maps.Animation.BOUNCE}
-          title="Tu ubicación (Navegador)"
-        />
-      )}
+    <div className="w-full h-full relative">
+      {/* GoogleMap siempre a pantalla completa */}
+      <GoogleMap
+        mapContainerStyle={{ width: '100%', height: '100%' }}
+        zoom={MAP_CONFIG.defaultZoom}
+        options={MAP_CONFIG.options}
+        onLoad={onLoad}
+      >
+        {/* Pin azul: Ubicación del navegador del usuario */}
+        {userLocation && (
+          <Marker
+            position={{
+              lat: userLocation.latitude,
+              lng: userLocation.longitude
+            }}
+            icon={createUserLocationIcon()}
+            animation={window.google.maps.Animation.BOUNCE}
+            title="Tu ubicación (Navegador)"
+          />
+        )}
 
-      {/* Pins verdes: Dispositivos de seguidores (contactos que dieron confianza) */}
-      {contactsMarkers}
+        {/* Pins verdes: Dispositivos de seguidores (contactos que dieron confianza) */}
+        {contactsMarkers}
 
-      {/* Pins morados: Dispositivos del usuario */}
-      {userMarkers}
+        {/* Pins morados: Dispositivos del usuario */}
+        {userMarkers}
 
-      {/* Pin rojo: Dispositivos perdidos del usuario */}
-      {lostUserMarkers}
+        {/* Pin rojo: Dispositivos perdidos del usuario */}
+        {lostUserMarkers}
 
-      {/* Pin amarillo: Dispositivos perdidos de seguidores */}
-      {lostContactsMarkers}
+        {/* Pin amarillo: Dispositivos perdidos de seguidores */}
+        {lostContactsMarkers}
 
-      {/* Ruta desde el pin azul al dispositivo seleccionado */}
-      {/* Primera línea: Borde blanco más grueso para efecto de contorno */}
-      {route && (
-        <Polyline
-          path={route}
-          options={{
-            strokeColor: '#ffffff',
-            strokeOpacity: 0.4,
-            strokeWeight: 6,
-            geodesic: true,
-          }}
-        />
-      )}
-      
-      {/* Segunda línea: Línea cyan principal con efecto dinámico */}
-      {route && (
-        <Polyline
-          path={route}
-          options={{
-            strokeColor: '#01D9F6',
-            strokeOpacity: 0.9,
-            strokeWeight: 3,
-            geodesic: true,
-            icons: [
-              {
-                icon: {
-                  path: 'M 0,-1 0,1',
-                  strokeOpacity: 1,
-                  scale: 4,
+        {/* Ruta desde el pin azul al dispositivo seleccionado */}
+        {/* Primera línea: Borde blanco más grueso para efecto de contorno */}
+        {route && (
+          <Polyline
+            path={route}
+            options={{
+              strokeColor: '#ffffff',
+              strokeOpacity: 0.4,
+              strokeWeight: 6,
+              geodesic: true,
+            }}
+          />
+        )}
+        
+        {/* Segunda línea: Línea cyan principal con efecto dinámico */}
+        {route && (
+          <Polyline
+            path={route}
+            options={{
+              strokeColor: '#01D9F6',
+              strokeOpacity: 0.9,
+              strokeWeight: 3,
+              geodesic: true,
+              icons: [
+                {
+                  icon: {
+                    path: 'M 0,-1 0,1',
+                    strokeOpacity: 1,
+                    scale: 4,
+                  },
+                  offset: '0',
+                  repeat: '20px',
                 },
-                offset: '0',
-                repeat: '20px',
-              },
-            ],
-          }}
-        />
+              ],
+            }}
+          />
+        )}
+      </GoogleMap>
+
+      {/* Botón de pantalla completa - Esquina superior derecha */}
+      <button
+        onClick={() => setIsFullscreen(!isFullscreen)}
+        className="absolute top-4 right-4 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg shadow-lg p-2 z-10 transition-all duration-200"
+        title={isFullscreen ? 'Salir de pantalla completa' : 'Pantalla completa'}
+      >
+        {isFullscreen ? (
+          <Minimize2 className="w-5 h-5 text-gray-800 dark:text-gray-200" />
+        ) : (
+          <Maximize2 className="w-5 h-5 text-gray-800 dark:text-gray-200" />
+        )}
+      </button>
+
+      {/* Mini-panel lateral en pantalla completa */}
+      {isFullscreen && (
+        <div className="absolute top-4 left-4 w-96 max-h-[90vh] bg-white dark:bg-gray-800 rounded-lg shadow-2xl z-10 flex flex-col overflow-hidden">
+          {/* Header del mini-panel */}
+          <div className="bg-gradient-to-r from-primary to-secondary p-4 flex items-center justify-between text-white">
+            <h3 className="font-bold text-lg">Información de Ruta</h3>
+            <button
+              onClick={() => setIsFullscreen(false)}
+              className="hover:bg-white hover:bg-opacity-20 rounded-lg p-1 transition"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Contenido del mini-panel */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            {/* Información de ruta cuando hay dispositivo seleccionado */}
+            {selectedDevice && routeInfo ? (
+              <div className="space-y-3">
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                  <h4 className="font-bold text-gray-800 dark:text-gray-200 mb-2">
+                    📍 Dispositivo Seleccionado
+                  </h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    {selectedDevice.name}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                    {selectedDevice.latitude?.toFixed(4)}, {selectedDevice.longitude?.toFixed(4)}
+                  </p>
+                </div>
+
+                {/* Información de ruta */}
+                <div className="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
+                  <div className="flex items-center space-x-2 mb-3">
+                    <Navigation2 className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                    <h5 className="font-bold text-blue-900 dark:text-blue-200">Ruta Calculada</h5>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    {/* Distancia */}
+                    {routeInfo.driving && (
+                      <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded p-2">
+                        <div className="flex items-center space-x-1">
+                          <Zap className="w-3 h-3 text-yellow-500" />
+                          <span className="text-xs text-gray-600 dark:text-gray-400">Distancia</span>
+                        </div>
+                        <span className="font-bold text-sm text-blue-600 dark:text-blue-400">
+                          {routeInfo.driving.distance}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Tiempo en carro */}
+                    {routeInfo.driving && (
+                      <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded p-2">
+                        <div className="flex items-center space-x-1">
+                          <Clock className="w-3 h-3 text-blue-500" />
+                          <span className="text-xs text-gray-600 dark:text-gray-400">En carro</span>
+                        </div>
+                        <span className="font-bold text-sm text-blue-600 dark:text-blue-400">
+                          {routeInfo.driving.duration}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Tiempo a pie */}
+                    {routeInfo.walking && (
+                      <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded p-2">
+                        <div className="flex items-center space-x-1">
+                          <Clock className="w-3 h-3 text-green-500" />
+                          <span className="text-xs text-gray-600 dark:text-gray-400">A pie</span>
+                        </div>
+                        <span className="font-bold text-sm text-green-600 dark:text-green-400">
+                          {routeInfo.walking.duration}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                <p className="text-sm">
+                  Selecciona un dispositivo en el mapa para ver información de ruta
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
       )}
-    </GoogleMap>
+    </div>
   );
 };
 
