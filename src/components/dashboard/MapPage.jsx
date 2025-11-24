@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Navigation, MapPin, Smartphone, Activity, Navigation2, Clock, Zap } from 'lucide-react';
+import { Navigation, MapPin, Smartphone, Activity, Navigation2, Clock, Zap, ChevronLeft, ChevronRight } from 'lucide-react';
 import MapView from '../map/MapView';
 
 const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], contactsDevices = [], fetchLocations }) => {
@@ -7,6 +7,7 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
   const [lastUpdateTime, setLastUpdateTime] = useState(new Date());
   const [displayTime, setDisplayTime] = useState(new Date());
   const [routeInfo, setRouteInfo] = useState(null); // Información de la ruta desde MapView
+  const [isPanelOpen, setIsPanelOpen] = useState(true); // Panel de dispositivos desplegable
 
   // Actualizar tiempo de última actualización cuando cambian los datos
   useEffect(() => {
@@ -151,86 +152,35 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 flex overflow-hidden">
+      {/* Main Content - Mapa ocupa toda la pantalla */}
+      <div className="flex-1 relative overflow-hidden">
         {/* Mapa */}
-        <div className="flex-1 relative">
-          <MapView
-            userLocation={userLocation}
-            user={user}
-            devices={visibleUserDevices}
-            lostDevices={lostUserDevices}
-            contactsDevices={visibleFollowersDevices}
-            lostContactsDevices={lostFollowersDevices}
-            selectedDevice={selectedDevice}
-            onRouteInfoChange={setRouteInfo}
-          />
-        </div>
+        <MapView
+          userLocation={userLocation}
+          user={user}
+          devices={visibleUserDevices}
+          lostDevices={lostUserDevices}
+          contactsDevices={visibleFollowersDevices}
+          lostContactsDevices={lostFollowersDevices}
+          selectedDevice={selectedDevice}
+          onRouteInfoChange={setRouteInfo}
+        />
 
-        {/* Paneles Laterales */}
-        <div className="w-80 flex flex-col bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden">
-          {/* Tabs */}
-          <div className="flex border-b border-gray-200 dark:border-gray-700">
-            <button className="flex-1 px-4 py-3 bg-primary text-white font-semibold text-sm flex items-center justify-center space-x-2">
-              <Smartphone className="w-4 h-4" />
-              <span>Mis Dispositivos</span>
-            </button>
-            <button className="flex-1 px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 font-semibold text-sm flex items-center justify-center space-x-2 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
-              <Smartphone className="w-4 h-4" />
-              <span>Seguidores</span>
-            </button>
+        {/* Panel Lateral Desplegable - Dispositivos */}
+        <div
+          className={`fixed left-0 top-20 bottom-0 w-80 bg-white dark:bg-gray-800 shadow-2xl z-30 transition-all duration-300 overflow-hidden flex flex-col ${
+            isPanelOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          {/* Header del Panel */}
+          <div className="bg-gradient-to-r from-primary to-secondary text-white p-4 flex items-center justify-between">
+            <h3 className="font-bold text-lg flex items-center space-x-2">
+              <Smartphone className="w-5 h-5" />
+              <span>Dispositivos</span>
+            </h3>
           </div>
 
-          {/* Card de información de ruta - Se muestra cuando hay dispositivo seleccionado */}
-          {selectedDevice && routeInfo && (
-            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/30 dark:to-cyan-900/30 border-b border-blue-200 dark:border-blue-800 p-4 space-y-3">
-              <div className="flex items-center space-x-2 mb-3">
-                <Navigation2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                <h3 className="font-bold text-blue-900 dark:text-blue-200">Ruta Calculada</h3>
-              </div>
-              
-              <div className="space-y-2">
-                {/* Distancia */}
-                {routeInfo.driving && (
-                  <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
-                    <div className="flex items-center space-x-2">
-                      <Zap className="w-4 h-4 text-yellow-500" />
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Distancia</span>
-                    </div>
-                    <span className="font-bold text-blue-600 dark:text-blue-400">{routeInfo.driving.distance}</span>
-                  </div>
-                )}
-
-                {/* Tiempo en carro */}
-                {routeInfo.driving && (
-                  <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
-                    <div className="flex items-center space-x-2">
-                      <Clock className="w-4 h-4 text-blue-500" />
-                      <span className="text-sm text-gray-600 dark:text-gray-400">En carro</span>
-                    </div>
-                    <span className="font-bold text-blue-600 dark:text-blue-400">{routeInfo.driving.duration}</span>
-                  </div>
-                )}
-
-                {/* Tiempo a pie */}
-                {routeInfo.walking && (
-                  <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
-                    <div className="flex items-center space-x-2">
-                      <Clock className="w-4 h-4 text-green-500" />
-                      <span className="text-sm text-gray-600 dark:text-gray-400">A pie</span>
-                    </div>
-                    <span className="font-bold text-green-600 dark:text-green-400">{routeInfo.walking.duration}</span>
-                  </div>
-                )}
-              </div>
-
-              <p className="text-xs text-gray-500 dark:text-gray-400 text-center italic">
-                Se actualiza en tiempo real
-              </p>
-            </div>
-          )}
-
-          {/* Lista de Dispositivos */}
+          {/* Contenido del Panel */}
           <div className="flex-1 overflow-y-auto">
             <div className="p-4 space-y-4">
               {/* Dispositivos Propios Visibles */}
@@ -238,7 +188,7 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
                 <div>
                   <h3 className="font-bold text-gray-800 dark:text-gray-200 text-sm mb-3 flex items-center space-x-2">
                     <div className="w-3 h-3 rounded-full bg-purple-500" />
-                    <span>Dispositivos Activos ({visibleUserDevices.length})</span>
+                    <span>Activos ({visibleUserDevices.length})</span>
                   </h3>
                   <div className="space-y-2">
                     {visibleUserDevices.map(device => (
@@ -253,7 +203,7 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
                 <div>
                   <h3 className="font-bold text-gray-800 dark:text-gray-200 text-sm mb-3 flex items-center space-x-2">
                     <div className="w-3 h-3 rounded-full bg-red-500" />
-                    <span>Dispositivos Perdidos ({lostUserDevices.length})</span>
+                    <span>Perdidos ({lostUserDevices.length})</span>
                   </h3>
                   <div className="space-y-2">
                     {lostUserDevices.map(device => (
@@ -268,7 +218,7 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
                 <div>
                   <h3 className="font-bold text-gray-800 dark:text-gray-200 text-sm mb-3 flex items-center space-x-2">
                     <div className="w-3 h-3 rounded-full bg-green-500" />
-                    <span>Seguidores Activos ({visibleFollowersDevices.length})</span>
+                    <span>Seguidores ({visibleFollowersDevices.length})</span>
                   </h3>
                   <div className="space-y-2">
                     {visibleFollowersDevices.map(device => (
@@ -283,7 +233,7 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
                 <div>
                   <h3 className="font-bold text-gray-800 dark:text-gray-200 text-sm mb-3 flex items-center space-x-2">
                     <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                    <span>Seguidores en Peligro ({lostFollowersDevices.length})</span>
+                    <span>En Peligro ({lostFollowersDevices.length})</span>
                   </h3>
                   <div className="space-y-2">
                     {lostFollowersDevices.map(device => (
@@ -297,40 +247,118 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
                 <div className="text-center py-8">
                   <Smartphone className="w-12 h-12 text-gray-400 mx-auto mb-3" />
                   <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    No hay dispositivos para mostrar
+                    No hay dispositivos
                   </p>
                 </div>
               )}
             </div>
           </div>
+        </div>
 
-          {/* Leyenda Compacta */}
-          <div className="border-t border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-700/50 text-xs space-y-2">
-            <div className="font-semibold text-gray-800 dark:text-gray-200 mb-3">Leyenda de Colores</div>
-            <div className="space-y-1">
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 rounded-full bg-blue-500" />
-                <span>Tu ubicación (navegador)</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 rounded-full bg-purple-500" />
-                <span>Tus dispositivos</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 rounded-full bg-green-500" />
-                <span>Dispositivos de seguidores</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 rounded-full bg-red-500" />
-                <span>Tus dispositivos perdidos</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                <span>dispositivos perdidos de seguidores</span>
-              </div>
+        {/* Botón Toggle Panel */}
+        <button
+          onClick={() => setIsPanelOpen(!isPanelOpen)}
+          className="fixed left-0 top-24 z-40 bg-primary hover:bg-secondary text-white p-2 rounded-r-lg shadow-lg transition-all"
+          title={isPanelOpen ? 'Cerrar panel' : 'Abrir panel'}
+        >
+          {isPanelOpen ? (
+            <ChevronLeft className="w-5 h-5" />
+          ) : (
+            <ChevronRight className="w-5 h-5" />
+          )}
+        </button>
+
+        {/* Leyenda - Esquina inferior izquierda */}
+        <div className="fixed bottom-4 left-4 bg-white dark:bg-gray-800 rounded-lg shadow-2xl p-4 z-20 max-w-xs">
+          <div className="font-semibold text-gray-800 dark:text-gray-200 mb-3 text-sm">
+            Leyenda de Colores
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center space-x-2 text-xs">
+              <div className="w-3 h-3 rounded-full bg-blue-500" />
+              <span className="text-gray-700 dark:text-gray-300">Tu ubicación</span>
+            </div>
+            <div className="flex items-center space-x-2 text-xs">
+              <div className="w-3 h-3 rounded-full bg-purple-500" />
+              <span className="text-gray-700 dark:text-gray-300">Tus dispositivos</span>
+            </div>
+            <div className="flex items-center space-x-2 text-xs">
+              <div className="w-3 h-3 rounded-full bg-green-500" />
+              <span className="text-gray-700 dark:text-gray-300">Dispositivos de seguidores</span>
+            </div>
+            <div className="flex items-center space-x-2 text-xs">
+              <div className="w-3 h-3 rounded-full bg-red-500" />
+              <span className="text-gray-700 dark:text-gray-300">Dispositivos perdidos</span>
+            </div>
+            <div className="flex items-center space-x-2 text-xs">
+              <div className="w-3 h-3 rounded-full bg-yellow-500" />
+              <span className="text-gray-700 dark:text-gray-300">Seguidores en peligro</span>
             </div>
           </div>
         </div>
+
+        {/* Panel de Información de Ruta - Flotante (esquina inferior derecha) */}
+        {selectedDevice && routeInfo && (
+          <div className="fixed bottom-4 right-4 bg-white dark:bg-gray-800 rounded-lg shadow-2xl p-4 z-20 w-80 max-h-96 overflow-y-auto">
+            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/30 dark:to-cyan-900/30 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
+              <div className="flex items-center space-x-2 mb-3">
+                <Navigation2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                <h3 className="font-bold text-blue-900 dark:text-blue-200">Ruta Calculada</h3>
+              </div>
+
+              {/* Dispositivo Seleccionado */}
+              <div className="bg-white dark:bg-gray-700 rounded p-3 mb-3">
+                <p className="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate">
+                  📍 {selectedDevice.name}
+                </p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                  {selectedDevice.latitude?.toFixed(4)}, {selectedDevice.longitude?.toFixed(4)}
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                {/* Distancia */}
+                {routeInfo.driving && (
+                  <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded p-2">
+                    <div className="flex items-center space-x-1">
+                      <Zap className="w-3 h-3 text-yellow-500" />
+                      <span className="text-xs text-gray-600 dark:text-gray-400">Distancia</span>
+                    </div>
+                    <span className="font-bold text-sm text-blue-600 dark:text-blue-400">
+                      {routeInfo.driving.distance}
+                    </span>
+                  </div>
+                )}
+
+                {/* Tiempo en carro */}
+                {routeInfo.driving && (
+                  <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded p-2">
+                    <div className="flex items-center space-x-1">
+                      <Clock className="w-3 h-3 text-blue-500" />
+                      <span className="text-xs text-gray-600 dark:text-gray-400">En carro</span>
+                    </div>
+                    <span className="font-bold text-sm text-blue-600 dark:text-blue-400">
+                      {routeInfo.driving.duration}
+                    </span>
+                  </div>
+                )}
+
+                {/* Tiempo a pie */}
+                {routeInfo.walking && (
+                  <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded p-2">
+                    <div className="flex items-center space-x-1">
+                      <Clock className="w-3 h-3 text-green-500" />
+                      <span className="text-xs text-gray-600 dark:text-gray-400">A pie</span>
+                    </div>
+                    <span className="font-bold text-sm text-green-600 dark:text-green-400">
+                      {routeInfo.walking.duration}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
