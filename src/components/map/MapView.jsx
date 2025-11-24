@@ -55,6 +55,16 @@ const MapView = ({
     }
   }, [selectedDevice, userLocation, map]);
 
+  // Cuando se selecciona un dispositivo, hacer zoom a él sin mover innecesariamente
+  useEffect(() => {
+    if (selectedDevice && map && userLocation) {
+      const bounds = new window.google.maps.LatLngBounds();
+      bounds.extend({ lat: userLocation.latitude, lng: userLocation.longitude });
+      bounds.extend({ lat: selectedDevice.latitude, lng: selectedDevice.longitude });
+      map.fitBounds(bounds, { padding: 100 });
+    }
+  }, [selectedDevice, map, userLocation]);
+
   // Componente para renderizar un dispositivo como marcador - Memoizado para evitar re-renders innecesarios
   const DeviceMarker = useCallback(({ device, color, type }) => {
     const position = { lat: device.latitude, lng: device.longitude };
@@ -166,16 +176,6 @@ const MapView = ({
     lat: userLocation?.latitude || MAP_CONFIG.defaultCenter.lat, 
     lng: userLocation?.longitude || MAP_CONFIG.defaultCenter.lng 
   };
-
-  // Cuando se selecciona un dispositivo, hacer zoom a él sin mover innecesariamente
-  useEffect(() => {
-    if (selectedDevice && map) {
-      const bounds = new window.google.maps.LatLngBounds();
-      bounds.extend({ lat: userLocation.latitude, lng: userLocation.longitude });
-      bounds.extend({ lat: selectedDevice.latitude, lng: selectedDevice.longitude });
-      map.fitBounds(bounds, { padding: 100 });
-    }
-  }, [selectedDevice, map, userLocation]);
 
   return (
     <GoogleMap
