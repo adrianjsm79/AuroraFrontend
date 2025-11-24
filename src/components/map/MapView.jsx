@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { GoogleMap, useLoadScript, Marker, InfoWindow, Polyline, Circle } from '@react-google-maps/api';
 import { GOOGLE_MAPS_API_KEY, MAP_CONFIG } from '../../config';
-import { Maximize2, Minimize2, X, Navigation2, Clock, Zap } from 'lucide-react';
+import { X, Navigation2, Clock, Zap } from 'lucide-react';
 
 // Función para crear un icono SVG con un ícono de persona dentro
 const createUserLocationIcon = () => {
@@ -63,7 +63,17 @@ const MapView = ({
   const [routeInfo, setRouteInfo] = useState(null); // Información de la ruta (distancia, tiempo, etc)
   const [hoveredMarker, setHoveredMarker] = useState(null);
   const [initialMapCentered, setInitialMapCentered] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false); // Estado para pantalla completa
+  const [isFullscreen, setIsFullscreen] = useState(false); // Detecta pantalla completa del navegador
+
+  // Detectar cuando se entra/sale de pantalla completa
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
@@ -307,18 +317,21 @@ const MapView = ({
     );
   }
 
-  const markerPosition = { 
-    lat: userLocation?.latitude || MAP_CONFIG.defaultCenter.lat, 
-    lng: userLocation?.longitude || MAP_CONFIG.defaultCenter.lng 
+  const mapOptions = {
+    ...MAP_CONFIG.options,
+    fullscreenControl: true, // Habilitar botón de pantalla completa nativo
+    fullscreenControlOptions: {
+      position: window.google.maps.ControlPosition.TOP_RIGHT,
+    },
   };
 
   return (
-    <div className="w-full h-full relative">
-      {/* GoogleMap siempre a pantalla completa */}
+    <div className="w-full h-full relative" id="map-container">
+      {/* GoogleMap con botón de pantalla completa nativo */}
       <GoogleMap
         mapContainerStyle={{ width: '100%', height: '100%' }}
         zoom={MAP_CONFIG.defaultZoom}
-        options={MAP_CONFIG.options}
+        options={mapOptions}
         onLoad={onLoad}
       >
         {/* Pin azul: Ubicación del navegador del usuario */}
@@ -385,34 +398,27 @@ const MapView = ({
         )}
       </GoogleMap>
 
-      {/* Botón de pantalla completa - Esquina superior derecha */}
-      <button
-        onClick={() => setIsFullscreen(!isFullscreen)}
-        className="absolute top-4 right-4 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg shadow-lg p-2 z-10 transition-all duration-200"
-        title={isFullscreen ? 'Salir de pantalla completa' : 'Pantalla completa'}
-      >
-        {isFullscreen ? (
-          <Minimize2 className="w-5 h-5 text-gray-800 dark:text-gray-200" />
-        ) : (
-          <Maximize2 className="w-5 h-5 text-gray-800 dark:text-gray-200" />
-        )}
-      </button>
-
-      {/* Mini-panel lateral en pantalla completa */}
+      {/* UI personalizado en modo fullscreen */}
       {isFullscreen && (
-        <div className="absolute top-4 left-4 w-96 max-h-[90vh] bg-white dark:bg-gray-800 rounded-lg shadow-2xl z-10 flex flex-col overflow-hidden">
-          {/* Header del mini-panel */}
+        <div className="fixed top-4 left-4 w-96 max-h-[90vh] bg-white dark:bg-gray-800 rounded-lg shadow-2xl z-50 flex flex-col overflow-hidden">
+          {/* Header del panel */}
           <div className="bg-gradient-to-r from-primary to-secondary p-4 flex items-center justify-between text-white">
             <h3 className="font-bold text-lg">Información de Ruta</h3>
             <button
-              onClick={() => setIsFullscreen(false)}
+              onClick={() => {
+                // Salir de pantalla completa
+                if (document.fullscreenElement) {
+                  document.exitFullscreen();
+                }
+              }}
               className="hover:bg-white hover:bg-opacity-20 rounded-lg p-1 transition"
+              title="Salir de pantalla completa"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Contenido del mini-panel */}
+          {/* Contenido del panel */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {/* Información de ruta cuando hay dispositivo seleccionado */}
             {selectedDevice && routeInfo ? (
@@ -421,7 +427,7 @@ const MapView = ({
                   <h4 className="font-bold text-gray-800 dark:text-gray-200 mb-2">
                     📍 Dispositivo Seleccionado
                   </h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
                     {selectedDevice.name}
                   </p>
                   <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
