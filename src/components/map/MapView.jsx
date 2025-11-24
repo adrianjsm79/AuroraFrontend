@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { GoogleMap, useLoadScript, Marker, InfoWindow, Polyline } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, Marker, InfoWindow, Polyline, Circle } from '@react-google-maps/api';
 import { GOOGLE_MAPS_API_KEY, MAP_CONFIG } from '../../config';
 
 const MapView = ({ 
@@ -95,9 +95,22 @@ const MapView = ({
             strokeColor: isSelected ? '#fff' : '#ffffff',
             strokeWeight: isSelected ? 4 : 2,
           }}
-          animation={isSelected ? window.google.maps.Animation.BOUNCE : null}
+          animation={null} // Se quita la animación de salto para todos los dispositivos
         />
         
+        {/* Círculo de precisión */}
+        <Circle
+          center={position}
+          radius={device.accuracy || 0}
+          options={{
+            strokeColor: color,
+            strokeOpacity: 0.5,
+            strokeWeight: 1,
+            fillColor: color,
+            fillOpacity: 0.2,
+          }}
+        />
+
         {/* Info Window al pasar el cursor */}
         {hoveredMarker === device.id && (
           <InfoWindow position={position} options={{ pixelOffset: new window.google.maps.Size(0, -30) }}>
@@ -107,6 +120,11 @@ const MapView = ({
               <p className="text-xs text-gray-500 mt-2">
                 📍 {device.latitude?.toFixed(4)}, {device.longitude?.toFixed(4)}
               </p>
+              {device.last_seen && (
+                <p className="text-xs text-gray-500 mt-1">
+                  Última vez visto: {new Date(device.last_seen).toLocaleString()}
+                </p>
+              )}
               {device.is_lost && (
                 <div className="mt-2 px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-semibold">
                   🚨 Reportado perdido
