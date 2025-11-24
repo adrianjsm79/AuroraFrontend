@@ -8,8 +8,8 @@ const createUserLocationIcon = () => {
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
       <circle cx="12" cy="12" r="10" fill="#3b82f6" stroke="white" stroke-width="2.5"/>
-      <circle cx="12" cy="8" r="2.5" fill="white"/>
-      <path d="M 12 10.5 Q 9 13.5 9 15.5 Q 9 17.5 12 17.5 Q 15 17.5 15 15.5 Q 15 13.5 12 10.5" fill="white"/>
+      <circle cx="12" cy="8.5" r="2" fill="white"/>
+      <path d="M 12 10.5 L 10 13 L 10 14.5 L 14 14.5 L 14 13 Z" fill="white"/>
       <!-- Sombra exterior para mejor contraste -->
       <circle cx="12" cy="12" r="11" fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="1"/>
     </svg>
@@ -30,10 +30,10 @@ const createDeviceIcon = (color, isSelected = false, isHovered = false) => {
   const size = baseSize * scale;
   
   const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
       <circle cx="12" cy="12" r="11" fill="${color}" stroke="white" stroke-width="2.5"/>
-      <rect x="8.5" y="6.5" width="7" height="11" rx="0.8" fill="white" stroke="white" stroke-width="0.5"/>
-      <circle cx="12" cy="15.5" r="0.8" fill="${color}"/>
+      <rect x="9" y="6.5" width="6" height="10" rx="0.5" fill="none" stroke="white" stroke-width="1.5"/>
+      <circle cx="12" cy="15" r="1" fill="white"/>
       <!-- Sombra exterior para mejor contraste -->
       <circle cx="12" cy="12" r="12" fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="1"/>
     </svg>

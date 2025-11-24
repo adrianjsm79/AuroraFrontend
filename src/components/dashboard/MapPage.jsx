@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Navigation, MapPin, Smartphone, Activity, Navigation2, Clock, Zap, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Navigation, MapPin, Smartphone, Activity, Navigation2, Clock, Zap, ChevronLeft, ChevronRight, AlertTriangle } from 'lucide-react';
 import MapView from '../map/MapView';
 
 const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], contactsDevices = [], fetchLocations }) => {
@@ -82,9 +82,9 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
             style={{ backgroundColor: pinColor }}
           />
           <div className="flex-1 min-w-0">
-            <p className="font-semibold text-gray-800 dark:text-gray-200 text-sm truncate">
+            <p className="font-semibold text-gray-800 dark:text-gray-200 text-sm truncate flex items-center gap-2">
               {device.name}
-              {isLost && <span className="ml-1">🚨</span>}
+              {isLost && <AlertTriangle className="w-4 h-4 text-red-500" />}
             </p>
             {type !== 'user' && (
               <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
@@ -92,23 +92,23 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
               </p>
             )}
             <div className="mt-2 space-y-1">
-              <p className="text-xs text-gray-600 dark:text-gray-400">
-                📍 {device.latitude?.toFixed(4)}, {device.longitude?.toFixed(4)}
+              <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center gap-1">
+                <MapPin className="w-3 h-3" /> {device.latitude?.toFixed(4)}, {device.longitude?.toFixed(4)}
               </p>
               <p className="text-xs text-gray-600 dark:text-gray-400">
                 ±{Math.round(device.accuracy || 0)}m
               </p>
-              <p className={`text-xs font-medium transition-colors ${
+              <p className={`text-xs font-medium transition-colors flex items-center gap-1 ${
                 isLost 
                   ? 'text-red-600 dark:text-red-400' 
                   : 'text-green-600 dark:text-green-400'
               }`}>
-                🕐 {formatLastSeen(device.last_seen)}
+                <Clock className="w-3 h-3" /> {formatLastSeen(device.last_seen)}
               </p>
             </div>
             {isLost && (
-              <div className="mt-2 px-2 py-1 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded text-xs font-semibold animate-pulse">
-                🚨 Reportado perdido
+              <div className="mt-2 px-2 py-1 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded text-xs font-semibold animate-pulse flex items-center gap-1">
+                <AlertTriangle className="w-3 h-3" /> Reportado perdido
               </div>
             )}
           </div>
@@ -210,8 +210,8 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
 
         {/* Panel Lateral Desplegable - Dispositivos */}
         <div
-          className={`fixed left-0 top-20 bottom-0 w-80 bg-white dark:bg-gray-800 shadow-2xl z-30 transition-all duration-300 overflow-hidden flex flex-col ${
-            isPanelOpen ? 'translate-x-0' : '-translate-x-full'
+          className={`fixed right-0 top-20 bottom-0 w-80 bg-white dark:bg-gray-800 shadow-2xl z-30 transition-all duration-300 overflow-hidden flex flex-col ${
+            isPanelOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
           {/* Header del Panel */}
@@ -230,7 +230,7 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
                 <div>
                   <h3 className="font-bold text-gray-800 dark:text-gray-200 text-sm mb-3 flex items-center space-x-2">
                     <div className="w-3 h-3 rounded-full bg-purple-500" />
-                    <span>Activos ({visibleUserDevices.length})</span>
+                    <span>Tus dispositivos ({visibleUserDevices.length})</span>
                   </h3>
                   <div className="space-y-2">
                     {visibleUserDevices.map(device => (
@@ -245,7 +245,7 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
                 <div>
                   <h3 className="font-bold text-gray-800 dark:text-gray-200 text-sm mb-3 flex items-center space-x-2">
                     <div className="w-3 h-3 rounded-full bg-red-500" />
-                    <span>Perdidos ({lostUserDevices.length})</span>
+                    <span>tus dispositivos Perdidos ({lostUserDevices.length})</span>
                   </h3>
                   <div className="space-y-2">
                     {lostUserDevices.map(device => (
@@ -260,7 +260,7 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
                 <div>
                   <h3 className="font-bold text-gray-800 dark:text-gray-200 text-sm mb-3 flex items-center space-x-2">
                     <div className="w-3 h-3 rounded-full bg-green-500" />
-                    <span>Seguidores ({visibleFollowersDevices.length})</span>
+                    <span>Dispositivos de Seguidores ({visibleFollowersDevices.length})</span>
                   </h3>
                   <div className="space-y-2">
                     {visibleFollowersDevices.map(device => (
@@ -275,7 +275,7 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
                 <div>
                   <h3 className="font-bold text-gray-800 dark:text-gray-200 text-sm mb-3 flex items-center space-x-2">
                     <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                    <span>En Peligro ({lostFollowersDevices.length})</span>
+                    <span>Dispositivos de seguidores perdidos ({lostFollowersDevices.length})</span>
                   </h3>
                   <div className="space-y-2">
                     {lostFollowersDevices.map(device => (
@@ -300,13 +300,13 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
         {/* Botón Toggle Panel */}
         <button
           onClick={() => setIsPanelOpen(!isPanelOpen)}
-          className="fixed left-0 top-24 z-40 bg-primary hover:bg-secondary text-white p-2 rounded-r-lg shadow-lg transition-all"
+          className="fixed right-0 top-24 z-40 bg-primary hover:bg-secondary text-white p-2 rounded-l-lg shadow-lg transition-all"
           title={isPanelOpen ? 'Cerrar panel' : 'Abrir panel'}
         >
           {isPanelOpen ? (
-            <ChevronLeft className="w-5 h-5" />
-          ) : (
             <ChevronRight className="w-5 h-5" />
+          ) : (
+            <ChevronLeft className="w-5 h-5" />
           )}
         </button>
 

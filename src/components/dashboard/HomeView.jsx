@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, EyeOff, Navigation, UserPlus, AlertCircle, MapPin, Smartphone, Users, Activity, Clock, Signal, Share2, Shield } from 'lucide-react';
+import { Eye, EyeOff, Navigation, UserPlus, AlertCircle, MapPin, Smartphone, Users, Activity, Clock, Signal, Share2, Shield, Smile } from 'lucide-react';
 
 const HomeView = ({ 
   user, 
@@ -20,8 +20,8 @@ const HomeView = ({
         <div className="bg-gradient-to-br from-primary via-secondary to-indigo-600 rounded-3xl shadow-2xl p-8 mb-8 text-white overflow-hidden relative">
           <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-48 -mt-48"></div>
           <div className="relative z-10">
-            <h1 className="text-5xl font-bold mb-2">
-              ¡Hola, {user?.nombre}! 👋
+            <h1 className="text-5xl font-bold mb-2 flex items-center gap-3">
+              ¡Hola, {user?.nombre}! <Smile className="w-12 h-12" />
             </h1>
             <p className="text-indigo-100 text-xl mb-6">
               Control total de tu ubicación y seguridad

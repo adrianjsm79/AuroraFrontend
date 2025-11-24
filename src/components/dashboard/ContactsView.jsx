@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, UserPlus, Users, Trash2, UserCheck } from 'lucide-react';
+import { Plus, UserPlus, Users, Trash2, UserCheck, Lock, MapPin, AlertTriangle, AlertCircle } from 'lucide-react';
 import PhoneInput from '../common/PhoneInput';
 import { countries } from '../../utils/countries';
 
@@ -158,20 +158,21 @@ const ContactsView = ({
       {/* Info Box */}
       <div className="bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20 rounded-2xl border-2 border-primary/30 p-6">
         <h3 className="font-bold text-xl text-gray-800 dark:text-gray-200 mb-3 flex items-center">
-          <span className="mr-2">🔒</span> Cómo Funciona el Compartir de Ubicación
+          <Lock className="w-5 h-5 mr-2" /> Cómo Funciona el Compartir de Ubicación
         </h3>
         <div className="space-y-2 text-gray-700 dark:text-gray-300 text-sm">
           <p>
-            <span className="font-semibold text-primary">📍 Regla Fundamental:</span> "Solo puede ver mi ubicacion la persona a la que le doy confianza"
+            <span className="font-semibold text-primary flex items-center gap-2"><MapPin className="w-4 h-4" /> Regla Fundamental:</span> "Solo puede ver mi ubicacion la persona a la que le doy confianza"
           </p>
           <p>
-            <span className="font-semibold text-blue-600">→ Mis Contactos de confianza:</span> Personas a quienes les compartiste tu ubicación. Ellos pueden verte en tiempo real en el mapa.
+            <span className="font-semibold text-blue-600 flex items-center gap-2"><Users className="w-4 h-4" /> Mis Contactos de confianza:</span> Personas a quienes les compartiste tu ubicación. Ellos pueden verte en tiempo real en el mapa.
           </p>
           <p>
-            <span className="font-semibold text-green-600">✓ Mis Seguidores:</span> Personas que te agregaron como contacto de confianza. Tú puedes verlos en tiempo real en el mapa.
+            <span className="font-semibold text-green-600 flex items-center gap-2"><UserCheck className="w-4 h-4" /> Mis Seguidores:</span> Personas que te agregaron como contacto de confianza. Tú puedes verlos en tiempo real en el mapa.
           </p>
-          <p>
-            <span className="font-semibold text-red-600">⚠️ Importante:</span> Puedes eliminar contactos en cualquier momento. Administra tu privacidad compartiendo solo con personas de confianza.
+          <p className="flex items-start gap-2">
+            <AlertTriangle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
+            <span><span className="font-semibold text-red-600">Importante:</span> Puedes eliminar contactos en cualquier momento. Administra tu privacidad compartiendo solo con personas de confianza.</span>
           </p>
         </div>
       </div>

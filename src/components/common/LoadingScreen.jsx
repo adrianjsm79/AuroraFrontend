@@ -8,7 +8,7 @@ const LoadingScreen = () => (
         <MapPin className="w-10 h-10 text-indigo-600 animate-pulse" />
       </div>
       <div className="loading-spinner mx-auto"></div>
-      <p className="text-white mt-4 font-semibold">Cargando TrackApp...</p>
+      <p className="text-white mt-4 font-semibold">Cargando AuroraApp...</p>
     </div>
   </div>
 );

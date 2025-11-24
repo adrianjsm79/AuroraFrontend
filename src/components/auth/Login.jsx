@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { MapPin, AlertCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 
 const Login = ({ onToggle }) => {
+  const navigate = useNavigate();
   const { isDarkMode } = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,7 +21,9 @@ const Login = ({ onToggle }) => {
     const result = await login(email, password);
     setLoading(false);
 
-    if (!result.success) {
+    if (result.success) {
+      navigate('/');
+    } else {
       setError(result.error);
     }
   };

@@ -204,7 +204,7 @@ const Dashboard = ({ onGoHome }) => {
                     // Actualizar dispositivos propios SIEMPRE (para last_seen, is_lost, etc)
                     const devicesData = await apiService.getDevices(token);
                     setRealTimeDevices(devicesData);
-                    console.log(`📱 Dispositivos actualizados (${devicesData?.length || 0}):`, devicesData?.map(d => ({
+                    console.log(`[Devices] Dispositivos actualizados (${devicesData?.length || 0}):`, devicesData?.map(d => ({
                         id: d.id,
                         name: d.name,
                         is_lost: d.is_lost,
@@ -217,7 +217,7 @@ const Dashboard = ({ onGoHome }) => {
                     const contactsData = await apiService.getReceivedTrustedContacts(token);
                     setRealTimeReceivedContacts(contactsData);
                     const totalDevices = contactsData?.reduce((sum, contact) => sum + (contact.devices?.length || 0), 0) || 0;
-                    console.log(`👥 Seguidores actualizados (${contactsData?.length || 0}, ${totalDevices} dispositivos):`, 
+                    console.log(`[Followers] Seguidores actualizados (${contactsData?.length || 0}, ${totalDevices} dispositivos):`, 
                         contactsData?.map(contact => ({
                             nombre: contact.nombre,
                             devicesCount: contact.devices?.length || 0,
@@ -233,7 +233,7 @@ const Dashboard = ({ onGoHome }) => {
                     );
                 }
             } catch (error) {
-                console.error('❌ Error en polling de datos en tiempo real:', error);
+                console.error('[Error] Error en polling de datos en tiempo real:', error);
             }
         }, 1000); // 1 segundo - actualizaciones prácticamente en tiempo real
     };

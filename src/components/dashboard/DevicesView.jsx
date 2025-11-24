@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Smartphone, Eye, EyeOff, Trash2, MapPin, Clock, AlertCircle, AlertTriangle } from 'lucide-react';
+import { Smartphone, Eye, EyeOff, Trash2, MapPin, Clock, AlertCircle, AlertTriangle, Lock, Zap, CheckCircle, Shield } from 'lucide-react';
 
 const DevicesView = ({ devices, updateDeviceVisibility, deleteDevice, updateDeviceLostStatus }) => {
   const [deletingId, setDeletingId] = useState(null);
@@ -264,7 +264,7 @@ const DevicesView = ({ devices, updateDeviceVisibility, deleteDevice, updateDevi
       </div>
 
       <div className="bg-gradient-to-br from-primary to-secondary rounded-2xl shadow-xl p-6 text-white">
-        <h3 className="font-bold text-xl mb-3">🛡️ Privacidad de Dispositivos</h3>
+        <h3 className="font-bold text-xl mb-3 flex items-center gap-2"><Shield className="w-5 h-5" /> Privacidad de Dispositivos</h3>
         <p className="text-white/80 mb-3">
           Controla qué dispositivos compartir con tus contactos de confianza. Puedes ocultar dispositivos específicos 
           para mantener ciertas ubicaciones privadas.
@@ -285,29 +285,30 @@ const DevicesView = ({ devices, updateDeviceVisibility, deleteDevice, updateDevi
           <p className="font-semibold text-lg">Cuando marcas un dispositivo como perdido:</p>
           <ul className="space-y-3 ml-4">
             <li className="flex items-start space-x-3">
-              <span className="flex-shrink-0 text-lg">🔴</span>
+              <AlertTriangle className="flex-shrink-0 w-5 h-5 text-red-500" />
               <span><strong>Alerta Inmediata:</strong> Todos tus contactos que te siguen serán notificados de que tu dispositivo está perdido</span>
             </li>
             <li className="flex items-start space-x-3">
-              <span className="flex-shrink-0 text-lg">📍</span>
+              <MapPin className="flex-shrink-0 w-5 h-5 text-blue-500" />
               <span><strong>Rastreo Activo:</strong> La ubicación del dispositivo se actualiza constantemente y es compartida con tus contactos</span>
             </li>
             <li className="flex items-start space-x-3">
-              <span className="flex-shrink-0 text-lg">🚨</span>
+              <Zap className="flex-shrink-0 w-5 h-5 text-yellow-500" />
               <span><strong>Indicador Visual:</strong> El dispositivo mostrará un badge "Reportado perdido" en todos los mapas</span>
             </li>
             <li className="flex items-start space-x-3">
-              <span className="flex-shrink-0 text-lg">🔐</span>
+              <Lock className="flex-shrink-0 w-5 h-5 text-purple-500" />
               <span><strong>Privar de Acceso:</strong> Se recomienda cambiar contraseñas y desactivar aplicaciones críticas remotamente</span>
             </li>
             <li className="flex items-start space-x-3">
-              <span className="flex-shrink-0 text-lg">✅</span>
+              <CheckCircle className="flex-shrink-0 w-5 h-5 text-green-500" />
               <span><strong>Marcar como Encontrado:</strong> Cuando recuperes el dispositivo, cambia el estado a encontrado</span>
             </li>
           </ul>
           <div className="mt-4 pt-4 border-t border-red-400 border-opacity-50">
-            <p className="text-xs text-red-100">
-              ⚠️ No compartas esta información públicamente. Solo tus contactos de confianza pueden ver esta alerta.
+            <p className="text-xs text-red-100 flex items-start gap-2">
+              <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              <span>No compartas esta información públicamente. Solo tus contactos de confianza pueden ver esta alerta.</span>
             </p>
           </div>
         </div>
