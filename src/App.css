@@ -1,106 +1,153 @@
 .App {
-  --bg: #f8fafc; /* light slate */
-  --surface: #ffffff;
-  --muted: #6b7280;
-  --primary: #6366f1; /* indigo-500 */
-  --text: #0f172a;
-
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background: var(--bg);
-  color: var(--text);
-  font-family: inherit;
-  padding: 1.5rem;
+  background-color: var(--light-background);
 }
 
-/* Header: smaller, not full-screen */
-.App-header {
-  width: 100%;
-  max-width: 1200px;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 0;
-  gap: 1rem;
+.App.dark {
+  background-color: var(--dark-background);
 }
 
-.App-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+/* Main Content */
+.app-content {
+  flex: 1;
 }
 
-.App-logo {
-  width: 48px;
-  height: 48px;
-  max-width: 10vmin;
-  pointer-events: none;
-  border-radius: 8px;
-  background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(99,102,241,0.06));
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
-/* Gentle rotation if user allows motion */
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo { animation: app-logo-spin 16s linear infinite; }
+/* Color variables support */
+:root {
+  --color-primary: #01D9F6;
+  --color-secondary: #CA01F6;
+  
+  /* Light Mode */
+  --light-background: #F8FAFB;
+  --light-surface: #FFFFFF;
+  --light-secondary-surface: #EDF4F7;
+  --light-text-primary: #1A2B3C;
+  --light-text-secondary: #5A6C7D;
+  --light-text-tertiary: #8A9BA8;
 }
 
-@keyframes app-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark Mode */
+    --dark-background: #0A1525;
+    --dark-surface: #1A2B3C;
+    --dark-secondary-surface: #243447;
+    --dark-text-primary: #F8FAFB;
+    --dark-text-secondary: #B8C5D0;
+    --dark-text-tertiary: #7A8B9A;
+  }
 }
 
-.App-main {
-  width: 100%;
-  max-width: 1200px;
-  display: flex;
-  gap: 1.25rem;
-  margin-top: 1.25rem;
-  align-items: flex-start;
+/* Gradient backgrounds */
+.gradient-bg-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
 }
 
-.App-sidebar {
-  width: 240px;
-  min-height: 200px;
+/* Container Styles */
+.container-main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-.App-content {
-  flex: 1 1 auto;
-  background: var(--surface);
+/* Cards and Surfaces */
+.card {
   border-radius: 0.75rem;
-  padding: 1rem;
-  box-shadow: 0 6px 15px -6px rgba(2,6,23,0.08);
+  transition: all 0.3s ease;
 }
 
-.App-link {
-  color: var(--primary);
-  text-decoration: none;
+.card-light {
+  background-color: white;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Loading fallback — components may use .loading-spinner from index.css */
-.loading-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 2rem 0;
+.card-dark {
+  background-color: #1A2B3C;
+  border: 1px solid #243447;
 }
 
-/* Make sure the original animation name doesn't collide with others */
-@keyframes app-bounce {
-  0% { transform: scale(0); opacity: 0; }
-  50% { transform: scale(1.08); }
-  100% { transform: scale(1); opacity: 1; }
+.card:hover {
+  box-shadow: 0 4px 12px rgba(1, 217, 246, 0.1);
+  transform: translateY(-2px);
 }
 
-.app-bounce { animation: app-bounce 0.45s ease-out; }
+/* Badge Styles */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
 
-/* Small utilities useful across components */
-.rounded-md { border-radius: 0.5rem; }
-.shadow-soft { box-shadow: 0 8px 20px -10px rgba(2,6,23,0.08); }
-.muted { color: var(--muted); }
+.badge-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.badge-secondary {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+/* Input Focus States */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: var(--color-primary);
+}
+
+/* Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 0.5s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Utilities */
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+.primary-gradient-text {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
