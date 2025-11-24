@@ -14,10 +14,10 @@ const PageTransition = ({ children }) => {
 
   return (
     <div
-      className={`transition-all duration-300 ease-in-out ${
+      className={`transition-opacity duration-300 ease-in-out ${
         isTransitioning
-          ? 'opacity-0 transform scale-95'
-          : 'opacity-100 transform scale-100'
+          ? 'opacity-0'
+          : 'opacity-100'
       }`}
     >
       {children}
