@@ -217,7 +217,6 @@ const Dashboard = ({ onGoHome }) => {
             }
         }, 1000); // 1 segundo - actualizaciones prácticamente en tiempo real
     };
-    };
 
     const fetchLocations = async () => {
         try {
