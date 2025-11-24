@@ -48,7 +48,7 @@ const ContactsView = ({
           <p className="text-sm text-gray-600 dark:text-gray-400">{contact.email}</p>
           <p className="text-xs text-primary font-medium mt-1">{contact.numero}</p>
           {isReceived ? (
-            <p className="text-xs text-green-600 dark:text-green-400 font-semibold mt-1">✓ Pueden ver tu ubicación en tiempo real</p>
+            <p className="text-xs text-green-600 dark:text-green-400 font-semibold mt-1">✓ Puedes ver su ubicación (porque te agregaron)</p>
           ) : (
             <p className="text-xs text-blue-600 dark:text-blue-400 font-semibold mt-1">→ Pueden ver tu ubicación (porque los agregaste)</p>
           )}
@@ -162,13 +162,13 @@ const ContactsView = ({
         </h3>
         <div className="space-y-2 text-gray-700 dark:text-gray-300 text-sm">
           <p>
-            <span className="font-semibold text-primary">📍 Regla Fundamental:</span> "Si agrego a alguien, esa persona puede ver mi ubicación"
+            <span className="font-semibold text-primary">📍 Regla Fundamental:</span> "Solo puede ver mi ubicacion la persona a la que le doy confianza"
           </p>
           <p>
-            <span className="font-semibold text-blue-600">→ Mis Contactos:</span> Personas a quienes les compartiste tu ubicación. Ellos pueden verte en tiempo real en el mapa.
+            <span className="font-semibold text-blue-600">→ Mis Contactos de confianza:</span> Personas a quienes les compartiste tu ubicación. Ellos pueden verte en tiempo real en el mapa.
           </p>
           <p>
-            <span className="font-semibold text-green-600">✓ Mis Seguidores:</span> Personas que te agregaron a ellos. Tú puedes verlos en tiempo real en el mapa.
+            <span className="font-semibold text-green-600">✓ Mis Seguidores:</span> Personas que te agregaron como contacto de confianza. Tú puedes verlos en tiempo real en el mapa.
           </p>
           <p>
             <span className="font-semibold text-red-600">⚠️ Importante:</span> Puedes eliminar contactos en cualquier momento. Administra tu privacidad compartiendo solo con personas de confianza.
