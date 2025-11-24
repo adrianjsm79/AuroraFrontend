@@ -5,11 +5,22 @@ import MapView from '../map/MapView';
 const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], contactsDevices = [], fetchLocations }) => {
   const [selectedDevice, setSelectedDevice] = useState(null);
   const [lastUpdateTime, setLastUpdateTime] = useState(new Date());
+  const [displayTime, setDisplayTime] = useState(new Date());
 
   // Actualizar tiempo de última actualización cuando cambian los datos
   useEffect(() => {
     setLastUpdateTime(new Date());
   }, [devices, receivedContacts, userLocation]);
+
+  // Actualizar el reloj de tiempo real cada segundo
+  // Esto asegura que el timestamp siempre muestre la hora actual
+  useEffect(() => {
+    const displayTimer = setInterval(() => {
+      setDisplayTime(new Date());
+    }, 500); // Actualizar cada 500ms para máxima precisión
+
+    return () => clearInterval(displayTimer);
+  }, []);
 
   // Separar dispositivos del usuario por estado
   // Estos datos se actualizan en tiempo real a través de polling en Dashboard
@@ -23,40 +34,55 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
   const lostFollowersDevices = followersDevices.filter(d => d.is_lost);
   const visibleFollowersDevices = followersDevices.filter(d => !d.is_lost);
 
-  const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('es-ES', {
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
-
   const DeviceCard = ({ device, type = 'user', isLost = false }) => {
-    const cardClass = isLost ? 'bg-red-50 dark:bg-red-900/30 border-red-200' : 'bg-gray-50 dark:bg-gray-700/50';
+    const cardClass = isLost ? 'bg-red-50 dark:bg-red-900/30 border-red-200 shadow-lg shadow-red-200/50 dark:shadow-red-900/30' : 'bg-gray-50 dark:bg-gray-700/50';
     const pinColor = 
       type === 'user' && isLost ? '#ef4444' :
       type === 'user' ? '#a855f7' :
       isLost ? '#fbbf24' :
       '#22c55e';
 
+    // Formato mejorado para la fecha
+    const formatLastSeen = (dateString) => {
+      if (!dateString) return 'Sin datos';
+      const date = new Date(dateString);
+      const now = new Date();
+      const diffSeconds = Math.floor((now - date) / 1000);
+      
+      if (diffSeconds < 60) {
+        return 'Hace unos segundos';
+      } else if (diffSeconds < 3600) {
+        const minutes = Math.floor(diffSeconds / 60);
+        return `Hace ${minutes} min`;
+      } else if (diffSeconds < 86400) {
+        const hours = Math.floor(diffSeconds / 3600);
+        return `Hace ${hours} h`;
+      } else {
+        return date.toLocaleString('es-ES', {
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      }
+    };
+
     return (
       <div
-        className={`p-4 rounded-lg border-2 ${cardClass} dark:border-gray-600 cursor-pointer transition transform hover:scale-105 ${
-          selectedDevice?.id === device.id ? 'ring-2 ring-primary' : ''
-        }`}
+        className={`p-4 rounded-lg border-2 ${cardClass} dark:border-gray-600 cursor-pointer transition-all transform hover:scale-105 duration-200 ${
+          selectedDevice?.id === device.id ? 'ring-2 ring-primary shadow-xl' : ''
+        } ${isLost ? 'animate-pulse' : ''}`}
         onClick={() => setSelectedDevice(device)}
       >
         <div className="flex items-start space-x-3">
           <div
-            className="w-3 h-3 rounded-full mt-1 flex-shrink-0"
+            className="w-3 h-3 rounded-full mt-1 flex-shrink-0 transition-all duration-200"
             style={{ backgroundColor: pinColor }}
           />
           <div className="flex-1 min-w-0">
             <p className="font-semibold text-gray-800 dark:text-gray-200 text-sm truncate">
               {device.name}
+              {isLost && <span className="ml-1">🚨</span>}
             </p>
             {type !== 'user' && (
               <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
@@ -68,11 +94,18 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
                 📍 {device.latitude?.toFixed(4)}, {device.longitude?.toFixed(4)}
               </p>
               <p className="text-xs text-gray-600 dark:text-gray-400">
-                🕐 {formatDate(device.last_seen)}
+                ±{Math.round(device.accuracy || 0)}m
+              </p>
+              <p className={`text-xs font-medium transition-colors ${
+                isLost 
+                  ? 'text-red-600 dark:text-red-400' 
+                  : 'text-green-600 dark:text-green-400'
+              }`}>
+                🕐 {formatLastSeen(device.last_seen)}
               </p>
             </div>
             {isLost && (
-              <div className="mt-2 px-2 py-1 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded text-xs font-semibold">
+              <div className="mt-2 px-2 py-1 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded text-xs font-semibold animate-pulse">
                 🚨 Reportado perdido
               </div>
             )}
@@ -102,8 +135,8 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
                   Tiempo Real
                 </span>
               </div>
-              <span className="text-xs text-green-600 dark:text-green-400">
-                {`${lastUpdateTime.toLocaleTimeString('es-ES')}`}
+              <span className="text-xs text-green-600 dark:text-green-400 font-mono">
+                {`${displayTime.toLocaleTimeString('es-ES')}`}
               </span>
             </div>
           </div>

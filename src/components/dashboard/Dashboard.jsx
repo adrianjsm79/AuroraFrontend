@@ -174,40 +174,49 @@ const Dashboard = ({ onGoHome }) => {
      * Esto complementa WebSocket y proporciona un fallback confiable
      */
     const startRealtimeDataPolling = () => {
-        console.log('🔄 Iniciando polling en tiempo real (cada 3 segundos)');
-        // Polling cada 3 segundos para dispositivos y contactos
+        console.log('🔄 Iniciando polling en tiempo real (cada 1 segundo)');
+        // Polling cada 1 segundo para actualizaciones prácticamente instantáneas
+        // de ubicaciones, estados (is_lost), timestamps (last_seen), etc.
         pollingInterval.current = setInterval(async () => {
             try {
                 // Solo hacer polling si estamos en la vista de mapa
                 if (currentView === 'map') {
-                    // Actualizar dispositivos propios
-                    if (!realTimeDevices) {
-                        const devicesData = await apiService.getDevices(token);
-                        setRealTimeDevices(devicesData);
-                        console.log(`📱 Dispositivos cargados: ${devicesData?.length || 0}`);
-                    } else {
-                        const devicesData = await apiService.getDevices(token);
-                        setRealTimeDevices(devicesData);
-                        console.log(`📱 Dispositivos actualizados: ${devicesData?.length || 0}`);
-                    }
+                    // Actualizar dispositivos propios SIEMPRE (para last_seen, is_lost, etc)
+                    const devicesData = await apiService.getDevices(token);
+                    setRealTimeDevices(devicesData);
+                    console.log(`📱 Dispositivos actualizados (${devicesData?.length || 0}):`, devicesData?.map(d => ({
+                        id: d.id,
+                        name: d.name,
+                        is_lost: d.is_lost,
+                        last_seen: d.last_seen,
+                        lat: d.latitude?.toFixed(2),
+                        lng: d.longitude?.toFixed(2)
+                    })));
 
-                    // Actualizar contactos/seguidores y sus dispositivos
-                    if (!realTimeReceivedContacts) {
-                        const contactsData = await apiService.getReceivedTrustedContacts(token);
-                        setRealTimeReceivedContacts(contactsData);
-                        const totalDevices = contactsData?.reduce((sum, contact) => sum + (contact.devices?.length || 0), 0) || 0;
-                        console.log(`👥 Seguidores cargados: ${contactsData?.length || 0}, dispositivos: ${totalDevices}`);
-                    } else {
-                        const contactsData = await apiService.getReceivedTrustedContacts(token);
-                        setRealTimeReceivedContacts(contactsData);
-                        const totalDevices = contactsData?.reduce((sum, contact) => sum + (contact.devices?.length || 0), 0) || 0;
-                        console.log(`👥 Seguidores actualizados: ${contactsData?.length || 0}, dispositivos: ${totalDevices}`);
-                    }
+                    // Actualizar contactos/seguidores y sus dispositivos SIEMPRE
+                    const contactsData = await apiService.getReceivedTrustedContacts(token);
+                    setRealTimeReceivedContacts(contactsData);
+                    const totalDevices = contactsData?.reduce((sum, contact) => sum + (contact.devices?.length || 0), 0) || 0;
+                    console.log(`👥 Seguidores actualizados (${contactsData?.length || 0}, ${totalDevices} dispositivos):`, 
+                        contactsData?.map(contact => ({
+                            nombre: contact.nombre,
+                            devicesCount: contact.devices?.length || 0,
+                            devices: contact.devices?.map(d => ({
+                                id: d.id,
+                                name: d.name,
+                                is_lost: d.is_lost,
+                                last_seen: d.last_seen,
+                                lat: d.latitude?.toFixed(2),
+                                lng: d.longitude?.toFixed(2)
+                            }))
+                        }))
+                    );
                 }
             } catch (error) {
                 console.error('❌ Error en polling de datos en tiempo real:', error);
             }
-        }, 3000); // 3 segundos
+        }, 1000); // 1 segundo - actualizaciones prácticamente en tiempo real
+    };
     };
 
     const fetchLocations = async () => {

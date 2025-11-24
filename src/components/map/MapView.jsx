@@ -128,6 +128,7 @@ const MapView = ({
           onMouseOut={() => setHoveredMarker(null)}
           icon={createDeviceIcon(color, isSelected, isHovered)}
           animation={null}
+          title={`${device.name}${device.is_lost ? ' 🚨 PERDIDO' : ''}`}
         />
         
         {/* Círculo de precisión */}
@@ -159,14 +160,17 @@ const MapView = ({
               <p className="text-xs text-gray-500 mt-2">
                 📍 {device.latitude?.toFixed(4)}, {device.longitude?.toFixed(4)}
               </p>
+              <p className="text-xs text-gray-500 mt-1">
+                ±{Math.round(device.accuracy || 0)}m
+              </p>
               {device.last_seen && (
                 <p className="text-xs text-gray-500 mt-1">
-                  🕐 {new Date(device.last_seen).toLocaleString()}
+                  🕐 {new Date(device.last_seen).toLocaleString('es-ES')}
                 </p>
               )}
               {device.is_lost && (
-                <div className="mt-2 px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-semibold">
-                  🚨 Reportado perdido
+                <div className="mt-2 px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-semibold animate-pulse">
+                  🚨 REPORTADO PERDIDO
                 </div>
               )}
             </div>
