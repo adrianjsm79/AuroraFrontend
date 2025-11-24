@@ -24,6 +24,7 @@ const Dashboard = ({ onGoHome }) => {
         removeTrustedContact,
         updateDeviceVisibility,
         deleteDevice,
+        updateDeviceLostStatus,
         fetchTrustedContacts,
         fetchReceivedContacts,
         fetchDevices,
@@ -217,6 +218,7 @@ const Dashboard = ({ onGoHome }) => {
                         devices={devices}
                         updateDeviceVisibility={updateDeviceVisibility}
                         deleteDevice={deleteDevice}
+                        updateDeviceLostStatus={updateDeviceLostStatus}
                     />
                 )}
 

@@ -77,6 +77,19 @@ export const apiService = {
     });
   },
 
+  async updateDeviceLostStatus(token, deviceId, isLost) {
+    const response = await fetch(`${API_URL}/devices/${deviceId}/update_lost_status/`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true',
+      },
+      body: JSON.stringify({ is_lost: isLost }),
+    });
+    return response.json();
+  },
+
   // Ubicaciones
   async updateLocation(token, location) {
     await fetch(`${API_URL}/tracking/update/`, {

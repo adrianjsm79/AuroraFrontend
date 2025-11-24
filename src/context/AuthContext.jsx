@@ -168,6 +168,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const updateDeviceLostStatus = async (deviceId, isLost) => {
+    try {
+      await apiService.updateDeviceLostStatus(token, deviceId, isLost);
+      await fetchDevices();
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  };
+
   return (
     <AuthContext.Provider value={{
       user,
@@ -184,6 +194,7 @@ export const AuthProvider = ({ children }) => {
       removeTrustedContact,
       updateDeviceVisibility,
       deleteDevice,
+      updateDeviceLostStatus,
       fetchTrustedContacts,
       fetchReceivedContacts,
       fetchDevices,

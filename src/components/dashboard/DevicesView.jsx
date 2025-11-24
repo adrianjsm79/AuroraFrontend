@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Smartphone, Eye, EyeOff, Trash2, MapPin, Clock, AlertCircle } from 'lucide-react';
+import { Smartphone, Eye, EyeOff, Trash2, MapPin, Clock, AlertCircle, AlertTriangle } from 'lucide-react';
 
-const DevicesView = ({ devices, updateDeviceVisibility, deleteDevice }) => {
+const DevicesView = ({ devices, updateDeviceVisibility, deleteDevice, updateDeviceLostStatus }) => {
   const [deletingId, setDeletingId] = useState(null);
+  const [markingLostId, setMarkingLostId] = useState(null);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -30,6 +31,16 @@ const DevicesView = ({ devices, updateDeviceVisibility, deleteDevice }) => {
     setDeletingId(null);
   };
 
+  const handleMarkLost = async (deviceId, currentLostStatus) => {
+    if (updateDeviceLostStatus) {
+      const result = await updateDeviceLostStatus(deviceId, !currentLostStatus);
+      if (!result.success) {
+        console.error('Error updating device lost status:', result.error);
+      }
+    }
+    setMarkingLostId(null);
+  };
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 mb-6">
@@ -50,8 +61,24 @@ const DevicesView = ({ devices, updateDeviceVisibility, deleteDevice }) => {
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 dark:bg-gray-700 rounded-full mb-4">
               <Smartphone className="w-10 h-10 text-gray-400 dark:text-gray-500" />
             </div>
-            <p className="text-gray-500 dark:text-gray-400 text-lg">No tienes dispositivos registrados</p>
-            <p className="text-gray-400 dark:text-gray-500 text-sm mt-2">Instala Aurora en tu dispositivo móvil para comenzar</p>
+            <p className="text-gray-500 dark:text-gray-400 text-lg font-semibold">No tienes dispositivos registrados</p>
+            <p className="text-gray-400 dark:text-gray-500 text-sm mt-2">Para registrar un dispositivo:</p>
+            <div className="mt-4 p-6 bg-blue-50 dark:bg-blue-900/30 border-2 border-blue-200 dark:border-blue-800 rounded-xl max-w-md mx-auto">
+              <ol className="text-left space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li className="flex items-start space-x-3">
+                  <span className="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-blue-600 text-white text-xs font-bold">1</span>
+                  <span>Descarga la aplicación móvil de Aurora</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-blue-600 text-white text-xs font-bold">2</span>
+                  <span>Inicia sesión con tu cuenta</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-blue-600 text-white text-xs font-bold">3</span>
+                  <span>Tu dispositivo se registrará automáticamente</span>
+                </li>
+              </ol>
+            </div>
           </div>
         ) : (
           <div className="space-y-4">
@@ -150,6 +177,28 @@ const DevicesView = ({ devices, updateDeviceVisibility, deleteDevice }) => {
                       )}
                     </button>
 
+                    <button
+                      onClick={() => setMarkingLostId(device.id)}
+                      className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all transform hover:scale-105 ${
+                        device.is_lost
+                          ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50'
+                          : 'bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-500'
+                      }`}
+                      title={device.is_lost ? 'Marcar como encontrado' : 'Marcar como perdido'}
+                    >
+                      {device.is_lost ? (
+                        <>
+                          <AlertTriangle className="w-4 h-4" />
+                          <span className="text-sm font-semibold">Perdido</span>
+                        </>
+                      ) : (
+                        <>
+                          <AlertTriangle className="w-4 h-4" />
+                          <span className="text-sm font-semibold">Marcar perdido</span>
+                        </>
+                      )}
+                    </button>
+
                     {deletingId === device.id ? (
                       <div className="flex items-center space-x-2">
                         <span className="text-sm text-gray-600 dark:text-gray-400">¿Estás seguro?</span>
@@ -177,6 +226,37 @@ const DevicesView = ({ devices, updateDeviceVisibility, deleteDevice }) => {
                     )}
                   </div>
                 </div>
+
+                {/* Confirmación para marcar como perdido */}
+                {markingLostId === device.id && (
+                  <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-red-800 dark:text-red-200">
+                        {device.is_lost ? '¿Marcar este dispositivo como encontrado?' : '¿Marcar este dispositivo como perdido?'}
+                      </p>
+                      <p className="text-xs text-red-700 dark:text-red-300 mt-1">
+                        {device.is_lost 
+                          ? 'Se dejará de mostrar como perdido en el sistema.'
+                          : 'Tus contactos sabrán que este dispositivo está perdido.'
+                        }
+                      </p>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => handleMarkLost(device.id, device.is_lost)}
+                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
+                      >
+                        Confirmar
+                      </button>
+                      <button
+                        onClick={() => setMarkingLostId(null)}
+                        className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
