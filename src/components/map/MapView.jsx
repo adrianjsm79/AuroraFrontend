@@ -86,10 +86,59 @@ const MapView = ({
 
   // Calcular ruta cuando se selecciona un dispositivo o cuando cambian ubicaciones
   // Se actualiza automáticamente en tiempo real conforme se mueven las ubicaciones
+  // Calcula ambos modos: DRIVING (carro) y WALKING (a pie)
   useEffect(() => {
     if (selectedDevice && userLocation && map) {
       const directionsService = new window.google.maps.DirectionsService();
       
+      // Función auxiliar para procesar la ruta
+      const processRoute = (result, status, travelMode) => {
+        if (status === 'OK') {
+          const routes = result.routes;
+          if (routes.length > 0) {
+            const routeData = routes[0];
+            // Decodificar el polyline path para obtener array de coordenadas
+            const path = [];
+            if (routeData.legs && routeData.legs.length > 0) {
+              for (let i = 0; i < routeData.legs.length; i++) {
+                const leg = routeData.legs[i];
+                if (leg.steps && leg.steps.length > 0) {
+                  for (let j = 0; j < leg.steps.length; j++) {
+                    const step = leg.steps[j];
+                    const points = window.google.maps.geometry.encoding.decodePath(step.polyline.points);
+                    path.push(...points);
+                  }
+                }
+              }
+            }
+            
+            // Convertir LatLng objects a coordenadas simples
+            const routePath = path.map(point => ({
+              lat: point.lat(),
+              lng: point.lng()
+            }));
+            
+            // Solo actualizar el polyline con la ruta en carro (DRIVING)
+            if (travelMode === 'DRIVING') {
+              setRoute(routePath);
+            }
+            
+            // Extraer información de la ruta
+            if (routeData.legs && routeData.legs.length > 0) {
+              const leg = routeData.legs[0];
+              return {
+                distance: leg.distance.text,
+                distanceValue: leg.distance.value, // en metros
+                duration: leg.duration.text,
+                durationValue: leg.duration.value, // en segundos
+              };
+            }
+          }
+        }
+        return null;
+      };
+      
+      // Solicitar ruta en carro (DRIVING)
       directionsService.route(
         {
           origin: { lat: userLocation.latitude, lng: userLocation.longitude },
@@ -97,42 +146,22 @@ const MapView = ({
           travelMode: 'DRIVING',
         },
         (result, status) => {
-          if (status === 'OK') {
-            // Extraer las coordenadas de la ruta (legs)
-            const routes = result.routes;
-            if (routes.length > 0) {
-              const routeData = routes[0];
-              // Decodificar el polyline path para obtener array de coordenadas
-              const path = [];
-              if (routeData.legs && routeData.legs.length > 0) {
-                for (let i = 0; i < routeData.legs.length; i++) {
-                  const leg = routeData.legs[i];
-                  if (leg.steps && leg.steps.length > 0) {
-                    for (let j = 0; j < leg.steps.length; j++) {
-                      const step = leg.steps[j];
-                      const points = window.google.maps.geometry.encoding.decodePath(step.polyline.points);
-                      path.push(...points);
-                    }
-                  }
-                }
-              }
+          const drivingInfo = processRoute(result, status, 'DRIVING');
+          
+          // Solicitar ruta a pie (WALKING)
+          directionsService.route(
+            {
+              origin: { lat: userLocation.latitude, lng: userLocation.longitude },
+              destination: { lat: selectedDevice.latitude, lng: selectedDevice.longitude },
+              travelMode: 'WALKING',
+            },
+            (walkResult, walkStatus) => {
+              const walkingInfo = processRoute(walkResult, walkStatus, 'WALKING');
               
-              // Convertir LatLng objects a coordenadas simples
-              const routePath = path.map(point => ({
-                lat: point.lat(),
-                lng: point.lng()
-              }));
-              
-              setRoute(routePath);
-              
-              // Extraer información de la ruta
-              if (routeData.legs && routeData.legs.length > 0) {
-                const leg = routeData.legs[0];
+              if (drivingInfo || walkingInfo) {
                 const routeInfo = {
-                  distance: leg.distance.text,
-                  distanceValue: leg.distance.value, // en metros
-                  duration: leg.duration.text,
-                  durationValue: leg.duration.value, // en segundos
+                  driving: drivingInfo,
+                  walking: walkingInfo,
                 };
                 setRouteInfo(routeInfo);
                 
@@ -140,16 +169,15 @@ const MapView = ({
                 if (onRouteInfoChange) {
                   onRouteInfoChange(routeInfo);
                 }
+              } else {
+                setRoute(null);
+                setRouteInfo(null);
+                if (onRouteInfoChange) {
+                  onRouteInfoChange(null);
+                }
               }
             }
-          } else {
-            console.error('Error calculating route:', status);
-            setRoute(null);
-            setRouteInfo(null);
-            if (onRouteInfoChange) {
-              onRouteInfoChange(null);
-            }
-          }
+          );
         }
       );
     } else {

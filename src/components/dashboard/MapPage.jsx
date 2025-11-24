@@ -191,22 +191,37 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
               
               <div className="space-y-2">
                 {/* Distancia */}
-                <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
-                  <div className="flex items-center space-x-2">
-                    <Zap className="w-4 h-4 text-yellow-500" />
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Distancia</span>
+                {routeInfo.driving && (
+                  <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
+                    <div className="flex items-center space-x-2">
+                      <Zap className="w-4 h-4 text-yellow-500" />
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Distancia</span>
+                    </div>
+                    <span className="font-bold text-blue-600 dark:text-blue-400">{routeInfo.driving.distance}</span>
                   </div>
-                  <span className="font-bold text-blue-600 dark:text-blue-400">{routeInfo.distance}</span>
-                </div>
+                )}
 
-                {/* Tiempo estimado */}
-                <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
-                  <div className="flex items-center space-x-2">
-                    <Clock className="w-4 h-4 text-green-500" />
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Tiempo EST.</span>
+                {/* Tiempo en carro */}
+                {routeInfo.driving && (
+                  <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
+                    <div className="flex items-center space-x-2">
+                      <Clock className="w-4 h-4 text-blue-500" />
+                      <span className="text-sm text-gray-600 dark:text-gray-400">En carro</span>
+                    </div>
+                    <span className="font-bold text-blue-600 dark:text-blue-400">{routeInfo.driving.duration}</span>
                   </div>
-                  <span className="font-bold text-green-600 dark:text-green-400">{routeInfo.duration}</span>
-                </div>
+                )}
+
+                {/* Tiempo a pie */}
+                {routeInfo.walking && (
+                  <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
+                    <div className="flex items-center space-x-2">
+                      <Clock className="w-4 h-4 text-green-500" />
+                      <span className="text-sm text-gray-600 dark:text-gray-400">A pie</span>
+                    </div>
+                    <span className="font-bold text-green-600 dark:text-green-400">{routeInfo.walking.duration}</span>
+                  </div>
+                )}
               </div>
 
               <p className="text-xs text-gray-500 dark:text-gray-400 text-center italic">
