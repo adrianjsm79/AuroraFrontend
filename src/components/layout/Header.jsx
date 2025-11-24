@@ -6,7 +6,7 @@ const Header = ({ sidebarOpen, setSidebarOpen, onLogout, onGoHome }) => {
   const navigate = useNavigate();
 
   const handleGoHome = () => {
-    navigate('/dashboard/homeview');
+    navigate('/');
   };
 
   return (

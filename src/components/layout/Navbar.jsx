@@ -56,7 +56,7 @@ const Navbar = ({ onLoginClick, onDashboardClick }) => {
             {user && (
               <>
                 <button
-                  onClick={() => navigate('/dashboard')}
+                  onClick={() => navigate('/dashboard/homeview')}
                   className={`${textPrimaryClass} hover:text-primary transition-colors duration-200 font-medium`}
                 >
                   Dashboard
@@ -114,7 +114,7 @@ const Navbar = ({ onLoginClick, onDashboardClick }) => {
             {user && (
               <>
                 <button
-                  onClick={() => handleNavigate('/dashboard')}
+                  onClick={() => handleNavigate('/dashboard/homeview')}
                   className={`block w-full text-left px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition-colors ${textPrimaryClass}`}
                 >
                   Dashboard
