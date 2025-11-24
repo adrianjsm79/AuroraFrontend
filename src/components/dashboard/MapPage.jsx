@@ -11,8 +11,9 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
   const lostUserDevices = userDevices.filter(d => d.is_lost);
   const visibleUserDevices = userDevices.filter(d => !d.is_lost);
 
-  // Dispositivos de los seguidores (contactos que dieron confianza)
-  const followersDevices = contactsDevices || [];
+  // Dispositivos de los seguidores (usuarios que siguen al usuario actual - receivedContacts)
+  // Extraer todos los dispositivos de los usuarios que siguen al usuario actual
+  const followersDevices = receivedContacts.flatMap(follower => follower.devices || []);
   const lostFollowersDevices = followersDevices.filter(d => d.is_lost);
   const visibleFollowersDevices = followersDevices.filter(d => !d.is_lost);
 
@@ -221,7 +222,7 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                <span>Seguidores en peligro</span>
+                <span>dispositivos perdidos de seguidores</span>
               </div>
             </div>
           </div>
