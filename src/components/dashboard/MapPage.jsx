@@ -1,11 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Navigation, MapPin, Smartphone, Activity } from 'lucide-react';
+import { Navigation, MapPin, Smartphone, Activity, Navigation2, Clock, Zap } from 'lucide-react';
 import MapView from '../map/MapView';
 
 const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], contactsDevices = [], fetchLocations }) => {
   const [selectedDevice, setSelectedDevice] = useState(null);
   const [lastUpdateTime, setLastUpdateTime] = useState(new Date());
   const [displayTime, setDisplayTime] = useState(new Date());
+  const [routeInfo, setRouteInfo] = useState(null); // Información de la ruta desde MapView
 
   // Actualizar tiempo de última actualización cuando cambian los datos
   useEffect(() => {
@@ -162,6 +163,7 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
             contactsDevices={visibleFollowersDevices}
             lostContactsDevices={lostFollowersDevices}
             selectedDevice={selectedDevice}
+            onRouteInfoChange={setRouteInfo}
           />
         </div>
 
@@ -178,6 +180,40 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
               <span>Seguidores</span>
             </button>
           </div>
+
+          {/* Card de información de ruta - Se muestra cuando hay dispositivo seleccionado */}
+          {selectedDevice && routeInfo && (
+            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/30 dark:to-cyan-900/30 border-b border-blue-200 dark:border-blue-800 p-4 space-y-3">
+              <div className="flex items-center space-x-2 mb-3">
+                <Navigation2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                <h3 className="font-bold text-blue-900 dark:text-blue-200">Ruta Calculada</h3>
+              </div>
+              
+              <div className="space-y-2">
+                {/* Distancia */}
+                <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
+                  <div className="flex items-center space-x-2">
+                    <Zap className="w-4 h-4 text-yellow-500" />
+                    <span className="text-sm text-gray-600 dark:text-gray-400">Distancia</span>
+                  </div>
+                  <span className="font-bold text-blue-600 dark:text-blue-400">{routeInfo.distance}</span>
+                </div>
+
+                {/* Tiempo estimado */}
+                <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
+                  <div className="flex items-center space-x-2">
+                    <Clock className="w-4 h-4 text-green-500" />
+                    <span className="text-sm text-gray-600 dark:text-gray-400">Tiempo EST.</span>
+                  </div>
+                  <span className="font-bold text-green-600 dark:text-green-400">{routeInfo.duration}</span>
+                </div>
+              </div>
+
+              <p className="text-xs text-gray-500 dark:text-gray-400 text-center italic">
+                Se actualiza en tiempo real
+              </p>
+            </div>
+          )}
 
           {/* Lista de Dispositivos */}
           <div className="flex-1 overflow-y-auto">

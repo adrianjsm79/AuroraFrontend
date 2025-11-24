@@ -54,10 +54,12 @@ const MapView = ({
   contactsDevices = [], 
   lostContactsDevices = [],
   selectedDevice,
-  hoveredDevice = null // Ahora es opcional
+  hoveredDevice = null, // Ahora es opcional
+  onRouteInfoChange = null // Callback para pasar info de ruta al padre
 }) => {
   const [map, setMap] = useState(null);
   const [route, setRoute] = useState(null);
+  const [routeInfo, setRouteInfo] = useState(null); // Información de la ruta (distancia, tiempo, etc)
   const [hoveredMarker, setHoveredMarker] = useState(null);
   const [initialMapCentered, setInitialMapCentered] = useState(false);
 
@@ -81,7 +83,8 @@ const MapView = ({
   // Este efecto solo actualiza visualmente la posición sin mover la cámara
   // excepto si el dispositivo seleccionado es del usuario
 
-  // Calcular ruta cuando se selecciona un dispositivo
+  // Calcular ruta cuando se selecciona un dispositivo o cuando cambian ubicaciones
+  // Se actualiza automáticamente en tiempo real conforme se mueven las ubicaciones
   useEffect(() => {
     if (selectedDevice && userLocation && map) {
       const directionsService = new window.google.maps.DirectionsService();
@@ -95,13 +98,40 @@ const MapView = ({
         (result, status) => {
           if (status === 'OK') {
             setRoute(result.routes[0].overview_polyline);
+            
+            // Extraer información de la ruta
+            if (result.routes[0].legs && result.routes[0].legs.length > 0) {
+              const leg = result.routes[0].legs[0];
+              const routeData = {
+                distance: leg.distance.text,
+                distanceValue: leg.distance.value, // en metros
+                duration: leg.duration.text,
+                durationValue: leg.duration.value, // en segundos
+              };
+              setRouteInfo(routeData);
+              
+              // Notificar al componente padre
+              if (onRouteInfoChange) {
+                onRouteInfoChange(routeData);
+              }
+            }
+          } else {
+            console.error('Error calculating route:', status);
+            setRouteInfo(null);
+            if (onRouteInfoChange) {
+              onRouteInfoChange(null);
+            }
           }
         }
       );
     } else {
       setRoute(null);
+      setRouteInfo(null);
+      if (onRouteInfoChange) {
+        onRouteInfoChange(null);
+      }
     }
-  }, [selectedDevice, userLocation, map]);
+  }, [selectedDevice, userLocation, map, onRouteInfoChange]);
 
   // Cuando se selecciona un dispositivo, hacer zoom a él sin mover innecesariamente
   useEffect(() => {
@@ -257,14 +287,39 @@ const MapView = ({
       {lostContactsMarkers}
 
       {/* Ruta desde el pin azul al dispositivo seleccionado */}
+      {/* Primera línea: Borde blanco más grueso para efecto de contorno */}
+      {route && (
+        <Polyline
+          path={route}
+          options={{
+            strokeColor: '#ffffff',
+            strokeOpacity: 0.4,
+            strokeWeight: 6,
+            geodesic: true,
+          }}
+        />
+      )}
+      
+      {/* Segunda línea: Línea cyan principal con efecto dinámico */}
       {route && (
         <Polyline
           path={route}
           options={{
             strokeColor: '#01D9F6',
-            strokeOpacity: 0.8,
+            strokeOpacity: 0.9,
             strokeWeight: 3,
             geodesic: true,
+            icons: [
+              {
+                icon: {
+                  path: 'M 0,-1 0,1',
+                  strokeOpacity: 1,
+                  scale: 4,
+                },
+                offset: '0',
+                repeat: '20px',
+              },
+            ],
           }}
         />
       )}
