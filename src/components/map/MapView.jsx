@@ -15,6 +15,7 @@ const MapView = ({
   const [map, setMap] = useState(null);
   const [route, setRoute] = useState(null);
   const [hoveredMarker, setHoveredMarker] = useState(null);
+  const [initialMapCentered, setInitialMapCentered] = useState(false);
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
@@ -26,14 +27,11 @@ const MapView = ({
 
   // Centrar mapa en la ubicación del usuario solo cuando carga inicialmente
   useEffect(() => {
-    if (map && userLocation) {
-      // Solo centrar si el mapa aún no ha sido posicionado (primer render)
-      const mapBounds = map.getBounds();
-      if (!mapBounds || !mapBounds.contains({ lat: userLocation.latitude, lng: userLocation.longitude })) {
-        map.panTo({ lat: userLocation.latitude, lng: userLocation.longitude });
-      }
+    if (map && userLocation && !initialMapCentered) {
+      map.panTo({ lat: userLocation.latitude, lng: userLocation.longitude });
+      setInitialMapCentered(true);
     }
-  }, [map]); // Remover userLocation de dependencias para evitar re-centering
+  }, [map, initialMapCentered]); // No incluir userLocation para evitar re-centering
 
   // Calcular ruta cuando se selecciona un dispositivo
   useEffect(() => {
@@ -169,10 +167,19 @@ const MapView = ({
     lng: userLocation?.longitude || MAP_CONFIG.defaultCenter.lng 
   };
 
+  // Cuando se selecciona un dispositivo, hacer zoom a él sin mover innecesariamente
+  useEffect(() => {
+    if (selectedDevice && map) {
+      const bounds = new window.google.maps.LatLngBounds();
+      bounds.extend({ lat: userLocation.latitude, lng: userLocation.longitude });
+      bounds.extend({ lat: selectedDevice.latitude, lng: selectedDevice.longitude });
+      map.fitBounds(bounds, { padding: 100 });
+    }
+  }, [selectedDevice, map, userLocation]);
+
   return (
     <GoogleMap
       mapContainerStyle={{ width: '100%', height: '100%' }}
-      center={markerPosition}
       zoom={MAP_CONFIG.defaultZoom}
       options={MAP_CONFIG.options}
       onLoad={onLoad}
