@@ -40,6 +40,16 @@ export const MAP_CONFIG = {
         stylers: [{ visibility: 'off' }]
       },
       {
+        featureType: 'poi',
+        elementType: 'geometry',
+        stylers: [{ visibility: 'off' }]
+      },
+      {
+        featureType: 'poi',
+        elementType: 'labels.icon',
+        stylers: [{ visibility: 'off' }]
+      },
+      {
         featureType: 'poi.park',
         elementType: 'geometry.fill',
         stylers: [{ color: '#1a3a3a' }]
