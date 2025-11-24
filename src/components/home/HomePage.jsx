@@ -356,7 +356,8 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* iOS */}
             <a
               href="#ios"
               className={`${surfaceClass} rounded-xl p-8 text-center hover:shadow-lg transition-all duration-300 group border-2 border-primary`}
@@ -373,6 +374,7 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
               </button>
             </a>
 
+            {/* Android */}
             <a
               href="#android"
               className={`${surfaceClass} rounded-xl p-8 text-center hover:shadow-lg transition-all duration-300 group border-2 border-primary`}
@@ -388,6 +390,35 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
                 Descargar en Google Play
               </button>
             </a>
+
+            {/* QR y GitHub */}
+            <div className={`${surfaceClass} rounded-xl p-8 text-center hover:shadow-lg transition-all duration-300 border-2 border-primary`}>
+              <div className="mb-4 flex justify-center">
+                <img 
+                  src="/images/qrAuroraReleases.png" 
+                  alt="QR Aurora Releases" 
+                  className="w-48 h-48 rounded-lg shadow-lg"
+                />
+              </div>
+              <h3 className={`text-xl font-bold mb-2 ${textPrimaryClass}`}>
+                Escanea el QR
+              </h3>
+              <p className={`${textSecondaryClass} text-sm mb-4`}>
+                O descarga desde nuestro repositorio
+              </p>
+              <a
+                href="https://github.com/adrianjsm79/aurora-mobile/releases"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center px-6 py-3 bg-primary hover:bg-opacity-90 text-white rounded-lg font-semibold transition-all w-full"
+              >
+                <span className="mr-2">📦</span>
+                Ver en GitHub
+              </a>
+              <p className={`${textSecondaryClass} text-xs mt-3`}>
+                Últimas versiones disponibles
+              </p>
+            </div>
           </div>
 
           <div className={`mt-12 p-6 rounded-xl ${isDarkMode ? 'bg-dark-secondary-surface border border-dark-surface' : 'bg-light-secondary-surface border border-primary'}`}>
