@@ -1,7 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Menu, X, MapPin, LogOut, Home } from 'lucide-react';
 
 const Header = ({ sidebarOpen, setSidebarOpen, onLogout, onGoHome }) => {
+  const navigate = useNavigate();
+
+  const handleGoHome = () => {
+    navigate('/dashboard/homeview');
+  };
+
   return (
     <header className="bg-white dark:bg-gray-900 shadow-md border-b border-gray-200 dark:border-gray-700 fixed top-0 left-0 right-0 z-40">
       <div className="px-4 py-4 flex items-center justify-between">
@@ -23,7 +30,7 @@ const Header = ({ sidebarOpen, setSidebarOpen, onLogout, onGoHome }) => {
         
         <div className="flex items-center space-x-2">
           <button
-            onClick={onGoHome}
+            onClick={handleGoHome}
             className="p-2 hover:bg-blue-50 dark:hover:bg-blue-900/50 rounded-xl transition-all transform hover:scale-105 text-blue-600 dark:text-blue-500"
             title="Ir al Inicio"
           >

@@ -38,14 +38,14 @@ const Dashboard = ({ onGoHome }) => {
     // Determinar la vista actual basada en la URL
     const getViewFromPath = () => {
         const path = location.pathname.replace('/dashboard/', '').trim();
-        return path || 'home';
+        return path || 'homeview';
     };
 
     const currentView = getViewFromPath();
 
     const setCurrentView = (viewId) => {
-        if (viewId === 'home') {
-            navigate('/dashboard');
+        if (viewId === 'homeview') {
+            navigate('/dashboard/homeview');
         } else {
             navigate(`/dashboard/${viewId}`);
         }
