@@ -53,27 +53,6 @@ const MapView = ({
     }
   }, [selectedDevice, userLocation, map]);
 
-  if (loadError) {
-    return (
-      <div className="w-full h-full flex items-center justify-center bg-gray-900 text-white">
-        <div>Error al cargar el mapa. Revisa la API Key de Google Maps.</div>
-      </div>
-    );
-  }
-
-  if (!isLoaded) {
-    return (
-      <div className="w-full h-full flex items-center justify-center bg-gray-900 text-white">
-        <div>Cargando mapa...</div>
-      </div>
-    );
-  }
-
-  const markerPosition = { 
-    lat: userLocation?.latitude || MAP_CONFIG.defaultCenter.lat, 
-    lng: userLocation?.longitude || MAP_CONFIG.defaultCenter.lng 
-  };
-
   // Componente para renderizar un dispositivo como marcador - Memoizado para evitar re-renders innecesarios
   const DeviceMarker = useCallback(({ device, color, type }) => {
     const position = { lat: device.latitude, lng: device.longitude };
@@ -164,6 +143,27 @@ const MapView = ({
     lostContactsDevices.map(device => <DeviceMarker key={device.id} device={device} color="#fbbf24" type="follower-lost" />),
     [lostContactsDevices, DeviceMarker]
   );
+
+  if (loadError) {
+    return (
+      <div className="w-full h-full flex items-center justify-center bg-gray-900 text-white">
+        <div>Error al cargar el mapa. Revisa la API Key de Google Maps.</div>
+      </div>
+    );
+  }
+
+  if (!isLoaded) {
+    return (
+      <div className="w-full h-full flex items-center justify-center bg-gray-900 text-white">
+        <div>Cargando mapa...</div>
+      </div>
+    );
+  }
+
+  const markerPosition = { 
+    lat: userLocation?.latitude || MAP_CONFIG.defaultCenter.lat, 
+    lng: userLocation?.longitude || MAP_CONFIG.defaultCenter.lng 
+  };
 
   return (
     <GoogleMap
