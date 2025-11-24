@@ -65,6 +65,7 @@ const MapView = ({
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+    libraries: ['geometry', 'places'], // Incluir geometry para decodificar polylines
   });
 
   const onLoad = useCallback((mapInstance) => {
@@ -97,26 +98,53 @@ const MapView = ({
         },
         (result, status) => {
           if (status === 'OK') {
-            setRoute(result.routes[0].overview_polyline);
-            
-            // Extraer información de la ruta
-            if (result.routes[0].legs && result.routes[0].legs.length > 0) {
-              const leg = result.routes[0].legs[0];
-              const routeData = {
-                distance: leg.distance.text,
-                distanceValue: leg.distance.value, // en metros
-                duration: leg.duration.text,
-                durationValue: leg.duration.value, // en segundos
-              };
-              setRouteInfo(routeData);
+            // Extraer las coordenadas de la ruta (legs)
+            const routes = result.routes;
+            if (routes.length > 0) {
+              const routeData = routes[0];
+              // Decodificar el polyline path para obtener array de coordenadas
+              const path = [];
+              if (routeData.legs && routeData.legs.length > 0) {
+                for (let i = 0; i < routeData.legs.length; i++) {
+                  const leg = routeData.legs[i];
+                  if (leg.steps && leg.steps.length > 0) {
+                    for (let j = 0; j < leg.steps.length; j++) {
+                      const step = leg.steps[j];
+                      const points = window.google.maps.geometry.encoding.decodePath(step.polyline.points);
+                      path.push(...points);
+                    }
+                  }
+                }
+              }
               
-              // Notificar al componente padre
-              if (onRouteInfoChange) {
-                onRouteInfoChange(routeData);
+              // Convertir LatLng objects a coordenadas simples
+              const routePath = path.map(point => ({
+                lat: point.lat(),
+                lng: point.lng()
+              }));
+              
+              setRoute(routePath);
+              
+              // Extraer información de la ruta
+              if (routeData.legs && routeData.legs.length > 0) {
+                const leg = routeData.legs[0];
+                const routeInfo = {
+                  distance: leg.distance.text,
+                  distanceValue: leg.distance.value, // en metros
+                  duration: leg.duration.text,
+                  durationValue: leg.duration.value, // en segundos
+                };
+                setRouteInfo(routeInfo);
+                
+                // Notificar al componente padre
+                if (onRouteInfoChange) {
+                  onRouteInfoChange(routeInfo);
+                }
               }
             }
           } else {
             console.error('Error calculating route:', status);
+            setRoute(null);
             setRouteInfo(null);
             if (onRouteInfoChange) {
               onRouteInfoChange(null);
