@@ -142,13 +142,55 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
               </span>
             </div>
           </div>
-          <button
-            onClick={fetchLocations}
-            className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-secondary transition flex items-center space-x-2 font-semibold"
-          >
-            <Navigation className="w-5 h-5" />
-            <span>Actualizar</span>
-          </button>
+
+          {/* Información de Ruta en el Header - Solo si hay dispositivo seleccionado */}
+          {selectedDevice && routeInfo ? (
+            <div className="flex items-center space-x-4 bg-blue-50 dark:bg-blue-900/20 px-4 py-2 rounded-lg border border-blue-200 dark:border-blue-800">
+              <div className="text-center">
+                <p className="text-xs text-gray-600 dark:text-gray-400">Dispositivo</p>
+                <p className="text-sm font-bold text-gray-800 dark:text-gray-200 truncate max-w-xs">
+                  {selectedDevice.name}
+                </p>
+              </div>
+
+              <div className="h-8 w-px bg-gray-300 dark:bg-gray-600" />
+
+              {routeInfo.driving && (
+                <>
+                  <div className="text-center">
+                    <p className="text-xs text-gray-600 dark:text-gray-400">Distancia</p>
+                    <p className="text-sm font-bold text-yellow-600 dark:text-yellow-400">
+                      {routeInfo.driving.distance}
+                    </p>
+                  </div>
+
+                  <div className="text-center">
+                    <p className="text-xs text-gray-600 dark:text-gray-400">En Carro</p>
+                    <p className="text-sm font-bold text-blue-600 dark:text-blue-400">
+                      {routeInfo.driving.duration}
+                    </p>
+                  </div>
+                </>
+              )}
+
+              {routeInfo.walking && (
+                <div className="text-center">
+                  <p className="text-xs text-gray-600 dark:text-gray-400">A Pie</p>
+                  <p className="text-sm font-bold text-green-600 dark:text-green-400">
+                    {routeInfo.walking.duration}
+                  </p>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              onClick={fetchLocations}
+              className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-secondary transition flex items-center space-x-2 font-semibold"
+            >
+              <Navigation className="w-5 h-5" />
+              <span>Actualizar</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -268,10 +310,10 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
           )}
         </button>
 
-        {/* Leyenda - Esquina inferior izquierda */}
-        <div className="fixed bottom-4 left-4 bg-white dark:bg-gray-800 rounded-lg shadow-2xl p-4 z-20 max-w-xs">
+        {/* Leyenda - Esquina inferior izquierda (sobre el mapa de Google) */}
+        <div className="fixed bottom-4 left-4 bg-white dark:bg-gray-800 bg-opacity-90 dark:bg-opacity-80 backdrop-blur rounded-lg shadow-lg p-4 z-20 max-w-xs">
           <div className="font-semibold text-gray-800 dark:text-gray-200 mb-3 text-sm">
-            Leyenda de Colores
+            Leyenda
           </div>
           <div className="space-y-2">
             <div className="flex items-center space-x-2 text-xs">
@@ -284,81 +326,18 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
             </div>
             <div className="flex items-center space-x-2 text-xs">
               <div className="w-3 h-3 rounded-full bg-green-500" />
-              <span className="text-gray-700 dark:text-gray-300">Dispositivos de seguidores</span>
+              <span className="text-gray-700 dark:text-gray-300">Seguidores</span>
             </div>
             <div className="flex items-center space-x-2 text-xs">
               <div className="w-3 h-3 rounded-full bg-red-500" />
-              <span className="text-gray-700 dark:text-gray-300">Dispositivos perdidos</span>
+              <span className="text-gray-700 dark:text-gray-300">Perdidos</span>
             </div>
             <div className="flex items-center space-x-2 text-xs">
               <div className="w-3 h-3 rounded-full bg-yellow-500" />
-              <span className="text-gray-700 dark:text-gray-300">Seguidores en peligro</span>
+              <span className="text-gray-700 dark:text-gray-300">En peligro</span>
             </div>
           </div>
         </div>
-
-        {/* Panel de Información de Ruta - Flotante (esquina inferior derecha) */}
-        {selectedDevice && routeInfo && (
-          <div className="fixed bottom-4 right-4 bg-white dark:bg-gray-800 rounded-lg shadow-2xl p-4 z-20 w-80 max-h-96 overflow-y-auto">
-            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/30 dark:to-cyan-900/30 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
-              <div className="flex items-center space-x-2 mb-3">
-                <Navigation2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                <h3 className="font-bold text-blue-900 dark:text-blue-200">Ruta Calculada</h3>
-              </div>
-
-              {/* Dispositivo Seleccionado */}
-              <div className="bg-white dark:bg-gray-700 rounded p-3 mb-3">
-                <p className="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate">
-                  📍 {selectedDevice.name}
-                </p>
-                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                  {selectedDevice.latitude?.toFixed(4)}, {selectedDevice.longitude?.toFixed(4)}
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                {/* Distancia */}
-                {routeInfo.driving && (
-                  <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded p-2">
-                    <div className="flex items-center space-x-1">
-                      <Zap className="w-3 h-3 text-yellow-500" />
-                      <span className="text-xs text-gray-600 dark:text-gray-400">Distancia</span>
-                    </div>
-                    <span className="font-bold text-sm text-blue-600 dark:text-blue-400">
-                      {routeInfo.driving.distance}
-                    </span>
-                  </div>
-                )}
-
-                {/* Tiempo en carro */}
-                {routeInfo.driving && (
-                  <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded p-2">
-                    <div className="flex items-center space-x-1">
-                      <Clock className="w-3 h-3 text-blue-500" />
-                      <span className="text-xs text-gray-600 dark:text-gray-400">En carro</span>
-                    </div>
-                    <span className="font-bold text-sm text-blue-600 dark:text-blue-400">
-                      {routeInfo.driving.duration}
-                    </span>
-                  </div>
-                )}
-
-                {/* Tiempo a pie */}
-                {routeInfo.walking && (
-                  <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded p-2">
-                    <div className="flex items-center space-x-1">
-                      <Clock className="w-3 h-3 text-green-500" />
-                      <span className="text-xs text-gray-600 dark:text-gray-400">A pie</span>
-                    </div>
-                    <span className="font-bold text-sm text-green-600 dark:text-green-400">
-                      {routeInfo.walking.duration}
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
