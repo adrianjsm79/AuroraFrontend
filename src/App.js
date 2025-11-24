@@ -5,7 +5,6 @@ import { ThemeProvider, useTheme } from './context/ThemeContext';
 import LoadingScreen from './components/common/LoadingScreen';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-import Breadcrumbs from './components/layout/Breadcrumbs';
 import PageTransition from './components/common/PageTransition';
 
 // Lazy loading de componentes
@@ -60,9 +59,6 @@ const AppContent = () => {
           onLoginClick={() => {}} 
           onDashboardClick={() => {}}
         />
-        
-        {/* Breadcrumbs - mostrar solo en dashboard */}
-        {user && <Breadcrumbs />}
         
         <PageTransition>
           <div className="flex-1">
