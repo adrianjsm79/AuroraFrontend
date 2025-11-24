@@ -10,7 +10,7 @@ export const apiService = {
   },
 
   async getReceivedTrustedContacts(token) {
-    const response = await fetch(`${API_URL}/users/trusted-contacts-received/`, {
+    const response = await fetch(`${API_URL}/users/trusted-contacts/trusted-by/`, {
       headers: { 'Authorization': `Bearer ${token}`, 'ngrok-skip-browser-warning': 'true' }, 
     });
     return response.json();
