@@ -56,17 +56,6 @@ const HomeView = ({
                   <p className="text-sm text-gray-500 dark:text-gray-400">Información en tiempo real</p>
                 </div>
               </div>
-              <button
-                onClick={toggleLocationVisibility}
-                className={`p-3 rounded-xl transition-all transform hover:scale-110 ${
-                  locationVisible
-                    ? 'bg-green-100 text-green-600 dark:bg-green-900/50 dark:text-green-400'
-                    : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400'
-                }`}
-                title={locationVisible ? 'Ocultar ubicación' : 'Mostrar ubicación'}
-              >
-                {locationVisible ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
-              </button>
             </div>
 
             {userLocation ? (
@@ -102,27 +91,7 @@ const HomeView = ({
                     <Navigation className="w-4 h-4" />
                     <span>Ver en Mapa</span>
                   </button>
-                  <button
-                    onClick={toggleLocationVisibility}
-                    className="flex-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-3 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition flex items-center justify-center space-x-2"
-                  >
-                    {locationVisible ? (
-                      <>
-                        <EyeOff className="w-4 h-4" />
-                        <span>Ocultar</span>
-                      </>
-                    ) : (
-                      <>
-                        <Eye className="w-4 h-4" />
-                        <span>Mostrar</span>
-                      </>
-                    )}
-                  </button>
                 </div>
-
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-4 text-center">
-                  {locationVisible ? '✓ Tu ubicación se comparte con tus contactos' : '✗ Tu ubicación está oculta'}
-                </p>
               </>
             ) : (
               <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-8 text-center">

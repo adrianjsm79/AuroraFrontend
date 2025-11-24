@@ -9,6 +9,7 @@ import HomeView from './HomeView';
 import MapPage from './MapPage';
 import ContactsView from './ContactsView';
 import DevicesView from './DevicesView';
+import AccountView from './AccountView';
 import AboutView from './AboutView';
 
 const Dashboard = ({ onGoHome }) => {
@@ -331,6 +332,16 @@ const Dashboard = ({ onGoHome }) => {
                         updateDeviceVisibility={updateDeviceVisibility}
                         deleteDevice={deleteDevice}
                         updateDeviceLostStatus={updateDeviceLostStatus}
+                    />
+                )}
+
+                {currentView === 'account' && (
+                    <AccountView
+                        user={user}
+                        onLogout={() => {
+                            logout();
+                            onGoHome();
+                        }}
                     />
                 )}
 
