@@ -28,16 +28,12 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-// Componente para rutas públicas (redirige si ya está logeado)
+// Componente para rutas públicas (accesibles incluso si está logeado)
 const PublicRoute = ({ children }) => {
-  const { user, loading } = useAuth();
+  const { loading } = useAuth();
 
   if (loading) {
     return <LoadingScreen />;
-  }
-
-  if (user) {
-    return <Navigate to="/dashboard" replace />;
   }
 
   return children;
@@ -69,18 +65,16 @@ const AppContent = () => {
         <div className="flex-1">
           <Suspense fallback={<LoadingScreen />}>
             <Routes>
-              {/* Rutas públicas */}
+              {/* Rutas públicas - accesibles por cualquiera */}
               <Route 
                 path="/" 
                 element={
-                  user ? (
-                    <Navigate to="/dashboard" replace />
-                  ) : (
+                  <PublicRoute>
                     <HomePage 
                       onLoginClick={() => {}}
                       onDashboardClick={() => {}}
                     />
-                  )
+                  </PublicRoute>
                 } 
               />
 
@@ -102,7 +96,7 @@ const AppContent = () => {
                 } 
               />
 
-              {/* Rutas del dashboard */}
+              {/* Rutas del dashboard - solo para usuarios logeados */}
               <Route 
                 path="/dashboard/*" 
                 element={
