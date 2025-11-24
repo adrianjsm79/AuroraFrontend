@@ -2,6 +2,45 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { GoogleMap, useLoadScript, Marker, InfoWindow, Polyline, Circle } from '@react-google-maps/api';
 import { GOOGLE_MAPS_API_KEY, MAP_CONFIG } from '../../config';
 
+// Función para crear un icono SVG con un ícono de persona dentro
+const createUserLocationIcon = () => {
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+      <circle cx="12" cy="12" r="10" fill="#3b82f6" stroke="#ffffff" stroke-width="2"/>
+      <circle cx="12" cy="8" r="2" fill="white"/>
+      <path d="M 12 10 Q 9 13 9 15 Q 9 17 12 17 Q 15 17 15 15 Q 15 13 12 10" fill="white"/>
+    </svg>
+  `;
+  
+  return {
+    url: `data:image/svg+xml;base64,${btoa(svg)}`,
+    scaledSize: new window.google.maps.Size(30, 30),
+    origin: new window.google.maps.Point(0, 0),
+    anchor: new window.google.maps.Point(15, 15),
+  };
+};
+
+// Función para crear un icono SVG con un ícono de dispositivo móvil dentro
+const createDeviceIcon = (color, isSelected = false, isHovered = false) => {
+  const scale = isSelected || isHovered ? 1.4 : 1;
+  const size = 20 * scale;
+  
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+      <circle cx="12" cy="12" r="11" fill="${color}" stroke="white" stroke-width="2"/>
+      <rect x="9" y="7" width="6" height="10" rx="0.5" fill="white"/>
+      <circle cx="12" cy="15" r="0.5" fill="${color}"/>
+    </svg>
+  `;
+  
+  return {
+    url: `data:image/svg+xml;base64,${btoa(svg)}`,
+    scaledSize: new window.google.maps.Size(size, size),
+    origin: new window.google.maps.Point(0, 0),
+    anchor: new window.google.maps.Point(size / 2, size / 2),
+  };
+};
+
 const MapView = ({ 
   userLocation, 
   user,
@@ -78,14 +117,7 @@ const MapView = ({
           onClick={() => {/* Selección manejada por el panel */}}
           onMouseOver={() => setHoveredMarker(device.id)}
           onMouseOut={() => setHoveredMarker(null)}
-          icon={{
-            path: window.google.maps.SymbolPath.CIRCLE,
-            scale: isSelected || isHovered ? 14 : 10,
-            fillColor: color,
-            fillOpacity: isSelected || isHovered ? 1 : 0.8,
-            strokeColor: isSelected ? '#fff' : '#ffffff',
-            strokeWeight: isSelected ? 4 : 2,
-          }}
+          icon={createDeviceIcon(color, isSelected, isHovered)}
           animation={null}
         />
         
@@ -191,14 +223,7 @@ const MapView = ({
             lat: userLocation.latitude,
             lng: userLocation.longitude
           }}
-          icon={{
-            path: window.google.maps.SymbolPath.CIRCLE,
-            scale: 12,
-            fillColor: '#3b82f6',
-            fillOpacity: 1,
-            strokeColor: '#ffffff',
-            strokeWeight: 3,
-          }}
+          icon={createUserLocationIcon()}
           animation={window.google.maps.Animation.BOUNCE}
           title="Tu ubicación (Navegador)"
         />
