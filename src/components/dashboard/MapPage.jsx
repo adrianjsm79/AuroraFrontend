@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Navigation, MapPin, Smartphone } from 'lucide-react';
 import MapView from '../map/MapView';
 
 const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], contactsDevices = [], fetchLocations }) => {
   const [selectedDevice, setSelectedDevice] = useState(null);
-  const [hoveredDevice, setHoveredDevice] = useState(null);
+  // Removido: hoveredDevice - el hover se manejará internamente en MapView
 
   // Separar dispositivos del usuario por estado
   const userDevices = devices || [];
@@ -41,8 +41,6 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
           selectedDevice?.id === device.id ? 'ring-2 ring-primary' : ''
         }`}
         onClick={() => setSelectedDevice(device)}
-        onMouseEnter={() => setHoveredDevice(device.id)}
-        onMouseLeave={() => setHoveredDevice(null)}
       >
         <div className="flex items-start space-x-3">
           <div
@@ -110,7 +108,6 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
             contactsDevices={visibleFollowersDevices}
             lostContactsDevices={lostFollowersDevices}
             selectedDevice={selectedDevice}
-            hoveredDevice={hoveredDevice}
           />
         </div>
 

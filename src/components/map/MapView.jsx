@@ -10,7 +10,7 @@ const MapView = ({
   contactsDevices = [], 
   lostContactsDevices = [],
   selectedDevice,
-  hoveredDevice
+  hoveredDevice = null // Ahora es opcional
 }) => {
   const [map, setMap] = useState(null);
   const [route, setRoute] = useState(null);
@@ -24,12 +24,16 @@ const MapView = ({
     setMap(mapInstance);
   }, []);
 
-  // Centrar mapa en la ubicación del usuario
+  // Centrar mapa en la ubicación del usuario solo cuando carga inicialmente
   useEffect(() => {
     if (map && userLocation) {
-      map.panTo({ lat: userLocation.latitude, lng: userLocation.longitude });
+      // Solo centrar si el mapa aún no ha sido posicionado (primer render)
+      const mapBounds = map.getBounds();
+      if (!mapBounds || !mapBounds.contains({ lat: userLocation.latitude, lng: userLocation.longitude })) {
+        map.panTo({ lat: userLocation.latitude, lng: userLocation.longitude });
+      }
     }
-  }, [userLocation, map]);
+  }, [map]); // Remover userLocation de dependencias para evitar re-centering
 
   // Calcular ruta cuando se selecciona un dispositivo
   useEffect(() => {
