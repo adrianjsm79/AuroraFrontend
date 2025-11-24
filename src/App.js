@@ -4,7 +4,6 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import LoadingScreen from './components/common/LoadingScreen';
 import Navbar from './components/layout/Navbar';
-import DashboardNavbar from './components/layout/DashboardNavbar';
 import Footer from './components/layout/Footer';
 import PageTransition from './components/common/PageTransition';
 
@@ -58,10 +57,8 @@ const AppContent = () => {
 
   return (
     <div className={`flex flex-col min-h-screen ${isDarkMode ? 'bg-dark-background' : 'bg-light-background'}`}>
-      {/* Mostrar navbar diferente según si estamos en dashboard */}
-      {isDashboard ? (
-        <DashboardNavbar />
-      ) : (
+      {/* Solo mostrar navbar en rutas públicas, no en dashboard */}
+      {!isDashboard && (
         <Navbar 
           onLoginClick={() => {}} 
           onDashboardClick={() => {}}
