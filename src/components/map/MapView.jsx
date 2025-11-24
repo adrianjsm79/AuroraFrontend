@@ -68,11 +68,20 @@ const MapView = ({
   // Detectar cuando se entra/sale de pantalla completa
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
+      setIsFullscreen(!!document.fullscreenElement || !!document.webkitFullscreenElement || !!document.mozFullScreenElement);
     };
 
     document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('msfullscreenchange', handleFullscreenChange);
+    
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('msfullscreenchange', handleFullscreenChange);
+    };
   }, []);
 
   const { isLoaded, loadError } = useLoadScript({
@@ -319,14 +328,20 @@ const MapView = ({
 
   const mapOptions = {
     ...MAP_CONFIG.options,
-    fullscreenControl: true, // Habilitar botón de pantalla completa nativo
-    fullscreenControlOptions: {
-      position: window.google.maps.ControlPosition.TOP_RIGHT,
-    },
+    fullscreenControl: true, // Asegurar que está habilitado
   };
 
   return (
-    <div className="w-full h-full relative" id="map-container">
+    <div 
+      className="w-full h-full relative" 
+      id="map-container"
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
+      }}
+    >
       {/* GoogleMap con botón de pantalla completa nativo */}
       <GoogleMap
         mapContainerStyle={{ width: '100%', height: '100%' }}
@@ -406,9 +421,15 @@ const MapView = ({
             <h3 className="font-bold text-lg">Información de Ruta</h3>
             <button
               onClick={() => {
-                // Salir de pantalla completa
+                // Salir de pantalla completa con soporte para todos los navegadores
                 if (document.fullscreenElement) {
                   document.exitFullscreen();
+                } else if (document.webkitFullscreenElement) {
+                  document.webkitExitFullscreen();
+                } else if (document.mozFullScreenElement) {
+                  document.mozCancelFullScreen();
+                } else if (document.msFullscreenElement) {
+                  document.msExitFullscreen();
                 }
               }}
               className="hover:bg-white hover:bg-opacity-20 rounded-lg p-1 transition"
