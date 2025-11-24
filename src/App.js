@@ -1,9 +1,10 @@
 import React, { useState, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import LoadingScreen from './components/common/LoadingScreen';
 import Navbar from './components/layout/Navbar';
+import DashboardNavbar from './components/layout/DashboardNavbar';
 import Footer from './components/layout/Footer';
 import PageTransition from './components/common/PageTransition';
 
@@ -47,85 +48,95 @@ const AppContent = () => {
   const [showLogin, setShowLogin] = useState(true);
   const { user, loading, logout } = useAuth();
   const { isDarkMode } = useTheme();
+  const location = useLocation();
+  
+  const isDashboard = location.pathname.startsWith('/dashboard');
 
   if (loading) {
     return <LoadingScreen />;
   }
 
   return (
-    <BrowserRouter>
-      <div className={`flex flex-col min-h-screen ${isDarkMode ? 'bg-dark-background' : 'bg-light-background'}`}>
+    <div className={`flex flex-col min-h-screen ${isDarkMode ? 'bg-dark-background' : 'bg-light-background'}`}>
+      {/* Mostrar navbar diferente según si estamos en dashboard */}
+      {isDashboard ? (
+        <DashboardNavbar />
+      ) : (
         <Navbar 
           onLoginClick={() => {}} 
           onDashboardClick={() => {}}
         />
-        
-        <PageTransition>
-          <div className="flex-1">
-            <Suspense fallback={<LoadingScreen />}>
-              <Routes>
-                {/* Rutas públicas */}
-                <Route 
-                  path="/" 
-                  element={
-                    user ? (
-                      <Navigate to="/dashboard" replace />
-                    ) : (
-                      <HomePage 
-                        onLoginClick={() => {}}
-                        onDashboardClick={() => {}}
-                      />
-                    )
-                  } 
-                />
+      )}
+      
+      <PageTransition>
+        <div className="flex-1">
+          <Suspense fallback={<LoadingScreen />}>
+            <Routes>
+              {/* Rutas públicas */}
+              <Route 
+                path="/" 
+                element={
+                  user ? (
+                    <Navigate to="/dashboard" replace />
+                  ) : (
+                    <HomePage 
+                      onLoginClick={() => {}}
+                      onDashboardClick={() => {}}
+                    />
+                  )
+                } 
+              />
 
-                {/* Rutas de autenticación */}
-                <Route 
-                  path="/login" 
-                  element={
-                    <PublicRoute>
-                      <Login onToggle={() => setShowLogin(false)} />
-                    </PublicRoute>
-                  } 
-                />
-                <Route 
-                  path="/register" 
-                  element={
-                    <PublicRoute>
-                      <Register onToggle={() => setShowLogin(true)} />
-                    </PublicRoute>
-                  } 
-                />
+              {/* Rutas de autenticación */}
+              <Route 
+                path="/login" 
+                element={
+                  <PublicRoute>
+                    <Login onToggle={() => setShowLogin(false)} />
+                  </PublicRoute>
+                } 
+              />
+              <Route 
+                path="/register" 
+                element={
+                  <PublicRoute>
+                    <Register onToggle={() => setShowLogin(true)} />
+                  </PublicRoute>
+                } 
+              />
 
-                {/* Rutas del dashboard */}
-                <Route 
-                  path="/dashboard/*" 
-                  element={
-                    <ProtectedRoute>
-                      <Dashboard onGoHome={() => {}} />
-                    </ProtectedRoute>
-                  } 
-                />
+              {/* Rutas del dashboard */}
+              <Route 
+                path="/dashboard/*" 
+                element={
+                  <ProtectedRoute>
+                    <Dashboard onGoHome={() => {}} />
+                  </ProtectedRoute>
+                } 
+              />
 
-                {/* Ruta por defecto */}
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-            </Suspense>
-          </div>
-        </PageTransition>
-        {!user && <Footer />}
-      </div>
-    </BrowserRouter>
+              {/* Ruta por defecto */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
+        </div>
+      </PageTransition>
+      
+      {/* Footer siempre visible */}
+      <Footer />
+    </div>
   );
 };
 
 const App = () => {
   return (
-    <AuthProvider>
-      <ThemeProvider>
-        <AppContent />
-      </ThemeProvider>
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <ThemeProvider>
+          <AppContent />
+        </ThemeProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 };
 
