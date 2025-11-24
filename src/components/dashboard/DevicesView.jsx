@@ -275,6 +275,43 @@ const DevicesView = ({ devices, updateDeviceVisibility, deleteDevice, updateDevi
           <li>• Los dispositivos ocultos no aparecerán en sus mapas</li>
         </ul>
       </div>
+
+      <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl shadow-xl p-6 text-white mt-6">
+        <h3 className="font-bold text-xl mb-4 flex items-center">
+          <AlertTriangle className="w-6 h-6 mr-3" />
+          Protocolo de Dispositivo Perdido
+        </h3>
+        <div className="space-y-3 text-sm text-red-50">
+          <p className="font-semibold text-lg">Cuando marcas un dispositivo como perdido:</p>
+          <ul className="space-y-3 ml-4">
+            <li className="flex items-start space-x-3">
+              <span className="flex-shrink-0 text-lg">🔴</span>
+              <span><strong>Alerta Inmediata:</strong> Todos tus contactos que te siguen serán notificados de que tu dispositivo está perdido</span>
+            </li>
+            <li className="flex items-start space-x-3">
+              <span className="flex-shrink-0 text-lg">📍</span>
+              <span><strong>Rastreo Activo:</strong> La ubicación del dispositivo se actualiza constantemente y es compartida con tus contactos</span>
+            </li>
+            <li className="flex items-start space-x-3">
+              <span className="flex-shrink-0 text-lg">🚨</span>
+              <span><strong>Indicador Visual:</strong> El dispositivo mostrará un badge "Reportado perdido" en todos los mapas</span>
+            </li>
+            <li className="flex items-start space-x-3">
+              <span className="flex-shrink-0 text-lg">🔐</span>
+              <span><strong>Privar de Acceso:</strong> Se recomienda cambiar contraseñas y desactivar aplicaciones críticas remotamente</span>
+            </li>
+            <li className="flex items-start space-x-3">
+              <span className="flex-shrink-0 text-lg">✅</span>
+              <span><strong>Marcar como Encontrado:</strong> Cuando recuperes el dispositivo, cambia el estado a encontrado</span>
+            </li>
+          </ul>
+          <div className="mt-4 pt-4 border-t border-red-400 border-opacity-50">
+            <p className="text-xs text-red-100">
+              ⚠️ No compartas esta información públicamente. Solo tus contactos de confianza pueden ver esta alerta.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
