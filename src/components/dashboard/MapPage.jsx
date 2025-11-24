@@ -310,8 +310,8 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
           )}
         </button>
 
-        {/* Leyenda - Esquina inferior izquierda (sobre el mapa de Google) */}
-        <div className="fixed bottom-4 left-4 bg-white dark:bg-gray-800 bg-opacity-90 dark:bg-opacity-80 backdrop-blur rounded-lg shadow-lg p-4 z-20 max-w-xs">
+        {/* Leyenda - Esquina inferior derecha (sobre el mapa de Google) */}
+        <div className="fixed bottom-4 right-4 bg-white dark:bg-gray-800 bg-opacity-90 dark:bg-opacity-80 backdrop-blur rounded-lg shadow-lg p-4 z-20 max-w-xs">
           <div className="font-semibold text-gray-800 dark:text-gray-200 mb-3 text-sm">
             Leyenda
           </div>
