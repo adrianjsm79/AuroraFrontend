@@ -193,9 +193,9 @@ const Dashboard = ({ onGoHome }) => {
 
                 {currentView === 'map' && (
                     <MapPage
-                        locations={locations}
                         userLocation={userLocation}
-                        trustedContacts={trustedContacts}
+                        user={user}
+                        receivedContacts={receivedContacts}
                         devices={devices}
                         contactsDevices={contactsDevices}
                         fetchLocations={fetchLocations}
