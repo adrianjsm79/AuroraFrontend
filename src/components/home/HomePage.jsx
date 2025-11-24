@@ -31,7 +31,7 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
             </h1>
 
             <p className={`text-xl md:text-2xl mb-8 max-w-2xl mx-auto ${textSecondaryClass}`}>
-              Aurora: Monitoreo en tiempo real de la ubicación de tus seres queridos con la máxima seguridad y privacidad.
+              Aurora: Localización en tiempo real de dispositivos, seguimiento de personas y protección contra delincuencia. Recupera tus dispositivos perdidos o robados al instante.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -71,7 +71,7 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
               Características Principales
             </h2>
             <p className={`text-lg ${textSecondaryClass} max-w-2xl mx-auto`}>
-              Todo lo que necesitas para mantener a tu familia segura
+              Protección integral para tus dispositivos, seres queridos y prevención ante delincuencia
             </p>
           </div>
 
@@ -85,7 +85,7 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
                 Localización en Tiempo Real
               </h3>
               <p className={`${textSecondaryClass}`}>
-                Conoce la ubicación exacta de tus contactos de confianza en cualquier momento con actualizaciones en vivo.
+                Ubica tus dispositivos en segundos. Rastreo GPS preciso de teléfonos, tablets y otros dispositivos con actualizaciones cada segundo.
               </p>
             </div>
 
@@ -95,10 +95,10 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
                 <span className="text-2xl">🔒</span>
               </div>
               <h3 className={`text-xl font-bold mb-3 ${textPrimaryClass}`}>
-                Seguridad de Datos
+                Recupera Dispositivos Robados
               </h3>
               <p className={`${textSecondaryClass}`}>
-                Encriptación de extremo a extremo garantiza que tus datos personales permanezcan protegidos en todo momento.
+                Si tu dispositivo es robado, localízalo al instante. Bloquea acceso remoto y protege tus datos antes de que sea demasiado tarde.
               </p>
             </div>
 
@@ -108,10 +108,10 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
                 <span className="text-2xl">📱</span>
               </div>
               <h3 className={`text-xl font-bold mb-3 ${textPrimaryClass}`}>
-                App Móvil Disponible
+                App Móvil Indispensable
               </h3>
               <p className={`${textSecondaryClass}`}>
-                Descarga nuestra aplicación en iOS y Android para tener control total desde tu teléfono.
+                La aplicación móvil es esencial. Comparte tu ubicación en tiempo real y monitorea dispositivos desde cualquier lugar.
               </p>
             </div>
 
@@ -121,36 +121,36 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
                 <span className="text-2xl">👥</span>
               </div>
               <h3 className={`text-xl font-bold mb-3 ${textPrimaryClass}`}>
-                Contactos de Confianza
+                Monitoreo de Contactos
               </h3>
               <p className={`${textSecondaryClass}`}>
-                Agrega solo a las personas en las que confías y controla quién puede ver tu ubicación.
+                Mantén a tu familia segura. Sabe dónde están tus seres queridos en tiempo real y recibe alertas de ubicación sospechosa.
               </p>
             </div>
 
             {/* Feature 5 */}
             <div className={`${surfaceClass} rounded-xl p-8 hover:shadow-lg transition-all duration-300`}>
               <div className="w-14 h-14 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center mb-4">
-                <span className="text-2xl">🗺️</span>
+                <span className="text-2xl">⚠️</span>
               </div>
               <h3 className={`text-xl font-bold mb-3 ${textPrimaryClass}`}>
-                Mapa Interactivo
+                Protección Ante Delincuencia
               </h3>
               <p className={`${textSecondaryClass}`}>
-                Visualiza en tiempo real la ubicación de todos tus contactos en un mapa interactivo y detallado.
+                Aurora te ayuda a actuar rápido ante robos. Comparte información con autoridades y obtén apoyo inmediato de nuestra comunidad.
               </p>
             </div>
 
             {/* Feature 6 */}
             <div className={`${surfaceClass} rounded-xl p-8 hover:shadow-lg transition-all duration-300`}>
               <div className="w-14 h-14 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center mb-4">
-                <span className="text-2xl">⚡</span>
+                <span className="text-2xl">🗺️</span>
               </div>
               <h3 className={`text-xl font-bold mb-3 ${textPrimaryClass}`}>
-                Rendimiento Óptimo
+                Mapa Interactivo 24/7
               </h3>
               <p className={`${textSecondaryClass}`}>
-                Actualizaciones rápidas y eficientes que no consumirán tu batería ni datos móviles.
+                Visualiza todos tus dispositivos y contactos en un mapa. Disponible 24/7 desde cualquier navegador con seguridad total.
               </p>
             </div>
           </div>
@@ -166,13 +166,13 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
                 Acerca de Aurora
               </h2>
               <p className={`text-lg mb-4 ${textSecondaryClass} leading-relaxed`}>
-                Aurora nació de la necesidad de mantener seguros a nuestros seres queridos de manera simple y efectiva. Nuestra misión es proporcionar una solución tecnológica confiable que permita a las familias estar conectadas sin comprometer la privacidad.
+                Aurora nació con un propósito claro: luchar contra la delincuencia tecnológica y proteger lo que más importa. Nos especializamos en localización de dispositivos perdidos, robados y en seguimiento de personas para su seguridad.
               </p>
               <p className={`text-lg mb-4 ${textSecondaryClass} leading-relaxed`}>
-                Con más de 5 años de experiencia en seguridad digital y localización GPS, hemos desarrollado una plataforma que combina tecnología de punta con una interfaz intuitiva y fácil de usar.
+                En una era donde los robos aumentan constantemente, Aurora te ofrece una herramienta poderosa para recuperar tus dispositivos al instante y mantener a tu familia segura. Nuestro sistema es respaldado por encriptación de nivel militar.
               </p>
               <p className={`text-lg ${textSecondaryClass} leading-relaxed`}>
-                Confiadas por más de 100,000 familias en toda Latinoamérica, Aurora es la solución de seguridad líder en la región.
+                Con más de 5 años de experiencia en tecnología de seguridad y localización GPS, hemos ayudado a miles de usuarios a recuperar dispositivos robados y mantener protegida a su familia.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -181,8 +181,8 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
                 <p className={`${textSecondaryClass}`}>Usuarios Activos</p>
               </div>
               <div className={`${surfaceClass} rounded-xl p-6 text-center`}>
-                <div className="text-3xl font-bold text-primary mb-2">50+</div>
-                <p className={`${textSecondaryClass}`}>Países</p>
+                <div className="text-3xl font-bold text-primary mb-2">10K+</div>
+                <p className={`${textSecondaryClass}`}>Dispositivos Recuperados</p>
               </div>
               <div className={`${surfaceClass} rounded-xl p-6 text-center`}>
                 <div className="text-3xl font-bold text-primary mb-2">99.9%</div>
@@ -190,7 +190,7 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
               </div>
               <div className={`${surfaceClass} rounded-xl p-6 text-center`}>
                 <div className="text-3xl font-bold text-primary mb-2">24/7</div>
-                <p className={`${textSecondaryClass}`}>Soporte</p>
+                <p className={`${textSecondaryClass}`}>Soporte Activo</p>
               </div>
             </div>
           </div>
@@ -205,26 +205,26 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
               Nuestros Objetivos
             </h2>
             <p className={`text-lg ${textSecondaryClass} max-w-2xl mx-auto`}>
-              En Aurora, nos comprometemos con la seguridad y el bienestar de cada familia
+              En Aurora, nos comprometemos con la lucha contra la delincuencia y la protección de lo que más importa
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className={`${surfaceClass} rounded-xl p-8 border-l-4 border-primary hover:shadow-lg transition-all duration-300`}>
               <h3 className={`text-xl font-bold mb-3 ${textPrimaryClass}`}>
-                Seguridad Total
+                Recuperación de Dispositivos
               </h3>
               <p className={`${textSecondaryClass}`}>
-                Proteger la ubicación y privacidad de tus seres queridos mediante tecnología de encriptación de última generación.
+                Ayudar a usuarios a recuperar sus dispositivos robados o perdidos en el menor tiempo posible. Somos tu aliado contra la delincuencia tecnológica.
               </p>
             </div>
 
             <div className={`${surfaceClass} rounded-xl p-8 border-l-4 border-primary hover:shadow-lg transition-all duration-300`}>
               <h3 className={`text-xl font-bold mb-3 ${textPrimaryClass}`}>
-                Confianza y Transparencia
+                Protección Familiar
               </h3>
               <p className={`${textSecondaryClass}`}>
-                Garantizar que cada usuario tenga control total sobre quién puede ver su ubicación y cómo se comparten sus datos.
+                Proporcionar tranquilidad a las familias permitiéndoles saber en tiempo real dónde están sus seres queridos. Seguridad sin comprometer la privacidad.
               </p>
             </div>
 
@@ -233,7 +233,7 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
                 Innovación Continua
               </h3>
               <p className={`${textSecondaryClass}`}>
-                Mejorar constantemente nuestras características y rendimiento para proporcionar la mejor experiencia posible.
+                Mejorar constantemente nuestras características para mantenernos un paso adelante de la delincuencia y brindar la mejor protección posible.
               </p>
             </div>
           </div>
@@ -248,7 +248,7 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
               ¿Por Qué Elegir Aurora?
             </h2>
             <p className={`text-lg ${textSecondaryClass} max-w-2xl mx-auto`}>
-              Te ofrecemos más que una simple app de localización
+              Somos la solución número uno para localización de dispositivos y protección ante delincuencia
             </p>
           </div>
 
@@ -260,10 +260,10 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
                 </div>
                 <div>
                   <h3 className={`text-lg font-bold mb-2 ${textPrimaryClass}`}>
-                    Actualizaciones en Tiempo Real
+                    Recuperación Inmediata
                   </h3>
                   <p className={`${textSecondaryClass}`}>
-                    Recibe la ubicación actualizada cada segundo sin consumir datos excesivos.
+                    Localiza tu dispositivo robado al instante. Tiempo es crítico en delincuencia.
                   </p>
                 </div>
               </div>
@@ -274,10 +274,10 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
                 </div>
                 <div>
                   <h3 className={`text-lg font-bold mb-2 ${textPrimaryClass}`}>
-                    Historial de Ubicaciones
+                    Precisión GPS Exacta
                   </h3>
                   <p className={`${textSecondaryClass}`}>
-                    Accede al historial completo de movimientos de tus contactos para mayor seguridad.
+                    Localización precisa hasta metros. Útil para recuperar o reportar a autoridades.
                   </p>
                 </div>
               </div>
@@ -291,7 +291,7 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
                     Múltiples Dispositivos
                   </h3>
                   <p className={`${textSecondaryClass}`}>
-                    Accede desde cualquier dispositivo: teléfono, tablet o computadora.
+                    Monitorea todos tus dispositivos desde un único panel. Teléfonos, tablets, laptops.
                   </p>
                 </div>
               </div>
@@ -304,10 +304,10 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
                 </div>
                 <div>
                   <h3 className={`text-lg font-bold mb-2 ${textPrimaryClass}`}>
-                    Privacidad Garantizada
+                    Encriptación Militar
                   </h3>
                   <p className={`${textSecondaryClass}`}>
-                    Encriptación de extremo a extremo asegura que solo tú y tus contactos accedan a los datos.
+                    Tus datos están protegidos con el estándar más alto de seguridad disponible.
                   </p>
                 </div>
               </div>
@@ -318,10 +318,10 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
                 </div>
                 <div>
                   <h3 className={`text-lg font-bold mb-2 ${textPrimaryClass}`}>
-                    Interfaz Intuitiva
+                    100% Gratuito
                   </h3>
                   <p className={`${textSecondaryClass}`}>
-                    Diseño limpio y fácil de usar, perfectamente optimizado para usuarios de todas las edades.
+                    Acceso completo sin costo. No hay suscripciones ocultas o publicidades intrusivas.
                   </p>
                 </div>
               </div>
@@ -332,10 +332,10 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
                 </div>
                 <div>
                   <h3 className={`text-lg font-bold mb-2 ${textPrimaryClass}`}>
-                    Soporte 24/7
+                    Comunidad Activa
                   </h3>
                   <p className={`${textSecondaryClass}`}>
-                    Nuestro equipo está siempre disponible para ayudarte con cualquier consulta.
+                    Parte de una comunidad que lucha contra la delincuencia. Reporta, alerta y ayuda.
                   </p>
                 </div>
               </div>
@@ -369,8 +369,8 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
               <p className={`${textSecondaryClass} text-sm mb-4`}>
                 Disponible en App Store
               </p>
-              <button className="px-6 py-3 bg-primary hover:bg-opacity-90 text-white rounded-lg font-semibold transition-all w-full">
-                Descargar en App Store
+              <button disabled className="px-6 py-3 bg-gray-400 text-white rounded-lg font-semibold transition-all w-full opacity-75 cursor-not-allowed">
+                ⏳ Próximamente
               </button>
             </a>
 
@@ -434,24 +434,24 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className={`${isDarkMode ? 'bg-gradient-to-r from-dark-secondary-surface to-dark-surface border border-dark-secondary-surface' : 'bg-gradient-to-r from-light-secondary-surface to-light-surface border border-primary'} rounded-2xl p-12 text-center`}>
             <h2 className={`text-3xl font-bold mb-4 ${textPrimaryClass}`}>
-              ¿Listo para proteger a tu familia?
+              ¿Tu dispositivo fue robado o perdido?
             </h2>
             <p className={`text-lg mb-8 ${textSecondaryClass} max-w-xl mx-auto`}>
-              Únete a miles de familias que ya confían en Aurora para mantenerse seguros.
+              No esperes más. Aurora te ayuda a localizarlo al instante. Únete a miles de usuarios que ya han recuperado sus dispositivos exitosamente.
             </p>
             {!user ? (
               <button
                 onClick={onLoginClick}
                 className="px-8 py-4 bg-primary hover:bg-opacity-90 text-white font-bold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
               >
-                Comenzar Ahora
+                Comienza Ahora - Es Gratis
               </button>
             ) : (
               <button
                 onClick={onDashboardClick}
                 className="px-8 py-4 bg-primary hover:bg-opacity-90 text-white font-bold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
               >
-                Acceder al Dashboard
+                Ir al Dashboard
               </button>
             )}
           </div>
