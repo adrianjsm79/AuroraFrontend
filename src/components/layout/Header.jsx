@@ -1,7 +1,7 @@
 import React from 'react';
-import { Menu, X, MapPin, LogOut } from 'lucide-react';
+import { Menu, X, MapPin, LogOut, Home } from 'lucide-react';
 
-const Header = ({ sidebarOpen, setSidebarOpen, onLogout }) => {
+const Header = ({ sidebarOpen, setSidebarOpen, onLogout, onGoHome }) => {
   return (
     <header className="bg-white dark:bg-gray-900 shadow-md border-b border-gray-200 dark:border-gray-700 fixed top-0 left-0 right-0 z-40">
       <div className="px-4 py-4 flex items-center justify-between">
@@ -21,13 +21,22 @@ const Header = ({ sidebarOpen, setSidebarOpen, onLogout }) => {
           </h1>
         </div>
         
-        <button
-          onClick={onLogout}
-          className="p-2 hover:bg-red-50 dark:hover:bg-red-900/50 rounded-xl transition-all transform hover:scale-105 text-red-600 dark:text-red-500"
-          title="Cerrar sesión"
-        >
-          <LogOut className="w-6 h-6" />
-        </button>
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={onGoHome}
+            className="p-2 hover:bg-blue-50 dark:hover:bg-blue-900/50 rounded-xl transition-all transform hover:scale-105 text-blue-600 dark:text-blue-500"
+            title="Ir al Inicio"
+          >
+            <Home className="w-6 h-6" />
+          </button>
+          <button
+            onClick={onLogout}
+            className="p-2 hover:bg-red-50 dark:hover:bg-red-900/50 rounded-xl transition-all transform hover:scale-105 text-red-600 dark:text-red-500"
+            title="Cerrar sesión"
+          >
+            <LogOut className="w-6 h-6" />
+          </button>
+        </div>
       </div>
     </header>
   );

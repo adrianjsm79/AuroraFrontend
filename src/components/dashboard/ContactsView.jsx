@@ -47,14 +47,18 @@ const ContactsView = ({
           <p className="font-bold text-gray-800 dark:text-gray-200 text-lg">{contact.nombre}</p>
           <p className="text-sm text-gray-600 dark:text-gray-400">{contact.email}</p>
           <p className="text-xs text-primary font-medium mt-1">{contact.numero}</p>
-          {isReceived && <p className="text-xs text-green-600 dark:text-green-400 font-semibold mt-1">Te dio confianza</p>}
+          {isReceived ? (
+            <p className="text-xs text-green-600 dark:text-green-400 font-semibold mt-1">✓ Pueden ver tu ubicación en tiempo real</p>
+          ) : (
+            <p className="text-xs text-blue-600 dark:text-blue-400 font-semibold mt-1">→ Tú ves su ubicación (si ellos te dan confianza)</p>
+          )}
         </div>
       </div>
       {!isReceived && (
         <button
           onClick={() => removeTrustedContact(contact.id)}
           className="p-3 text-red-600 hover:bg-red-50 rounded-xl transition-all transform hover:scale-110 dark:hover:bg-red-900/50"
-          title="Eliminar contacto"
+          title="Dejar de seguir este contacto"
         >
           <Trash2 className="w-5 h-5" />
         </button>
@@ -68,8 +72,8 @@ const ContactsView = ({
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200">Mis Contactos</h2>
-            <p className="text-gray-600 dark:text-gray-400 mt-1">Contactos a los que les diste confianza</p>
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200">Siguiendo Contactos</h2>
+            <p className="text-gray-600 dark:text-gray-400 mt-1">Contactos que agregaste. Podrás ver su ubicación solo si ellos te agregan como confianza.</p>
           </div>
           <button
             onClick={() => setShowAddContact(!showAddContact)}
@@ -128,15 +132,15 @@ const ContactsView = ({
 
       {/* Sección: Contactos que TE DIERON confianza */}
       {receivedContacts.length > 0 && (
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 border-2 border-green-200 dark:border-green-900">
           <div className="mb-6">
             <div className="flex items-center space-x-3">
               <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl shadow-lg">
                 <UserCheck className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200">Contactos que te confían</h2>
-                <p className="text-gray-600 dark:text-gray-400 mt-1">Pueden ver tu ubicación</p>
+                <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200">Mis Seguidores</h2>
+                <p className="text-gray-600 dark:text-gray-400 mt-1">Personas que pueden ver tu ubicación en tiempo real. Pueden eliminar su confianza pero TÚ no puedes eliminarlos.</p>
               </div>
             </div>
           </div>
@@ -151,15 +155,26 @@ const ContactsView = ({
         </div>
       )}
 
-      {(trustedContacts.length > 0 || receivedContacts.length > 0) && (
-        <div className="bg-gradient-to-br from-primary to-secondary rounded-2xl shadow-xl p-6 text-white">
-          <h3 className="font-bold text-xl mb-3">💡 Consejo de privacidad</h3>
-          <p className="text-white/80">
-            Tu ubicación es compartida con los contactos que agregaste y pueden ser vistos por aquellos que te dieron confianza. 
-            Administra tus dispositivos para controlar qué ubicaciones compartir.
+      {/* Info Box */}
+      <div className="bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20 rounded-2xl border-2 border-primary/30 p-6">
+        <h3 className="font-bold text-xl text-gray-800 dark:text-gray-200 mb-3 flex items-center">
+          <span className="mr-2">🔒</span> Cómo Funciona la Privacidad en Aurora
+        </h3>
+        <div className="space-y-2 text-gray-700 dark:text-gray-300 text-sm">
+          <p>
+            <span className="font-semibold text-primary">📍 Regla Fundamental:</span> "Solo si yo te doy confianza, tú puedes ver mi ubicación"
+          </p>
+          <p>
+            <span className="font-semibold text-blue-600">→ Siguiendo:</span> Contactos que agregaste. Tu ubicación será visible solo si ellos te agregan como confianza.
+          </p>
+          <p>
+            <span className="font-semibold text-green-600">✓ Seguidores:</span> Personas que te agregaron. Ven tu ubicación en tiempo real. Ellos pueden eliminar su confianza cuando quieran.
+          </p>
+          <p>
+            <span className="font-semibold text-red-600">⚠️ Importante:</span> No puedes eliminar a tus seguidores, solo ellos pueden dejar de seguirte. Administra tus dispositivos para controlar qué ubicaciones compartir.
           </p>
         </div>
-      )}
+      </div>
     </div>
   );
 };

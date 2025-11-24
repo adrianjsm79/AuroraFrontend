@@ -55,7 +55,9 @@ const AppContent = () => {
       />
       <div className="flex-1">
         {currentPage === 'dashboard' ? (
-          <Dashboard />
+          <Dashboard 
+            onGoHome={() => setCurrentPage('home')}
+          />
         ) : (
           <HomePage 
             onLoginClick={() => setCurrentPage('home')}

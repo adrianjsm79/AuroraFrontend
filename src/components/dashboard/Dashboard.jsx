@@ -11,7 +11,7 @@ import ContactsView from './ContactsView';
 import DevicesView from './DevicesView';
 import AboutView from './AboutView';
 
-const Dashboard = () => {
+const Dashboard = ({ onGoHome }) => {
     const { 
         user, 
         token, 
@@ -162,6 +162,7 @@ const Dashboard = () => {
                 sidebarOpen={sidebarOpen}
                 setSidebarOpen={setSidebarOpen}
                 onLogout={logout}
+                onGoHome={onGoHome}
             />
             <Sidebar
                 sidebarOpen={sidebarOpen}
