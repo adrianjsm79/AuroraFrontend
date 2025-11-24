@@ -1,12 +1,18 @@
-import React, { useState, useCallback } from 'react';
-import { Navigation, MapPin, Smartphone } from 'lucide-react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Navigation, MapPin, Smartphone, Activity } from 'lucide-react';
 import MapView from '../map/MapView';
 
 const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], contactsDevices = [], fetchLocations }) => {
   const [selectedDevice, setSelectedDevice] = useState(null);
-  // Removido: hoveredDevice - el hover se manejará internamente en MapView
+  const [lastUpdateTime, setLastUpdateTime] = useState(new Date());
+
+  // Actualizar tiempo de última actualización cuando cambian los datos
+  useEffect(() => {
+    setLastUpdateTime(new Date());
+  }, [devices, receivedContacts, userLocation]);
 
   // Separar dispositivos del usuario por estado
+  // Estos datos se actualizan en tiempo real a través de polling en Dashboard
   const userDevices = devices || [];
   const lostUserDevices = userDevices.filter(d => d.is_lost);
   const visibleUserDevices = userDevices.filter(d => !d.is_lost);
@@ -81,11 +87,25 @@ const MapPage = ({ userLocation, user, receivedContacts = [], devices = [], cont
       {/* Header */}
       <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4 shadow-lg">
         <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 flex items-center space-x-2">
-              <MapPin className="w-6 h-6 text-primary" />
-              <span>Mapa de Ubicaciones</span>
-            </h2>
+          <div className="flex items-center space-x-4">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 flex items-center space-x-2">
+                <MapPin className="w-6 h-6 text-primary" />
+                <span>Mapa de Ubicaciones</span>
+              </h2>
+            </div>
+            {/* Indicador de actualización en tiempo real */}
+            <div className="flex items-center space-x-2 bg-green-100 dark:bg-green-900/30 px-3 py-2 rounded-lg">
+              <div className="flex items-center space-x-1">
+                <Activity className="w-4 h-4 text-green-600 dark:text-green-400 animate-pulse" />
+                <span className="text-sm font-semibold text-green-700 dark:text-green-300">
+                  Tiempo Real
+                </span>
+              </div>
+              <span className="text-xs text-green-600 dark:text-green-400">
+                {`${lastUpdateTime.toLocaleTimeString('es-ES')}`}
+              </span>
+            </div>
           </div>
           <button
             onClick={fetchLocations}

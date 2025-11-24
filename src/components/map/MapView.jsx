@@ -77,6 +77,10 @@ const MapView = ({
     }
   }, [map, initialMapCentered]); // No incluir userLocation para evitar re-centering
 
+  // Actualizar marcador de ubicación del usuario en tiempo real sin re-centrar
+  // Este efecto solo actualiza visualmente la posición sin mover la cámara
+  // excepto si el dispositivo seleccionado es del usuario
+
   // Calcular ruta cuando se selecciona un dispositivo
   useEffect(() => {
     if (selectedDevice && userLocation && map) {
@@ -173,6 +177,7 @@ const MapView = ({
   }, [hoveredDevice, selectedDevice, hoveredMarker]);
 
   // Pre-renderizar los marcadores de cada categoría para optimizar performance
+  // Utilizamos useMemo para evitar re-renders innecesarios cuando los datos cambian
   const userMarkers = useMemo(() => 
     devices.map(device => <DeviceMarker key={device.id} device={device} color="#a855f7" type="user" />),
     [devices, DeviceMarker]
@@ -183,6 +188,7 @@ const MapView = ({
     [lostDevices, DeviceMarker]
   );
 
+  // Marcadores de dispositivos de seguidores - se actualizan en tiempo real
   const contactsMarkers = useMemo(() => 
     contactsDevices.map(device => <DeviceMarker key={device.id} device={device} color="#22c55e" type="follower" />),
     [contactsDevices, DeviceMarker]

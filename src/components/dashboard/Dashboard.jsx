@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { apiService } from '../../services/api';
-import { createWebSocketConnection, sendLocationUpdate } from '../../services/websocket';
+import { createWebSocketConnection, sendLocationUpdate, subscribeToDeviceUpdates } from '../../services/websocket';
 import { startLocationTracking, stopLocationTracking } from '../../utils/geolocation';
 import Header from '../layout/Header';
 import Sidebar from '../layout/Sidebar';
@@ -37,16 +37,21 @@ const Dashboard = ({ onGoHome }) => {
     const [showAddContact, setShowAddContact] = useState(false);
     const [locationVisible, setLocationVisible] = useState(true);
     const [locationError, setLocationError] = useState('');
+    const [realTimeDevices, setRealTimeDevices] = useState(null); // Estado para dispositivos en tiempo real
+    const [realTimeReceivedContacts, setRealTimeReceivedContacts] = useState(null); // Estado para contactos en tiempo real
     const ws = useRef(null);
     const watchId = useRef(null);
+    const pollingInterval = useRef(null); // Para polling fallback
 
     useEffect(() => {
         initializeLocation();
         connectWebSocket();
+        startRealtimeDataPolling();
 
         return () => {
             if (ws.current) ws.current.close();
             stopLocationTracking(watchId.current);
+            if (pollingInterval.current) clearInterval(pollingInterval.current);
         };
     }, []);
 
@@ -57,11 +62,62 @@ const Dashboard = ({ onGoHome }) => {
                 if (data.type === 'location_update') {
                     updateLocationInList(data);
                 }
+                // Actualizaciones de dispositivos en tiempo real
+                else if (data.type === 'device_location_update') {
+                    updateDeviceLocationInRealTime(data);
+                }
+                // Actualizaciones de contactos/seguidores en tiempo real
+                else if (data.type === 'contact_location_update') {
+                    updateContactLocationInRealTime(data);
+                }
             },
             (error) => {
                 console.error('WebSocket error:', error);
             }
         );
+    };
+
+    /**
+     * Actualiza la ubicación de un dispositivo en tiempo real
+     */
+    const updateDeviceLocationInRealTime = (data) => {
+        setRealTimeDevices((prev) => {
+            if (!prev) return null;
+            return prev.map((device) =>
+                device.id === data.device_id
+                    ? {
+                        ...device,
+                        latitude: data.latitude,
+                        longitude: data.longitude,
+                        accuracy: data.accuracy,
+                        last_seen: data.timestamp || new Date().toISOString(),
+                    }
+                    : device
+            );
+        });
+    };
+
+    /**
+     * Actualiza la ubicación de un dispositivo de un contacto/seguidor en tiempo real
+     */
+    const updateContactLocationInRealTime = (data) => {
+        setRealTimeReceivedContacts((prev) => {
+            if (!prev) return null;
+            return prev.map((contact) => ({
+                ...contact,
+                devices: (contact.devices || []).map((device) =>
+                    device.id === data.device_id
+                        ? {
+                            ...device,
+                            latitude: data.latitude,
+                            longitude: data.longitude,
+                            accuracy: data.accuracy,
+                            last_seen: data.timestamp || new Date().toISOString(),
+                        }
+                        : device
+                ),
+            }));
+        });
     };
 
     const initializeLocation = () => {
@@ -113,6 +169,47 @@ const Dashboard = ({ onGoHome }) => {
         });
     };
 
+    /**
+     * Inicia el polling para obtener actualizaciones de datos en tiempo real
+     * Esto complementa WebSocket y proporciona un fallback confiable
+     */
+    const startRealtimeDataPolling = () => {
+        console.log('🔄 Iniciando polling en tiempo real (cada 3 segundos)');
+        // Polling cada 3 segundos para dispositivos y contactos
+        pollingInterval.current = setInterval(async () => {
+            try {
+                // Solo hacer polling si estamos en la vista de mapa
+                if (currentView === 'map') {
+                    // Actualizar dispositivos propios
+                    if (!realTimeDevices) {
+                        const devicesData = await apiService.getDevices(token);
+                        setRealTimeDevices(devicesData);
+                        console.log(`📱 Dispositivos cargados: ${devicesData?.length || 0}`);
+                    } else {
+                        const devicesData = await apiService.getDevices(token);
+                        setRealTimeDevices(devicesData);
+                        console.log(`📱 Dispositivos actualizados: ${devicesData?.length || 0}`);
+                    }
+
+                    // Actualizar contactos/seguidores y sus dispositivos
+                    if (!realTimeReceivedContacts) {
+                        const contactsData = await apiService.getReceivedTrustedContacts(token);
+                        setRealTimeReceivedContacts(contactsData);
+                        const totalDevices = contactsData?.reduce((sum, contact) => sum + (contact.devices?.length || 0), 0) || 0;
+                        console.log(`👥 Seguidores cargados: ${contactsData?.length || 0}, dispositivos: ${totalDevices}`);
+                    } else {
+                        const contactsData = await apiService.getReceivedTrustedContacts(token);
+                        setRealTimeReceivedContacts(contactsData);
+                        const totalDevices = contactsData?.reduce((sum, contact) => sum + (contact.devices?.length || 0), 0) || 0;
+                        console.log(`👥 Seguidores actualizados: ${contactsData?.length || 0}, dispositivos: ${totalDevices}`);
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Error en polling de datos en tiempo real:', error);
+            }
+        }, 3000); // 3 segundos
+    };
+
     const fetchLocations = async () => {
         try {
             const data = await apiService.getLocations(token);
@@ -141,6 +238,13 @@ const Dashboard = ({ onGoHome }) => {
     useEffect(() => {
         if (currentView === 'map') {
             fetchLocations();
+            // Asegurarse de que tenemos datos en tiempo real cuando entramos al mapa
+            if (!realTimeDevices) {
+                apiService.getDevices(token).then(setRealTimeDevices);
+            }
+            if (!realTimeReceivedContacts) {
+                apiService.getReceivedTrustedContacts(token).then(setRealTimeReceivedContacts);
+            }
         }
     }, [currentView]);
 
@@ -195,8 +299,8 @@ const Dashboard = ({ onGoHome }) => {
                     <MapPage
                         userLocation={userLocation}
                         user={user}
-                        receivedContacts={receivedContacts}
-                        devices={devices}
+                        receivedContacts={realTimeReceivedContacts || receivedContacts}
+                        devices={realTimeDevices || devices}
                         contactsDevices={contactsDevices}
                         fetchLocations={fetchLocations}
                     />
