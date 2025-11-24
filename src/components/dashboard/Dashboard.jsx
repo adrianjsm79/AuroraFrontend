@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { apiService } from '../../services/api';
 import { createWebSocketConnection, sendLocationUpdate, subscribeToDeviceUpdates } from '../../services/websocket';
@@ -13,6 +14,8 @@ import AccountView from './AccountView';
 import AboutView from './AboutView';
 
 const Dashboard = ({ onGoHome }) => {
+    const navigate = useNavigate();
+    const location = useLocation();
     const { 
         user, 
         token, 
@@ -31,7 +34,23 @@ const Dashboard = ({ onGoHome }) => {
         fetchDevices,
         fetchContactsDevices
     } = useAuth();
-    const [currentView, setCurrentView] = useState('home');
+
+    // Determinar la vista actual basada en la URL
+    const getViewFromPath = () => {
+        const path = location.pathname.replace('/dashboard/', '') || 'home';
+        return path;
+    };
+
+    const currentView = getViewFromPath();
+
+    const setCurrentView = (viewId) => {
+        if (viewId === 'home') {
+            navigate('/dashboard');
+        } else {
+            navigate(`/dashboard/${viewId}`);
+        }
+    };
+
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [locations, setLocations] = useState([]);
     const [userLocation, setUserLocation] = useState(null);

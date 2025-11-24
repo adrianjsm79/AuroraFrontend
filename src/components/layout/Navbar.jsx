@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 
 const Navbar = ({ onLoginClick, onDashboardClick }) => {
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
   const { isDarkMode, toggleTheme } = useTheme();
   const [showMenu, setShowMenu] = useState(false);
 
   const handleLogout = () => {
     logout();
+    navigate('/');
+    setShowMenu(false);
+  };
+
+  const handleNavigate = (path) => {
+    navigate(path);
     setShowMenu(false);
   };
 
@@ -26,7 +34,7 @@ const Navbar = ({ onLoginClick, onDashboardClick }) => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <button
-              onClick={onLoginClick}
+              onClick={() => navigate('/')}
               className="flex items-center space-x-2 focus:outline-none"
             >
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
@@ -39,7 +47,7 @@ const Navbar = ({ onLoginClick, onDashboardClick }) => {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
             <button
-              onClick={onLoginClick}
+              onClick={() => navigate('/')}
               className={`${textPrimaryClass} hover:text-primary transition-colors duration-200 font-medium`}
             >
               Inicio
@@ -48,7 +56,7 @@ const Navbar = ({ onLoginClick, onDashboardClick }) => {
             {user && (
               <>
                 <button
-                  onClick={onDashboardClick}
+                  onClick={() => navigate('/dashboard')}
                   className={`${textPrimaryClass} hover:text-primary transition-colors duration-200 font-medium`}
                 >
                   Dashboard
@@ -97,10 +105,7 @@ const Navbar = ({ onLoginClick, onDashboardClick }) => {
         {showMenu && (
           <div className={`md:hidden pb-4 space-y-3 ${isDarkMode ? 'border-t border-dark-secondary-surface' : 'border-t'}`}>
             <button
-              onClick={() => {
-                onLoginClick();
-                setShowMenu(false);
-              }}
+              onClick={() => handleNavigate('/')}
               className={`block w-full text-left px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition-colors ${textPrimaryClass}`}
             >
               Inicio
@@ -109,10 +114,7 @@ const Navbar = ({ onLoginClick, onDashboardClick }) => {
             {user && (
               <>
                 <button
-                  onClick={() => {
-                    onDashboardClick();
-                    setShowMenu(false);
-                  }}
+                  onClick={() => handleNavigate('/dashboard')}
                   className={`block w-full text-left px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition-colors ${textPrimaryClass}`}
                 >
                   Dashboard
