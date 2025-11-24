@@ -6,7 +6,7 @@ const Sidebar = ({ sidebarOpen, currentView, setCurrentView, setSidebarOpen, use
   const { theme, toggleTheme } = useTheme();
 
   const menuItems = [
-    { id: 'home', label: 'Inicio', icon: MapPin, color: 'indigo' },
+    { id: 'homeview', label: 'Inicio', icon: MapPin, color: 'indigo' },
     { id: 'map', label: 'Mapa en Vivo', icon: Navigation, color: 'blue' },
     { id: 'devices', label: 'Dispositivos', icon: Smartphone, color: 'purple' },
     { id: 'contacts', label: 'Contactos', icon: Users, color: 'pink', badge: trustedContacts.length },

@@ -308,7 +308,7 @@ const Dashboard = ({ onGoHome }) => {
             />
 
             <main className="pt-20 pb-8 px-4 md:px-8 lg:px-12">
-                {currentView === 'home' && (
+                {currentView === 'homeview' && (
                     <HomeView
                         user={user}
                         userLocation={userLocation}
