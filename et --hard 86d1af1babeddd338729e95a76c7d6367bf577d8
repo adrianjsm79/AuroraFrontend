@@ -1,0 +1,259 @@
+[33mcommit be7fe4af005e8a5ab21e3d698f31362effc3a0b0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Mon Nov 24 03:09:19 2025 -0500
+
+    arreglos varios en la sintaxis
+
+[33mcommit 86d1af1babeddd338729e95a76c7d6367bf577d8[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Mon Nov 24 02:38:32 2025 -0500
+
+    arreglos varios en el mapa
+
+[33mcommit c95225ad4feb4fbf34613da2b3b519870c071eee[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Mon Nov 24 02:11:37 2025 -0500
+
+    arreglado error de sintaxis en mapview
+
+[33mcommit a6ff3ff0fa7f02eb5f00a5af9dc5b965d6a2b823[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Mon Nov 24 02:05:09 2025 -0500
+
+    actualizacion de el mapa
+
+[33mcommit 52153530912fb569b8bd3860b50715d8313dbd4a[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Mon Nov 24 00:17:38 2025 -0500
+
+    arreglo de un error en la obtencion de dispositivos
+
+[33mcommit 5be80057e0abfb09981f4ab089c31d4172d012bb[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Mon Nov 24 00:10:28 2025 -0500
+
+    más informacion en DevicesView
+
+[33mcommit c24c1b1c506c8b3624578200de4a3094d98d85e4[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 23 23:59:05 2025 -0500
+
+    actualizacion para Devicesview
+
+[33mcommit 40ec871d6c35362e63f17a486c96f81aa24fb872[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 23 23:00:38 2025 -0500
+
+    cambio en info de contacto 2
+
+[33mcommit 9d82ee1717529e3054dbd86033169addd8cb67df[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 23 22:45:13 2025 -0500
+
+    cambio en info de contacto xd
+
+[33mcommit 6385bbc2f77e18d02d5b98b22ef872598954bec8[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 23 22:39:41 2025 -0500
+
+    implementacion de lista de contactos seguidores
+
+[33mcommit 3d4279bef5c36799b477ce147da425f493bc58a6[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 23 22:32:39 2025 -0500
+
+    dashboard. mejora en la gestion de contactos
+
+[33mcommit df991cb1c9a1ab2e6dce8998ff8598518d1cd190[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 23 22:01:36 2025 -0500
+
+    informacion más precisa en el landingpage
+
+[33mcommit 61688bc824638d9ee7aba839053d4c9cd6b7b964[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 23 21:53:36 2025 -0500
+
+    implementacion de landingpage de aurora 2
+
+[33mcommit 6565692488c6f2b93c84a379c1f1ac55fede6ad1[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 23 21:39:48 2025 -0500
+
+    implementacion de landingpage de aurora
+
+[33mcommit ba77d491d0dd3fefc6cf5066ef92be45660f1c99[m
+Author: David <david.vilchez@tecsup.edu.pe>
+Date:   Sat Nov 22 17:34:33 2025 -0500
+
+    Revert "agregado de map id"
+    
+    This reverts commit 5dae674875defbb20f98124fa75ecd9ae5f7b805.
+
+[33mcommit 0a28d758a1be7b14612ddb8120f1d9b0c061ce77[m
+Author: David <david.vilchez@tecsup.edu.pe>
+Date:   Sat Nov 22 17:04:26 2025 -0500
+
+    arreglo de mapview 3
+
+[33mcommit a4f822c96d0040423477cb491f09622417a3e975[m
+Author: David <david.vilchez@tecsup.edu.pe>
+Date:   Sat Nov 22 15:27:07 2025 -0500
+
+    arreglo ubicacion de navegador
+
+[33mcommit 94b7f71ad0a6797bb26a6d6382b9b812b4ae6a9a[m
+Author: David <david.vilchez@tecsup.edu.pe>
+Date:   Sat Nov 22 15:07:02 2025 -0500
+
+    denuevo intento de arreglo en mapview
+
+[33mcommit 4d9ba4807b3d0f8b3eb1e3ad5b1112d1f1d04df1[m
+Author: David <david.vilchez@tecsup.edu.pe>
+Date:   Sat Nov 22 14:58:07 2025 -0500
+
+    arreglo de mapview
+
+[33mcommit d787b9cbeca622d683f94aa7172c33bcc85cdee6[m
+Author: David <david.vilchez@tecsup.edu.pe>
+Date:   Sat Nov 22 14:46:44 2025 -0500
+
+    manejo de dispositivos
+
+[33mcommit 5dae674875defbb20f98124fa75ecd9ae5f7b805[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Tue Nov 4 04:09:48 2025 -0500
+
+    agregado de map id
+
+[33mcommit 8894d3fadfbee128d8da584e9a6e097a118a83a4[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Tue Nov 4 03:00:49 2025 -0500
+
+    arreglo del renderizado del mapa
+
+[33mcommit 4f917db2a79f6815022bfe07d877850d5ba30f24[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Mon Nov 3 23:20:34 2025 -0500
+
+    agregado de banderas en prefijos y mas prefijos 7
+
+[33mcommit ec98d5f4cbf978e8cee21eaf09eab374ffc2754b[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Mon Nov 3 23:15:52 2025 -0500
+
+    agregado de banderas en prefijos y mas prefijos 6
+
+[33mcommit 1e13e41db9cbc338cee20b223da908a91ac1f972[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Mon Nov 3 23:05:39 2025 -0500
+
+    agregado de banderas en prefijos y mas prefijos 5
+
+[33mcommit 5870df405de984d85fb3b01dc5009f1dcba83060[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Mon Nov 3 22:42:57 2025 -0500
+
+    agregado de banderas en prefijos y mas prefijos 4
+
+[33mcommit 38e248f7fe9341c62c9820a9eba90dbdba7c606a[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Mon Nov 3 22:36:02 2025 -0500
+
+    agregado de banderas en prefijos y mas prefijos 3
+
+[33mcommit 6c3b11a02a2b253ea06268e5785baca796748cc1[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Mon Nov 3 22:11:03 2025 -0500
+
+    agregado de banderas en prefijos y mas prefijos 2
+
+[33mcommit 68b1242f6e99de6e96d62759568e3654153abb1d[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Mon Nov 3 22:06:22 2025 -0500
+
+    agregado de banderas en prefijos y mas prefijos
+
+[33mcommit 2d11bba0338ecfe92caf6e2c31843cc2f0facdf5[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Mon Nov 3 21:37:48 2025 -0500
+
+    implementacion de prefijos  en numeros de telefonos
+
+[33mcommit ed6f76c5f7d7e4379bee85001b3c1d27b57f662a[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 2 19:44:53 2025 -0500
+
+    tema de navegador y responsive en un boton
+
+[33mcommit 4c019800dc31fd94c8a17b11cb5c2038e88cbf49[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 2 18:16:35 2025 -0500
+
+    boton modo oscuro implementacion 2
+
+[33mcommit 6aeeaea6fe97a80f0bb1c9f093bfe771da6fee4d[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 2 18:11:19 2025 -0500
+
+    boton modo oscuro implementacion 1
+
+[33mcommit 5d375e39705be4d8e7eead55582290d799ff3b5d[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 2 17:13:39 2025 -0500
+
+    boton con qr insertado en cabecera de home
+
+[33mcommit 44fcdf5f542935b562ed489cf7b53ec6a739bc35[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 2 17:08:54 2025 -0500
+
+    boton con qr en home
+
+[33mcommit 692aa9bcb943bd191310ecaf8cbbca72a3d20516[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 2 16:59:38 2025 -0500
+
+    fixed images
+
+[33mcommit 5ac38fe4789d5f154c81442b399dd9c9fbc8f838[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 2 16:54:59 2025 -0500
+
+    elimine la carpeta images
+
+[33mcommit eb9eb972774795d7084e5ef527961fb952080fa4[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 2 16:50:34 2025 -0500
+
+    movi la carpeta images
+
+[33mcommit efaa13bbf9bca269cf9f09f9849825ff9ce17688[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 2 16:45:12 2025 -0500
+
+    seccion about us añadida
+
+[33mcommit feacf75d1408e358fc51655edf03c7cd43e7fc3e[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 2 16:01:45 2025 -0500
+
+    colores de gradientes actualizados
+
+[33mcommit b1d8cdb11a7e866d5beacb99b4f7c82b7c57cd6f[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 2 15:49:03 2025 -0500
+
+    colores de auth actualizados
+
+[33mcommit 3397aa650327fa502d29a72c081d4588c25785cb[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Sun Nov 2 15:39:42 2025 -0500
+
+    colores primarios actualizados
+
+[33mcommit c4b0a7d9e221e3783966daf0d642c46cb5ad653c[m
+Author: Adrian <adrian.silvasantiste@tecsup.edu.pe>
+Date:   Fri Oct 31 10:04:00 2025 -0500
+
+    cambio en services api y authcontext

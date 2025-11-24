@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { GoogleMap, useLoadScript, Marker, InfoWindow, Polyline, Circle } from '@react-google-maps/api';
 import { GOOGLE_MAPS_API_KEY, MAP_CONFIG } from '../../config';
 
@@ -74,8 +74,8 @@ const MapView = ({
     lng: userLocation?.longitude || MAP_CONFIG.defaultCenter.lng 
   };
 
-  // Componente para renderizar un dispositivo como marcador
-  const DeviceMarker = ({ device, color, type }) => {
+  // Componente para renderizar un dispositivo como marcador - Memoizado para evitar re-renders innecesarios
+  const DeviceMarker = useCallback(({ device, color, type }) => {
     const position = { lat: device.latitude, lng: device.longitude };
     const isHovered = hoveredDevice === device.id;
     const isSelected = selectedDevice?.id === device.id;
@@ -95,7 +95,7 @@ const MapView = ({
             strokeColor: isSelected ? '#fff' : '#ffffff',
             strokeWeight: isSelected ? 4 : 2,
           }}
-          animation={null} // Se quita la animación de salto para todos los dispositivos
+          animation={null}
         />
         
         {/* Círculo de precisión */}
@@ -111,18 +111,25 @@ const MapView = ({
           }}
         />
 
-        {/* Info Window al pasar el cursor */}
+        {/* Info Window al pasar el cursor - Desactivado el auto-pan */}
         {hoveredMarker === device.id && (
-          <InfoWindow position={position} options={{ pixelOffset: new window.google.maps.Size(0, -30) }}>
-            <div className="bg-white p-3 rounded-lg shadow-lg max-w-xs">
-              <p className="font-semibold text-gray-800">{device.name}</p>
-              {device.user_email && <p className="text-sm text-gray-600">{device.user_email}</p>}
+          <InfoWindow 
+            position={position} 
+            options={{ 
+              pixelOffset: new window.google.maps.Size(0, -35),
+              disableAutoPan: true, // 🔑 Clave: Previene el movimiento automático del mapa
+              maxWidth: 280
+            }}
+          >
+            <div className="bg-white p-3 rounded-lg shadow-lg text-gray-800 text-sm">
+              <p className="font-semibold">{device.name}</p>
+              {device.user_email && <p className="text-xs text-gray-600 mt-1">{device.user_email}</p>}
               <p className="text-xs text-gray-500 mt-2">
                 📍 {device.latitude?.toFixed(4)}, {device.longitude?.toFixed(4)}
               </p>
               {device.last_seen && (
                 <p className="text-xs text-gray-500 mt-1">
-                  Última vez visto: {new Date(device.last_seen).toLocaleString()}
+                  🕐 {new Date(device.last_seen).toLocaleString()}
                 </p>
               )}
               {device.is_lost && (
@@ -135,7 +142,28 @@ const MapView = ({
         )}
       </React.Fragment>
     );
-  };
+  }, [hoveredDevice, selectedDevice, hoveredMarker]);
+
+  // Pre-renderizar los marcadores de cada categoría para optimizar performance
+  const userMarkers = useMemo(() => 
+    devices.map(device => <DeviceMarker key={device.id} device={device} color="#a855f7" type="user" />),
+    [devices, DeviceMarker]
+  );
+
+  const lostUserMarkers = useMemo(() => 
+    lostDevices.map(device => <DeviceMarker key={device.id} device={device} color="#ef4444" type="user-lost" />),
+    [lostDevices, DeviceMarker]
+  );
+
+  const contactsMarkers = useMemo(() => 
+    contactsDevices.map(device => <DeviceMarker key={device.id} device={device} color="#22c55e" type="follower" />),
+    [contactsDevices, DeviceMarker]
+  );
+
+  const lostContactsMarkers = useMemo(() => 
+    lostContactsDevices.map(device => <DeviceMarker key={device.id} device={device} color="#fbbf24" type="follower-lost" />),
+    [lostContactsDevices, DeviceMarker]
+  );
 
   return (
     <GoogleMap
@@ -166,24 +194,16 @@ const MapView = ({
       )}
 
       {/* Pins verdes: Dispositivos de seguidores (contactos que dieron confianza) */}
-      {contactsDevices.map(device => (
-        <DeviceMarker key={device.id} device={device} color="#22c55e" type="follower" />
-      ))}
+      {contactsMarkers}
 
       {/* Pins morados: Dispositivos del usuario */}
-      {devices.map(device => (
-        <DeviceMarker key={device.id} device={device} color="#a855f7" type="user" />
-      ))}
+      {userMarkers}
 
       {/* Pin rojo: Dispositivos perdidos del usuario */}
-      {lostDevices.map(device => (
-        <DeviceMarker key={device.id} device={device} color="#ef4444" type="user-lost" />
-      ))}
+      {lostUserMarkers}
 
       {/* Pin amarillo: Dispositivos perdidos de seguidores */}
-      {lostContactsDevices.map(device => (
-        <DeviceMarker key={device.id} device={device} color="#fbbf24" type="follower-lost" />
-      ))}
+      {lostContactsMarkers}
 
       {/* Ruta desde el pin azul al dispositivo seleccionado */}
       {route && (
