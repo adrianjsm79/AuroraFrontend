@@ -10,6 +10,7 @@ import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import PolicyIcon from "@mui/icons-material/Policy";
 import PersonIcon from "@mui/icons-material/Person";
 import CloudQueueIcon from "@mui/icons-material/CloudQueue";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const Footer = () => {
   const { isDarkMode } = useTheme();
