@@ -9,7 +9,7 @@ import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import WarningIcon from '@mui/icons-material/Warning';
 import MapIcon from '@mui/icons-material/Map';
-import Footer from "../../layout/Footer";
+import Footer from "../layout/Footer";
 
 const HomePage = ({ onLoginClick, onDashboardClick }) => {
   const { isDarkMode } = useTheme();
