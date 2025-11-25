@@ -1,34 +1,34 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: 'class',
+export default {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
       colors: {
-        primary: '#01D9F6',
-        secondary: '#CA01F6',
-        
-        // Light Mode Colors
-        'light-background': '#F8FAFB',
-        'light-surface': '#FFFFFF',
-        'light-secondary-surface': '#EDF4F7',
-        'light-text-primary': '#1A2B3C',
-        'light-text-secondary': '#5A6C7D',
-        'light-text-tertiary': '#8A9BA8',
-        
-        // Dark Mode Colors
-        'dark-background': '#0A1525',
-        'dark-surface': '#1A2B3C',
-        'dark-secondary-surface': '#243447',
-        'dark-text-primary': '#F8FAFB',
-        'dark-text-secondary': '#B8C5D0',
-        'dark-text-tertiary': '#7A8B9A',
+        primary: '#3B82F6',
+        secondary: '#8B5CF6',
+        'dark-background': '#0F172A',
+        'dark-surface': '#1E293B',
+        'dark-secondary-surface': '#334155',
+        'dark-text-primary': '#F1F5F9',
+        'dark-text-secondary': '#94A3B8',
+        'light-background': '#FFFFFF',
+        'light-surface': '#F8FAFC',
+        'light-secondary-surface': '#E2E8F0',
+        'light-text-primary': '#1E293B',
+        'light-text-secondary': '#64748B',
       },
       animation: {
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-      }
+        'gradient': 'gradient 8s linear infinite',
+      },
+      keyframes: {
+        gradient: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+      },
     },
   },
   plugins: [],
