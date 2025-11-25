@@ -1,214 +1,146 @@
-import React from 'react';
-import { useTheme } from '../../context/ThemeContext';
+import React from "react";
+import { useTheme } from "../context/ThemeContext"; // ← cambiar de "../../" a "../"
+import GitHubIcon from "@mui/icons-material/GitHub";
+import XIcon from "@mui/icons-material/X";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import SecurityIcon from "@mui/icons-material/Security";
+import CodeIcon from "@mui/icons-material/Code";
+import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import PolicyIcon from "@mui/icons-material/Policy";
+import PersonIcon from "@mui/icons-material/Person";
+import CloudQueueIcon from "@mui/icons-material/CloudQueue";
 
 const Footer = () => {
   const { isDarkMode } = useTheme();
   const currentYear = new Date().getFullYear();
 
-  const bgClass = isDarkMode ? 'bg-dark-surface border-t border-dark-secondary-surface' : 'bg-light-secondary-surface border-t';
-  const textPrimaryClass = isDarkMode ? 'text-dark-text-primary' : 'text-light-text-primary';
-  const textSecondaryClass = isDarkMode ? 'text-dark-text-secondary' : 'text-light-text-secondary';
-  const linkClass = isDarkMode ? 'text-primary hover:text-opacity-80' : 'text-primary hover:text-opacity-90';
+  const bgClass = isDarkMode
+    ? "bg-dark-surface border-t border-dark-secondary-surface"
+    : "bg-gray-50 border-t border-gray-200";
+
+  const textPrimaryClass = isDarkMode ? "text-white" : "text-gray-900";
+  const textSecondaryClass = isDarkMode ? "text-slate-400" : "text-gray-600";
+
+  const linkClass = isDarkMode
+    ? "text-primary hover:text-white transition-colors"
+    : "text-primary hover:text-gray-900 transition-colors";
+
+  const socialIconClass = isDarkMode
+    ? "text-slate-400 hover:text-white"
+    : "text-gray-500 hover:text-gray-900";
 
   return (
     <footer className={`${bgClass} mt-auto transition-colors duration-300`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8">
-          {/* Company Info */}
-          <div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-6">
+
+        {/* MAIN GRID */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-y-10 gap-x-8 mb-12">
+
+          {/* COMPANY */}
+          <div className="col-span-2 md:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center shadow-lg">
                 <span className="text-white font-bold text-lg">A</span>
               </div>
-              <span className={`font-bold text-lg ${textPrimaryClass}`}>Aurora</span>
+              <span className={`font-bold text-xl ${textPrimaryClass}`}>Aurora</span>
             </div>
+
             <p className={`text-sm ${textSecondaryClass} leading-relaxed`}>
               Aplicación de seguridad en tiempo real para mantener a tus seres queridos protegidos.
             </p>
-            {/* Social Links */}
-            <div className="flex space-x-4 mt-4">
-              <a href="https://github.com/adrianjsm79" target="_blank" rel="noopener noreferrer" 
-                className={`${linkClass} hover:scale-110 transition-transform text-2xl`} title="GitHub">
-                🐙
-              </a>
-              <a href="#facebook" 
-                className={`${linkClass} hover:scale-110 transition-transform text-2xl`} title="Facebook">
-                📘
-              </a>
-              <a href="#twitter" 
-                className={`${linkClass} hover:scale-110 transition-transform text-2xl`} title="Twitter">
-                𝕏
-              </a>
-              <a href="#instagram" 
-                className={`${linkClass} hover:scale-110 transition-transform text-2xl`} title="Instagram">
-                📷
-              </a>
-              <a href="#linkedin" 
-                className={`${linkClass} hover:scale-110 transition-transform text-2xl`} title="LinkedIn">
-                💼
-              </a>
+
+            {/* SOCIAL */}
+            <div className="flex space-x-4 mt-6">
+              {[
+                { Icon: GitHubIcon, href: "https://github.com/adrianjsm79", title: "GitHub" },
+                { Icon: XIcon, href: "#twitter", title: "Twitter" },
+                { Icon: InstagramIcon, href: "#instagram", title: "Instagram" },
+               
+              ].map((item, index) => (
+                <a
+                  key={index}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${socialIconClass} transition-transform hover:scale-110`}
+                  title={item.title}
+                >
+                  <item.Icon sx={{ fontSize: 24 }} />
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Product */}
+          {/* PRODUCT */}
           <div>
-            <h3 className={`font-semibold mb-4 ${textPrimaryClass}`}>📱 Producto</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#features" className={`text-sm ${linkClass} transition-colors`}>
-                  Características
-                </a>
-              </li>
-              <li>
-                <a href="#security" className={`text-sm ${linkClass} transition-colors`}>
-                  Seguridad
-                </a>
-              </li>
-              <li>
-                <a href="#download" className={`text-sm ${linkClass} transition-colors`}>
-                  Descargar App
-                </a>
-              </li>
-              <li>
-                <a href="#changelog" className={`text-sm ${linkClass} transition-colors`}>
-                  Changelog
-                </a>
-              </li>
+            <h3 className={`font-semibold mb-4 ${textPrimaryClass} flex items-center`}>
+              <SecurityIcon fontSize="small" className="mr-2 text-primary" /> Producto
+            </h3>
+            <ul className="space-y-3">
+              <li><a href="#features" className={`text-sm ${linkClass}`}>Características</a></li>
+              <li><a href="#security" className={`text-sm ${linkClass}`}>Seguridad</a></li>
+              <li><a href="#download" className={`text-sm ${linkClass}`}>Descargar App</a></li>
+              <li><a href="#changelog" className={`text-sm ${linkClass}`}>Changelog</a></li>
             </ul>
           </div>
 
-          {/* Company */}
+          {/* OPEN SOURCE */}
           <div>
-            <h3 className={`font-semibold mb-4 ${textPrimaryClass}`}>🏢 Empresa</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#about" className={`text-sm ${linkClass} transition-colors`}>
-                  Acerca de
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/adrianjsm79/AuroraBackend" target="_blank" rel="noopener noreferrer" className={`text-sm ${linkClass} transition-colors`}>
-                  GitHub Backend
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/adrianjsm79/aurorafrontend" target="_blank" rel="noopener noreferrer" className={`text-sm ${linkClass} transition-colors`}>
-                  GitHub Frontend
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className={`text-sm ${linkClass} transition-colors`}>
-                  Contacto
-                </a>
-              </li>
+            <h3 className={`font-semibold mb-4 ${textPrimaryClass} flex items-center`}>
+              <CodeIcon fontSize="small" className="mr-2 text-primary" /> Código Abierto
+            </h3>
+            <ul className="space-y-3">
+              <li><a href="#about" className={`text-sm ${linkClass}`}>Acerca de</a></li>
+              <li><a href="https://github.com/adrianjsm79/AuroraBackend" target="_blank" className={`text-sm ${linkClass}`}>GitHub Backend</a></li>
+              <li><a href="https://github.com/adrianjsm79/aurorafrontend" target="_blank" className={`text-sm ${linkClass}`}>GitHub Frontend</a></li>
+              <li><a href="#contact" className={`text-sm ${linkClass}`}>Contacto</a></li>
             </ul>
           </div>
 
-          {/* Support */}
+          {/* SUPPORT */}
           <div>
-            <h3 className={`font-semibold mb-4 ${textPrimaryClass}`}>💬 Soporte</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="mailto:support@aurorasecurity.com" className={`text-sm ${linkClass} transition-colors`}>
-                  ✉️ Soporte
-                </a>
-              </li>
-              <li>
-                <a href="mailto:dev@aurorasecurity.com" className={`text-sm ${linkClass} transition-colors`}>
-                  👨‍💻 Desarrolladores
-                </a>
-              </li>
-              <li>
-                <a href="#faq" className={`text-sm ${linkClass} transition-colors`}>
-                  ❓ FAQ
-                </a>
-              </li>
-              <li>
-                <a href="#status" className={`text-sm ${linkClass} transition-colors`}>
-                  📊 Estado
-                </a>
-              </li>
+            <h3 className={`font-semibold mb-4 ${textPrimaryClass} flex items-center`}>
+              <LiveHelpIcon fontSize="small" className="mr-2 text-primary" /> Soporte
+            </h3>
+            <ul className="space-y-3">
+              <li><a href="mailto:support@aurorasecurity.com" className={`text-sm ${linkClass}`}>Soporte General</a></li>
+              <li><a href="mailto:dev@aurorasecurity.com" className={`text-sm ${linkClass}`}>Soporte Dev</a></li>
+              <li><a href="#faq" className={`text-sm ${linkClass}`}>Preguntas Frecuentes</a></li>
+              <li><a href="#status" className={`text-sm ${linkClass}`}>Estado del Servicio</a></li>
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* LEGAL */}
           <div>
-            <h3 className={`font-semibold mb-4 ${textPrimaryClass}`}>⚖️ Legal</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#privacy" className={`text-sm ${linkClass} transition-colors`}>
-                  Privacidad
-                </a>
-              </li>
-              <li>
-                <a href="#terms" className={`text-sm ${linkClass} transition-colors`}>
-                  Términos
-                </a>
-              </li>
-              <li>
-                <a href="#cookies" className={`text-sm ${linkClass} transition-colors`}>
-                  Cookies
-                </a>
-              </li>
-              <li>
-                <a href="#compliance" className={`text-sm ${linkClass} transition-colors`}>
-                  Cumplimiento
-                </a>
-              </li>
+            <h3 className={`font-semibold mb-4 ${textPrimaryClass} flex items-center`}>
+              <PolicyIcon fontSize="small" className="mr-2 text-primary" /> Legal
+            </h3>
+            <ul className="space-y-3">
+              <li><a href="#privacy" className={`text-sm ${linkClass}`}>Política de Privacidad</a></li>
+              <li><a href="#terms" className={`text-sm ${linkClass}`}>Términos de Servicio</a></li>
+              <li><a href="#cookies" className={`text-sm ${linkClass}`}>Política de Cookies</a></li>
+              <li><a href="#compliance" className={`text-sm ${linkClass}`}>Cumplimiento</a></li>
             </ul>
           </div>
+
         </div>
 
-        {/* Team Section */}
-        <div className={`mb-8 p-6 rounded-lg ${isDarkMode ? 'bg-dark-secondary-surface border border-dark-surface' : 'bg-light-surface border border-primary'}`}>
-          <h3 className={`font-semibold mb-3 ${textPrimaryClass} flex items-center`}>
-            <span className="mr-2">👥</span> Equipo de Desarrollo
-          </h3>
-          <p className={`text-sm ${textSecondaryClass} mb-3`}>
-            Aurora es un proyecto de código abierto desarrollado con pasión. Conoce al equipo:
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <a href="https://github.com/adrianjsm79" target="_blank" rel="noopener noreferrer"
-              className={`text-sm ${linkClass} transition-colors hover:underline`}>
-              • Adrián Silva - Lead Developer & Founder
-            </a>
-            <a href="mailto:dev@aurorasecurity.com"
-              className={`text-sm ${linkClass} transition-colors hover:underline`}>
-              • Contactar al Equipo de Desarrollo
-            </a>
-          </div>
-        </div>
+        
 
-        {/* Divider */}
-        <div className={`border-t ${isDarkMode ? 'border-dark-secondary-surface' : 'border-gray-200'} mb-6`}></div>
 
-        {/* Bottom Footer */}
-        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          {/* Copyright */}
-          <p className={`text-sm ${textSecondaryClass}`}>
-            &copy; {currentYear} Aurora Security. Todos los derechos reservados. • 100% Gratuito • Open Source
-          </p>
+        {/* BOTTOM */}
+        
 
-          {/* Version & Status */}
           <div className="flex items-center space-x-4">
-            <span className={`text-xs ${textSecondaryClass}`}>
-              v1.0.0
-            </span>
-            <span className="text-xs text-green-500">
-              ● Status: Operativo
+            <span className={`text-xs ${textSecondaryClass}`}>v1.0.0</span>
+            <span className="text-xs text-green-500 flex items-center">
+              <CloudQueueIcon sx={{ fontSize: 14 }} className="mr-1" /> Operativo
             </span>
           </div>
         </div>
 
-        {/* Footer Note */}
-        <div className={`text-xs ${textSecondaryClass} text-center mt-6 opacity-75`}>
-          Desarrollado con ❤️ • Aurora Web Platform • 
-          <a href="https://github.com/adrianjsm79" target="_blank" rel="noopener noreferrer" className={`ml-1 ${linkClass}`}>
-            Ver en GitHub
-          </a>
-        </div>
-      </div>
+        
     </footer>
   );
 };
