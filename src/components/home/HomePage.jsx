@@ -103,12 +103,12 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { icon: <LocationOnIcon sx={{ fontSize: 30 }} />, title: "Localización en Tiempo Real", text: "Rastreo GPS preciso con actualizaciones cada segundo." },
+              { icon: <GroupIcon sx={{ fontSize: 30 }} />, title: "Círculo de Confianza", text: "Red de seguridad colaborativa. Permite que tus contactos de confianza monitoreen la ubicacion de tu dispositivo en situaciones críticas." },
               { icon: <LockIcon sx={{ fontSize: 30 }} />, title: "Recupera Dispositivos Robados", text: "Bloqueo remoto y localización inmediata ante robos." },
               { icon: <SmartphoneIcon sx={{ fontSize: 30 }} />, title: "App Móvil Indispensable", text: "Comparte y monitorea ubicación desde cualquier lugar." },
-              { icon: <ConnectWithoutContactIcon sx={{ fontSize: 30 }} />, title: "Monitoreo de Contactos", text: "Mantén segura a tu familia con alertas en tiempo real." },
+              { icon: <LocationOnIcon sx={{ fontSize: 30 }} />, title: "Rastreo Reactivo en Vivo", text: "Arquitectura basada en WebSockets para seguimiento GPS con latencia cero y actualización instantánea." },
               { icon: <WarningIcon sx={{ fontSize: 30 }} />, title: "Protección Ante Delincuencia", text: "Actúa rápido y comparte datos con autoridades." },
-              { icon: <MapIcon sx={{ fontSize: 30 }} />, title: "Mapa Interactivo 24/7", text: "Visualiza todos tus dispositivos y contactos en un mapa." }
+              { icon: <MapIcon sx={{ fontSize: 30 }} />, title: "Centro de Comando Web", text: "Gestión centralizada. Marca dispositivos como perdidos, activa protocolos de defensa y visualiza mapas desde cualquier navegador." }
             ].map((f, i) => (
               <div key={i} className={`${surfaceClass} rounded-xl p-8 hover:shadow-lg transition-all`}>
                 <div className="w-14 h-14 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center mb-4 text-2xl">
@@ -127,16 +127,15 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className={`text-4xl font-bold mb-6 ${textPrimaryClass}`}>Acerca de Aurora</h2>
-            <p className={`text-lg mb-4 ${textSecondaryClass}`}>Aurora nació con un propósito: combatir la delincuencia tecnológica.</p>
-            <p className={`text-lg mb-4 ${textSecondaryClass}`}>Protección con encriptación militar y tecnología GPS avanzada.</p>
-            <p className={`text-lg ${textSecondaryClass}`}>5 años de experiencia ayudando a recuperar miles de dispositivos.</p>
+            <p className={`text-lg mb-4 ${textSecondaryClass}`}>Aurora no es solo un localizador; es un <strong>sistema de defensa activo</strong>. Nace como una respuesta tecnológica avanzada ante la creciente inseguridad, diseñada para proteger tu patrimonio digital cuando más vulnerable está.</p>
+            <p className={`text-lg mb-4 ${textSecondaryClass}`}>Garantiza que la conexión entre tú y tus dispositivos sea instantánea, segura y permanente.</p>
           </div>
           <div className="grid grid-cols-2 gap-4">
             {[
-              ["100K+", "Usuarios Activos"],
-              ["10K+", "Dispositivos Recuperados"],
-              ["99.9%", "Disponibilidad"],
-              ["24/7", "Soporte Activo"]
+              ["< 100ms", "Latencia Real (WebSockets)"],
+              ["3", "Capas de Rastreo (GPS/Red/Sonar)"],
+              ["24/7", "Servicio en Segundo Plano"],
+              ["100%", "Privacidad y Cifrado Local"]
             ].map(([num, label], i) => (
               <div key={i} className={`${surfaceClass} rounded-xl p-6 text-center`}>
                 <div className="text-3xl font-bold text-primary mb-2">{num}</div>
@@ -156,9 +155,9 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              ["Recuperación de Dispositivos", "Recupera teléfonos perdidos o robados rápidamente."],
-              ["Protección Familiar", "Ubicación en tiempo real para tu familia sin perder privacidad."],
-              ["Innovación Continua", "Actualizaciones constantes para combatir la delincuencia."]
+              ["Disminuir el Tiempo de Respuesta", "Reducir la latencia entre el robo y la acción defensiva."],
+              ["Garantizar la Persistencia", "Asegurar que el rastreo continúe incluso ante intentos de apagado forzado o pérdida de conexión a internet."],
+              ["Democratizar la Seguridad", "Proveer herramientas y metodos de proteccion en dispositivos móviles estándar sin hardware adicional."]
             ].map(([title, text], i) => (
               <div key={i} className={`${surfaceClass} rounded-xl p-8 border-l-4 border-primary hover:shadow-lg`}>
                 <h3 className={`text-xl font-bold mb-3 ${textPrimaryClass}`}>{title}</h3>
@@ -174,14 +173,14 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className={`text-4xl font-bold mb-4 ${textPrimaryClass}`}>¿Por Qué Elegir Aurora?</h2>
-            <p className={`text-lg ${textSecondaryClass} max-w-2xl mx-auto`}> La plataforma más completa en seguridad y localización </p>
+            <p className={`text-lg ${textSecondaryClass} max-w-2xl mx-auto`}> plataforma que combina rastreo GPS con contramedidas activas anti-robo. </p>
           </div>
           <div className="grid md:grid-cols-2 gap-12">
             <div className="space-y-6">
               {[
-                ["Recuperación Inmediata", "Localiza tu dispositivo al instante."],
-                ["Precisión GPS Exacta", "Ubicación precisa hasta metros."],
-                ["Múltiples Dispositivos", "Administra varios equipos desde un solo panel."]
+                ["Defensa Activa", "No solo rastrea, utiliza protocolos de seguridad para mantener la conexión viva."],
+                ["Búsqueda Sónica Offline", "Encuentra tu dispositivo oculto o perdido cerca mediante alertas de audio de alta potencia, incluso sin internet."],
+                ["Arquitectura Reactiva", "Tecnología Websocket para una comunicación bidireccional instantánea entre la web y tu móvil."]
               ].map(([title, text], i) => (
                 <div key={i} className="flex gap-4">
                   <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white font-bold">✓</div>
@@ -194,9 +193,9 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
             </div>
             <div className="space-y-6">
               {[
-                ["Encriptación Militar", "Protege tus datos con el estándar más alto."],
+                ["Privacidad Total", "Tus datos de ubicación son tuyos. Gestión de permisos transparente y almacenamiento seguro."],
                 ["100% Gratuito", "Sin suscripciones ni anuncios."],
-                ["Comunidad Activa", "Reporta y recibe ayuda de otros usuarios."]
+                ["Sistema Unificado", "Controla la seguridad de todos tus dispositivos y contactos de confianza desde un único panel web."]
               ].map(([title, text], i) => (
                 <div key={i} className="flex gap-4">
                   <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white font-bold">✓</div>
@@ -232,7 +231,7 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
                 <p className={textSecondaryClass}>Próximamente</p>
               </div>
               <button disabled className="px-6 py-3 bg-gray-400 text-white rounded-lg mt-6 w-full cursor-not-allowed">
-                ⏳ En desarrollo
+                Proximamente
               </button>
             </div>
 
@@ -245,32 +244,32 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
                 <h3 className={`text-2xl font-bold mb-3 ${textPrimaryClass}`}>Android</h3>
                 <p className={textSecondaryClass}>Disponible en Google Play</p>
               </div>
-              <button className="px-6 py-3 bg-primary text-white rounded-lg w-full mt-6">
-                Descargar
+              <button disabled className="px-6 py-3 bg-gray-400 text-white rounded-lg mt-6 w-full cursor-not-allowed">
+                Proximamente
               </button>
             </a>
 
             {/* QR / GitHub - mantener grande para igualar altura */}
             <div className={`${surfaceClass} rounded-2xl p-10 text-center border-2 border-primary flex flex-col items-center justify-between min-h-[26rem]`}>
               <div className="mb-6 flex justify-center items-center h-48">
-                <img src="https://placehold.co/224x224/1f2937/FFFFFF?text=QR" alt="QR Placeholder" className="w-56 h-56 mx-auto mb-4 rounded-lg shadow-lg" />
+                <img src="/images/qrAuroraReleases.png" alt="QR Placeholder" className="w-56 h-56 mx-auto mb-4 rounded-lg shadow-lg" />
               </div>
               <div>
                 <h3 className={`text-2xl font-bold mb-2 ${textPrimaryClass}`}>Escanea el QR</h3>
                 <p className={textSecondaryClass}>Descarga desde GitHub</p>
               </div>
               <a
-                href="https://github.com/adrianjsm79/aurora-mobile/releases"
+                href="https://github.com/adrianjsm79/Aurora2/releases/"
                 target="_blank"
                 className="px-6 py-3 bg-primary text-white rounded-lg w-full inline-block mt-6"
               >
-                📦 Ver Repositorio
+                Ver Repositorio
               </a>
             </div>
           </div>
 
           <div className={`mt-8 md:mt-10 p-8 md:p-10 rounded-2xl text-center font-semibold text-lg shadow-2xl ${isDarkMode ? 'bg-dark-secondary-surface border-2 border-dark-surface' : 'bg-white/95 border-2 border-primary'}`}>
-            ⚡ La app móvil es necesaria para monitorear en tiempo real
+             La app móvil es necesaria para monitorear en tiempo real
           </div>
         </div>
       </section>
@@ -281,7 +280,7 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
           <div className={`${isDarkMode ? 'bg-gradient-to-r from-dark-secondary-surface to-dark-surface border border-dark-secondary-surface' : 'bg-gradient-to-r from-light-secondary-surface to-light-surface border border-primary'} rounded-2xl p-10 text-center shadow-xl`}>
              <h2 className={`text-4xl font-bold mb-6 ${textPrimaryClass}`}> ¿Listo para comenzar? </h2>
              <p className={`text-lg mb-8 ${textSecondaryClass}`}>
-               Únete a miles de usuarios que ya protegen sus dispositivos y a su familia con Aurora.
+               Únete a la comunidad de Aurora.
              </p>
              {!user ? (
                <button

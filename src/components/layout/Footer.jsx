@@ -53,9 +53,9 @@ const Footer = () => {
             {/* SOCIAL */}
             <div className="flex space-x-4 mt-6">
               {[
-                { Icon: GitHubIcon, href: "https://github.com/adrianjsm79", title: "GitHub" },
-                { Icon: XIcon, href: "#twitter", title: "Twitter" },
-                { Icon: InstagramIcon, href: "#instagram", title: "Instagram" },
+                { Icon: GitHubIcon, href: "https://github.com/adrianjsm79/", title: "GitHub" },
+                { Icon: XIcon, href: "https://x.com/", title: "Twitter" },
+                { Icon: InstagramIcon, href: "https://www.instagram.com/", title: "Instagram" },
                
               ].map((item, index) => (
                 <a
@@ -80,8 +80,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li><a href="#features" className={`text-sm ${linkClass}`}>Características</a></li>
               <li><a href="#security" className={`text-sm ${linkClass}`}>Seguridad</a></li>
-              <li><a href="#download" className={`text-sm ${linkClass}`}>Descargar App</a></li>
-              <li><a href="#changelog" className={`text-sm ${linkClass}`}>Changelog</a></li>
+              <li><a href="https://github.com/adrianjsm79/aurora2/releases" className={`text-sm ${linkClass}`}>Descargar App</a></li>
             </ul>
           </div>
 
@@ -91,9 +90,8 @@ const Footer = () => {
               <CodeIcon fontSize="small" className="mr-2 text-primary" /> Código Abierto
             </h3>
             <ul className="space-y-3">
-              <li><a href="#about" className={`text-sm ${linkClass}`}>Acerca de</a></li>
               <li><a href="https://github.com/adrianjsm79/AuroraBackend" target="_blank" className={`text-sm ${linkClass}`}>GitHub Backend</a></li>
-              <li><a href="https://github.com/adrianjsm79/aurorafrontend" target="_blank" className={`text-sm ${linkClass}`}>GitHub Frontend</a></li>
+              <li><a href="https://github.com/adrianjsm79/AuroraFrontend" target="_blank" className={`text-sm ${linkClass}`}>GitHub Frontend</a></li>
               <li><a href="#contact" className={`text-sm ${linkClass}`}>Contacto</a></li>
             </ul>
           </div>
@@ -104,10 +102,9 @@ const Footer = () => {
               <LiveHelpIcon fontSize="small" className="mr-2 text-primary" /> Soporte
             </h3>
             <ul className="space-y-3">
-              <li><a href="mailto:support@aurorasecurity.com" className={`text-sm ${linkClass}`}>Soporte General</a></li>
-              <li><a href="mailto:dev@aurorasecurity.com" className={`text-sm ${linkClass}`}>Soporte Dev</a></li>
+              <li><a href="mailto:adrian.silvasantiste@tecsup.edu.pe" className={`text-sm ${linkClass}`}>Soporte General</a></li>
               <li><a href="#faq" className={`text-sm ${linkClass}`}>Preguntas Frecuentes</a></li>
-              <li><a href="#status" className={`text-sm ${linkClass}`}>Estado del Servicio</a></li>
+
             </ul>
           </div>
 
@@ -119,8 +116,6 @@ const Footer = () => {
             <ul className="space-y-3">
               <li><a href="#privacy" className={`text-sm ${linkClass}`}>Política de Privacidad</a></li>
               <li><a href="#terms" className={`text-sm ${linkClass}`}>Términos de Servicio</a></li>
-              <li><a href="#cookies" className={`text-sm ${linkClass}`}>Política de Cookies</a></li>
-              <li><a href="#compliance" className={`text-sm ${linkClass}`}>Cumplimiento</a></li>
             </ul>
           </div>
 
