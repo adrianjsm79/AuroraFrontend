@@ -1,39 +1,34 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 const ThemeContext = createContext();
 
-export const useTheme = () => useContext(ThemeContext);
-
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        return savedTheme;
-      }
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    return 'light';
-  });
-
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    setIsDarkMode(prev => !prev);
   };
 
-  const isDarkMode = theme === 'dark';
+  const themeClasses = {
+    header: isDarkMode 
+      ? 'bg-dark-surface text-dark-text-primary border-b border-dark-secondary-surface' 
+      : 'bg-white text-light-text-primary border-b border-gray-200',
+    footer: isDarkMode 
+      ? 'bg-dark-surface text-dark-text-secondary border-t border-dark-secondary-surface' 
+      : 'bg-light-surface text-light-text-secondary border-t border-gray-200'
+  };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, isDarkMode }}>
+    <ThemeContext.Provider value={{ isDarkMode, toggleTheme, themeClasses }}>
       {children}
     </ThemeContext.Provider>
   );
+};
+
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useTheme debe usarse dentro de ThemeProvider');
+  }
+  return context;
 };
