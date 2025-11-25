@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import AppleIcon from '@mui/icons-material/Apple';
@@ -9,9 +10,9 @@ import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import WarningIcon from '@mui/icons-material/Warning';
 import MapIcon from '@mui/icons-material/Map';
-import Footer from "../layout/Footer";
 
 const HomePage = ({ onLoginClick, onDashboardClick }) => {
+  const navigate = useNavigate();
   const { isDarkMode } = useTheme();
   const { user } = useAuth();
 
@@ -65,13 +66,13 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
             {!user ? (
               <>
                 <button
-                  onClick={onLoginClick}
+                  onClick={() => navigate('/register')}
                   className="px-6 py-3 bg-primary text-white rounded-md font-bold shadow-lg hover:shadow-xl transition-transform transform hover:scale-105"
                 >
                   Crear Cuenta
                 </button>
                 <button
-                  onClick={onLoginClick}
+                  onClick={() => navigate('/login')}
                   className="px-4 py-3 bg-white/10 text-white rounded-md font-semibold border border-white/20 hover:bg-white/20 transition"
                 >
                   Iniciar sesión
@@ -79,7 +80,7 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
               </>
             ) : (
               <button
-                onClick={onDashboardClick}
+                onClick={() => navigate('/dashboard/homeview')}
                 className="px-6 py-3 bg-primary text-white rounded-md font-bold shadow-lg hover:shadow-xl transition-transform transform hover:scale-105"
               >
                 Ir al Dashboard
@@ -287,14 +288,14 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
              </p>
              {!user ? (
                <button
-                 onClick={onLoginClick}
+                 onClick={() => navigate('/register')}
                  className="px-10 py-4 bg-primary text-white font-bold rounded-xl hover:bg-opacity-90 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
                >
                  Crear Cuenta Gratis
                </button>
              ) : (
                <button
-                 onClick={onDashboardClick}
+                 onClick={() => navigate('/dashboard/homeview')}
                  className="px-10 py-4 bg-primary text-white font-bold rounded-xl hover:bg-opacity-90 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
                >
                  Ir al Dashboard
@@ -303,8 +304,6 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
            </div>
          </div>
        </section>
-
-      <Footer />
     </div>
   );
 };
