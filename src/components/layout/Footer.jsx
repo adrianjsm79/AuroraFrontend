@@ -41,13 +41,16 @@ const Footer = () => {
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-lg">A</span>
+                <LocationOnIcon 
+                  className="text-white drop-shadow-md" 
+                  sx={{ fontSize: 42 }} 
+                />
               </div>
               <span className={`font-bold text-xl ${textPrimaryClass}`}>Aurora</span>
             </div>
 
             <p className={`text-sm ${textSecondaryClass} leading-relaxed`}>
-              Aplicación de seguridad en tiempo real para mantener a tus seres queridos protegidos.
+              Aplicación de seguridad en tiempo real para mantener a tus dispositivos protegidos.
             </p>
 
             {/* SOCIAL */}

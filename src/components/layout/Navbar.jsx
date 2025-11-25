@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 const Navbar = ({ onLoginClick, onDashboardClick }) => {
   const navigate = useNavigate();
@@ -38,7 +39,10 @@ const Navbar = ({ onLoginClick, onDashboardClick }) => {
               className="flex items-center space-x-2 focus:outline-none"
             >
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">A</span>
+                <LocationOnIcon 
+                  className="text-white drop-shadow-md" 
+                  sx={{ fontSize: 42 }} 
+                />
               </div>
               <span className={`font-bold text-xl ${textPrimaryClass}`}>Aurora</span>
             </button>

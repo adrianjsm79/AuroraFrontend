@@ -33,14 +33,17 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
             </span>
-            <span className="text-sm text-white/90">100K+ usuarios protegidos</span>
+            <span className="text-sm text-white/90">servicio activo 24/7</span>
           </div>
 
           <div className="mb-6">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl blur-xl opacity-50" />
               <div className="relative w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl transform rotate-6 hover:rotate-0 transition-transform">
-                <span className="text-white font-bold text-4xl">A</span>
+                <LocationOnIcon 
+                  className="text-white drop-shadow-md" 
+                  sx={{ fontSize: 42 }} 
+                />
               </div>
             </div>
           </div>

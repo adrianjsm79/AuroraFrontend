@@ -44,11 +44,11 @@ const AboutView = () => {
               Tu seguridad y privacidad son nuestra máxima prioridad. Consulta nuestros documentos legales para entender cómo protegemos tus datos.
             </p>
             <div className="space-y-3">
-              <a href="#" className="flex items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition group dark:bg-gray-700/50 dark:hover:bg-gray-700">
+              <a href="/terms/terminos.html" className="flex items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition group dark:bg-gray-700/50 dark:hover:bg-gray-700">
                 <FileText className="w-5 h-5 mr-3 text-gray-500 dark:text-gray-400 group-hover:text-primary transition" />
                 <span className="font-semibold text-gray-700 dark:text-gray-300">Términos y Condiciones</span>
               </a>
-              <a href="#" className="flex items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition group dark:bg-gray-700/50 dark:hover:bg-gray-700">
+              <a href="/terms/politicas.html" className="flex items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition group dark:bg-gray-700/50 dark:hover:bg-gray-700">
                 <ShieldCheck className="w-5 h-5 mr-3 text-gray-500 dark:text-gray-400 group-hover:text-primary transition" />
                 <span className="font-semibold text-gray-700 dark:text-gray-300">Política de Privacidad y Datos</span>
               </a>
