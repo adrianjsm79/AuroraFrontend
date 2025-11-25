@@ -103,7 +103,7 @@ const HomePage = ({ onLoginClick, onDashboardClick }) => {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { icon: <ConnectWithoutContact sx={{ fontSize: 30 }} />, title: "Círculo de Confianza", text: "Red de seguridad colaborativa. Permite que tus contactos de confianza monitoreen la ubicacion de tu dispositivo en situaciones críticas." },
+              { icon: <ConnectWithoutContactIcon sx={{ fontSize: 30 }} />, title: "Círculo de Confianza", text: "Red de seguridad colaborativa. Permite que tus contactos de confianza monitoreen la ubicacion de tu dispositivo en situaciones críticas." },
               { icon: <LockIcon sx={{ fontSize: 30 }} />, title: "Recupera Dispositivos Robados", text: "Bloqueo remoto y localización inmediata ante robos." },
               { icon: <SmartphoneIcon sx={{ fontSize: 30 }} />, title: "App Móvil Indispensable", text: "Comparte y monitorea ubicación desde cualquier lugar." },
               { icon: <LocationOnIcon sx={{ fontSize: 30 }} />, title: "Rastreo Reactivo en Vivo", text: "Arquitectura basada en WebSockets para seguimiento GPS con latencia cero y actualización instantánea." },
