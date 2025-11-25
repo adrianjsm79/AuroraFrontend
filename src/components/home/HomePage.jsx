@@ -1,6 +1,6 @@
 import React from 'react';
-import { useTheme } from '../context/ThemeContext.jsx';
-import { useAuth } from '../context/AuthContext.jsx';
+import { useTheme } from '../../context/ThemeContext';
+import { useAuth } from '../../context/AuthContext';
 import AppleIcon from '@mui/icons-material/Apple';
 import AndroidIcon from '@mui/icons-material/Android';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -9,7 +9,7 @@ import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import WarningIcon from '@mui/icons-material/Warning';
 import MapIcon from '@mui/icons-material/Map';
-import Footer from "../layout/Footer.jsx";
+import Footer from "../../layout/Footer";
 
 const HomePage = ({ onLoginClick, onDashboardClick }) => {
   const { isDarkMode } = useTheme();
