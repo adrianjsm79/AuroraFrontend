@@ -92,7 +92,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li><a href="https://github.com/adrianjsm79/AuroraBackend" target="_blank" className={`text-sm ${linkClass}`}>GitHub Backend</a></li>
               <li><a href="https://github.com/adrianjsm79/AuroraFrontend" target="_blank" className={`text-sm ${linkClass}`}>GitHub Frontend</a></li>
-              <li><a href="#contact" className={`text-sm ${linkClass}`}>Contacto</a></li>
+              <li><a href="https://www.linkedin.com/" className={`text-sm ${linkClass}`}>Contacto</a></li>
             </ul>
           </div>
 
@@ -102,8 +102,17 @@ const Footer = () => {
               <LiveHelpIcon fontSize="small" className="mr-2 text-primary" /> Soporte
             </h3>
             <ul className="space-y-3">
-              <li><a href="mailto:adrian.silvasantiste@tecsup.edu.pe" className={`text-sm ${linkClass}`}>Soporte General</a></li>
-              <li><a href="#faq" className={`text-sm ${linkClass}`}>Preguntas Frecuentes</a></li>
+              <li>
+                <a 
+                  href="https://wa.me/51947179270?text=Hola,%20necesito%20ayuda%20con%20Aurora" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`text-sm ${linkClass}`}
+                >
+                  Soporte general
+                </a>
+              </li>
+              <li><a href="/terms/faq.html" className={`text-sm ${linkClass}`}>Preguntas Frecuentes</a></li>
 
             </ul>
           </div>
@@ -114,8 +123,8 @@ const Footer = () => {
               <PolicyIcon fontSize="small" className="mr-2 text-primary" /> Legal
             </h3>
             <ul className="space-y-3">
-              <li><a href="#privacy" className={`text-sm ${linkClass}`}>Política de Privacidad</a></li>
-              <li><a href="#terms" className={`text-sm ${linkClass}`}>Términos de Servicio</a></li>
+              <li><a href="/terms/politicas.html" className={`text-sm ${linkClass}`}>Política de Privacidad</a></li>
+              <li><a href="/terms/terminos.html" className={`text-sm ${linkClass}`}>Términos de Servicio</a></li>
             </ul>
           </div>
 
